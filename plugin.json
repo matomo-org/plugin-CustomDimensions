@@ -1,0 +1,22 @@
+{
+    "name": "Custom Dimensions",
+    "version": "0.1.0",
+    "description": "Define custom dimensions",
+    "theme": false,
+    "keywords": [
+        "custom dimensions",
+        "track"
+    ],
+    "license": "GPL v3+",
+    "homepage": "http:\/\/piwik.org",
+    "require": {
+        "piwik": ">=2.15.0"
+    },
+    "authors": [
+        {
+            "name": "Piwik",
+            "email": "hello@piwik.org",
+            "homepage": "http:\/\/piwik.org"
+        }
+    ]
+}

@@ -1,0 +1,70 @@
+<div>
+    <h2>Configure {{ dimensionScope|ucfirst }} Custom Dimension {{ editDimension.dimension.index || '' }}</h2>
+
+    <p ng-show="editDimension.model.isLoading || editDimension.model.isUpdating">
+        <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
+    </p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <form ng-submit="editDimension.edit ? editDimension.updateCustomDimension() : editDimension.createCustomDimension()">
+                <div class="form-group">
+                    <label for="name">
+                        Name
+                    </label>
+                    <input type="text" id="name" ng-model="editDimension.dimension.name"
+                           required
+                           title="Allowed characters are any letters, numbers, whitespace, a dash and underline"
+                           pattern="[A-Za-z\s\d-_]{1,255}">
+                </div>
+                <div class="form-group">
+                    <label for="active">
+                        Active
+                    </label>
+                    <input type="checkbox" id="active"
+                           ng-model="editDimension.dimension.active">
+                </div>
+                <div class="form-group">
+
+                    <label for="extractions">Extract Value</label>
+
+                    <div ng-repeat="(index, extraction) in editDimension.dimension.extractions" class="extraction">
+                        <select name="extractions"
+                                ng-model="editDimension.dimension.extractions[index].dimension">
+                            <option value="url">Page URL</option>
+                            <option value="urlparam">Page URL Param</option>
+                            <option value="action_name">Page Title</option>
+                        </select>
+
+                        <input type="text"
+                               ng-model="editDimension.dimension.extractions[index].pattern"
+                               placeholder="test(.*)">
+
+                        <span ng-click="editDimension.addExtraction()" class="icon-plus"></span>
+                        <span ng-click="editDimension.removeExtraction(index)"
+                              ng-show="(editDimension.dimension.extractions|length) > 1" class="icon-minus"></span>
+                    </div>
+
+                </div>
+
+                <input class="btn" type="submit" ng-show="editDimension.edit" ng-disabled="editDimension.model.isUpdating" value="Update">
+                <input class="btn" type="submit" ng-show="editDimension.create"  ng-disabled="editDimension.model.isUpdating" value="Create">
+                <a class="btn" type="button" ng-href="#list">Cancel</a>
+            </form>
+
+        </div>
+        <div class="col-md-6">
+            <br />
+            <div ng-show="editDimension.edit" class="alert alert-info">
+                To track a value manually for this custom dimension in the JavaScript Tracker call:
+                <br />
+                <br />
+                <code>_paq.push(['setCustomDimension', {{ editDimension.dimension.idcustomdimension }}, 'Any custom value');</code>
+                <br />
+                <br />
+            </div>
+        </div>
+    </div>
+
+
+</div>
