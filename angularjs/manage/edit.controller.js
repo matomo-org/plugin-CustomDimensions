@@ -7,20 +7,22 @@
 (function () {
     angular.module('piwikApp').controller('CustomDimensionsEditController', CustomDimensionsEditController);
 
-    CustomDimensionsEditController.$inject = ['$scope', 'customDimensionsModel', 'piwik', '$location'];
+    CustomDimensionsEditController.$inject = ['$scope', 'customDimensionsModel', 'piwik', '$location', '$filter'];
 
-    function CustomDimensionsEditController($scope, customDimensionsModel, piwik, $location) {
+    function CustomDimensionsEditController($scope, customDimensionsModel, piwik, $location, $filter) {
 
         var self = this;
         var currentId = null;
 
+        var translate = $filter('translate');
+
         this.model = customDimensionsModel;
 
-        function showSuccessNotification(message)
+        function showNotification(message, context)
         {
             var UI = require('piwik/UI');
             var notification = new UI.Notification();
-            notification.show(message, {context: 'success', id:'customdimensions', type: 'toast'});
+            notification.show(message, {context: context, id:'customdimensions', type: 'toast'});
         }
 
         function init(dimensionId)
@@ -60,27 +62,34 @@
         }
 
         this.createCustomDimension = function () {
-
             var method = 'CustomDimensions.configureNewCustomDimension';
 
             this.isUpdating = true;
 
-            customDimensionsModel.createOrUpdateDimension(this.dimension, method).then(function () {
-                showSuccessNotification('Custom Dimension created');
+            customDimensionsModel.createOrUpdateDimension(this.dimension, method).then(function (response) {
+                if (response.type === 'error') {
+                    return;
+                }
+
+                showNotification(translate('CustomDimensions_DimensionCreated'), response.type);
                 self.model.reload();
                 $location.url('/list');
             });
         };
 
         this.updateCustomDimension = function () {
-            this.dimension.idCustomDimension = this.dimension.idcustomdimension;
+            this.dimension.idDimension = this.dimension.idcustomdimension;
 
             var method = 'CustomDimensions.configureExistingCustomDimension';
 
             this.isUpdating = true;
 
-            customDimensionsModel.createOrUpdateDimension(this.dimension, method).then(function () {
-                showSuccessNotification('Custom Dimension updated');
+            customDimensionsModel.createOrUpdateDimension(this.dimension, method).then(function (response) {
+                if (response.type === 'error') {
+                    return;
+                }
+
+                showNotification(translate('CustomDimensions_DimensionUpdated'), response.type);
                 $location.url('/list');
             });
         };

@@ -15,6 +15,7 @@
         var model = {
             customDimensions : [],
             availableScopes: [],
+            extractionDimensions: [],
             isLoading: false,
             isUpdating: false,
             fetchCustomDimensionsConfiguration: fetchCustomDimensionsConfiguration,
@@ -48,8 +49,16 @@
                     return customDimensions;
                 });
 
-            return $q.all(fetchAllPromise, fetchAvailableScopes()).then(function () {
+            return $q.all(fetchAllPromise, fetchAvailableScopes(), fetchAvailableExtractionDimensions()).then(function () {
                 model.isLoading = false;
+            });
+        }
+
+        function fetchAvailableExtractionDimensions() {
+            return piwikApi.fetch({method: 'CustomDimensions.getAvailableExtractionDimensions'}).then(function (availableExtractionDimensions) {
+                model.extractionDimensions = availableExtractionDimensions;
+
+                return availableExtractionDimensions;
             });
         }
 
@@ -85,9 +94,12 @@
 
             return piwikApi.post(dimension, {extractions: extractions}).then(function (response) {
                 model.isUpdating = false;
-                return response;
-            }, function () {
+
+                return {type: 'success'};
+
+            }, function (error) {
                 model.isUpdating = false;
+                return {type: 'error', message: error};
             });
         }
     }

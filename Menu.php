@@ -14,7 +14,6 @@ use Piwik\Menu\MenuReporting;
 use Piwik\Menu\MenuUser;
 use Piwik\Piwik;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
-use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\UsersManager\UserPreferences;
 
 /**
@@ -40,6 +39,12 @@ class Menu extends \Piwik\Plugin\Menu
         $idSite = Common::getRequestVar('idSite', null, 'int');
         $config = new Configuration();
         $dimensions = $config->getCustomDimensionsForSite($idSite);
+
+        foreach ($dimensions as $index => $dimension) {
+            if (!$dimension['active']) {
+                unset($dimensions[$index]);
+            }
+        }
 
         $this->addMenuItemsForCustomDimensions($menu, $dimensions, CustomDimensions::SCOPE_VISIT);
         $this->addMenuItemsForCustomDimensions($menu, $dimensions, CustomDimensions::SCOPE_ACTION);
@@ -72,7 +77,7 @@ class Menu extends \Piwik\Plugin\Menu
             $id    = $dimension['idcustomdimension'];
             $url   = $this->urlForAction('menuGetCustomDimension', array('idDimension' => $id));
             $order = 100 + $id;
-            $tooltip = 'Custom Dimension ' . $id; // todo translate
+            $tooltip = Piwik::translate('CustomDimensions_CustomDimensionId', $id);
 
             if ($scope === CustomDimensions::SCOPE_VISIT) {
 
@@ -90,8 +95,8 @@ class Menu extends \Piwik\Plugin\Menu
             }
 
             if ($numItems > 3) {
-                // todo translate
-                $menu->addGroup($mainMenuName, 'Custom Dimensions', $group, ++$order, $tooltip = false);
+                $title = Piwik::translate('CustomDimensions_CustomDimensions');
+                $menu->addGroup($mainMenuName, $title, $group, ++$order, $tooltip = false);
             }
         }
     }

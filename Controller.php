@@ -11,7 +11,6 @@ namespace Piwik\Plugins\CustomDimensions;
 use Piwik\Common;
 use Piwik\DataTable;
 use Piwik\Piwik;
-use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\View;
 
 class Controller extends \Piwik\Plugin\Controller
@@ -23,36 +22,6 @@ class Controller extends \Piwik\Plugin\Controller
         Piwik::checkUserHasAdminAccess($idSite);
 
         return $this->renderTemplate('manage', array());
-    }
-
-    public function menuGetCustomDimension()
-    {
-        $dimension = $this->getDimensionIfValid();
-
-        return View::singleReport($dimension['name'], $this->getCustomDimension());
-    }
-
-    public function getCustomDimension()
-    {
-        $this->getDimensionIfValid();
-
-        return $this->renderReport('getCustomDimension', 'getCustomDimension');
-    }
-
-    private function getDimensionIfValid()
-    {
-        $idSite = Common::getRequestVar('idSite', null, 'int');
-        Piwik::checkUserHasViewAccess($idSite);
-
-        $idDimension = Common::getRequestVar('idDimension', 0, 'int');
-        $config = new Configuration();
-        $dimension = $config->getCustomDimension($idSite, $idDimension);
-
-        if (empty($dimension)) {
-            throw new \Exception("Dimension $idDimension does not exist for site $idSite");
-        }
-
-        return $dimension;
     }
 
 }

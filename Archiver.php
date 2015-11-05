@@ -8,18 +8,13 @@
  */
 namespace Piwik\Plugins\CustomDimensions;
 
-use Piwik\Common;
 use Piwik\Config;
-use Piwik\DataAccess\LogAggregator;
-use Piwik\DataArray;
 use Piwik\Metrics;
+use Piwik\Plugins\Actions\Metrics as ActionsMetrics;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
-use Piwik\Tracker\GoalManager;
 use Piwik\Tracker;
 use Piwik\ArchiveProcessor;
-
-require_once PIWIK_INCLUDE_PATH . '/libs/PiwikTracker/PiwikTracker.php';
 
 class Archiver extends \Piwik\Plugin\Archiver
 {
@@ -60,7 +55,7 @@ class Archiver extends \Piwik\Plugin\Archiver
             return $this->recordNames;
         }
 
-        $dimensions = $this->getCustomDimensions();
+        $dimensions = $this->getActiveCustomDimensions();
 
         foreach ($dimensions as $dimension) {
             $this->recordNames[] = self::buildRecordNameForCustomDimensionId($dimension['idcustomdimension']);
@@ -69,13 +64,20 @@ class Archiver extends \Piwik\Plugin\Archiver
         return $this->recordNames;
     }
 
-    private function getCustomDimensions()
+    private function getActiveCustomDimensions()
     {
         $idSite = $this->processor->getParams()->getSite()->getId();
         $config = new Configuration();
         $dimensions = $config->getCustomDimensionsForSite($idSite);
 
-        return $dimensions;
+        $active = array();
+        foreach ($dimensions as $index => $dimension) {
+            if ($dimension['active']) {
+                $active[] = $dimension;
+            }
+        }
+
+        return $active;
     }
 
     public function aggregateMultipleReports()
@@ -94,15 +96,19 @@ class Archiver extends \Piwik\Plugin\Archiver
 
     public function aggregateDayReport()
     {
-        $dimensions = $this->getCustomDimensions();
+        $dimensions = $this->getActiveCustomDimensions();
         foreach ($dimensions as $dimension) {
             $this->dataArray = new DataArray();
 
+            $valueField = LogTable::buildCustomDimensionColumnName($dimension);
+            $dimensions = array($valueField);
+            $where      = "%s.$valueField != ''";
+
             if ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
-                $this->aggregateFromVisits($dimension);
-                $this->aggregateFromConversions($dimension);
+                $this->aggregateFromVisits($valueField, $dimensions, $where);
+                $this->aggregateFromConversions($valueField, $dimensions, $where);
             } elseif ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
-                $this->aggregateFromActions($dimension);
+                $this->aggregateFromActions($valueField);
             }
 
             $this->dataArray->enrichMetricsWithConversions();
@@ -118,55 +124,89 @@ class Archiver extends \Piwik\Plugin\Archiver
         }
     }
 
-    protected function aggregateFromVisits($dimension)
+    protected function aggregateFromVisits($valueField, $dimensions, $where)
     {
-        $valueField = LogTable::buildCustomDimensionColumnName($dimension['index']);
-
-        $dimensions = array($valueField);
-        $where = "%s.$valueField != ''";
         $query = $this->getLogAggregator()->queryVisitsByDimension($dimensions, $where);
 
         while ($row = $query->fetch()) {
-            $value = $this->cleanCustomVarValue($row[$valueField]);
+            $value = $this->cleanCustomDimensionValue($row[$valueField]);
 
             $this->dataArray->sumMetricsVisits($value, $row);
         }
     }
 
-    protected function aggregateFromConversions($dimension)
+    protected function aggregateFromConversions($valueField, $dimensions, $where)
     {
-        $valueField = LogTable::buildCustomDimensionColumnName($dimension['index']);
-
-        $dimensions = array($valueField);
-        $where = "%s.$valueField != ''";
         $query = $this->getLogAggregator()->queryConversionsByDimension($dimensions, $where);
 
         while ($row = $query->fetch()) {
-            $value = $this->cleanCustomVarValue($row[$valueField]);
+            $value = $this->cleanCustomDimensionValue($row[$valueField]);
 
             $this->dataArray->sumMetricsGoals($value, $row);
         }
     }
 
-    protected function aggregateFromActions($dimension)
+    protected function aggregateFromActions($valueField)
     {
-        $valueField = LogTable::buildCustomDimensionColumnName($dimension['index']);
+        $metricsConfig = ActionsMetrics::getActionMetrics();
 
-        $dimensions = array($valueField);
-        $where = "%s.$valueField != ''";
+        $metricIds   = array_keys($metricsConfig);
+        $metricIds[] = Metrics::INDEX_PAGE_SUM_TIME_SPENT;
+        $metricIds[] = Metrics::INDEX_BOUNCE_COUNT;
+        $metricIds[] = Metrics::INDEX_PAGE_EXIT_NB_VISITS;
+        $this->dataArray->setActionMetricsIds($metricIds);
 
-        $query = $this->getLogAggregator()->queryActionsByDimension($dimensions, $where);
+        $select = "log_link_visit_action.$valueField,
+                  sum(log_link_visit_action.time_spent) as `" . Metrics::INDEX_PAGE_SUM_TIME_SPENT . "`,
+                  sum(case visitAlias.visit_total_actions when 1 then 1 when 0 then 1 else 0 end) as `" . Metrics::INDEX_BOUNCE_COUNT . "`,
+                  sum(IF(visitAlias.last_idlink_va = log_link_visit_action.idlink_va, 1, 0)) as `" . Metrics::INDEX_PAGE_EXIT_NB_VISITS . "`";
 
-        while ($row = $query->fetch()) {
-            $value = $this->cleanCustomVarValue($row[$valueField]);
+        $select = $this->addMetricsToSelect($select, $metricsConfig);
+
+        $from = array(
+            "log_link_visit_action",
+            array(
+                "table"  => "log_visit",
+                "tableAlias"  => "visitAlias",
+                "joinOn" => "visitAlias.idvisit = log_link_visit_action.idvisit"
+            )
+        );
+
+        $where = "log_link_visit_action.server_time >= ?
+                  AND log_link_visit_action.server_time <= ?
+                  AND log_link_visit_action.idsite = ?
+                  AND log_link_visit_action.$valueField IS NOT NULL";
+
+        $groupBy = "log_link_visit_action.$valueField";
+        $orderBy = "`" . Metrics::INDEX_PAGE_NB_HITS . "` DESC";
+
+        // get query with segmentation
+        $logAggregator = $this->getLogAggregator();
+        $query     = $logAggregator->generateQuery($select, $from, $where, $groupBy, $orderBy);
+        $db        = $logAggregator->getDb();
+        $resultSet = $db->query($query['sql'], $query['bind']);
+
+        while ($row = $resultSet->fetch()) {
+            $value = $this->cleanCustomDimensionValue($row[$valueField]);
 
             $this->dataArray->sumMetricsActions($value, $row);
         }
     }
 
-    protected function cleanCustomVarValue($value)
+    private function addMetricsToSelect($select, $metricsConfig)
     {
-        if (strlen($value)) {
+        if (!empty($metricsConfig)) {
+            foreach ($metricsConfig as $metric => $config) {
+                $select .= ', ' . $config['query'] . " as `" . $metric . "`";
+            }
+        }
+
+        return $select;
+    }
+
+    protected function cleanCustomDimensionValue($value)
+    {
+        if (isset($value) && strlen($value)) {
             return $value;
         }
 

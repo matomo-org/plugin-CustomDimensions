@@ -9,10 +9,12 @@
 namespace Piwik\Plugins\CustomDimensions\Dao;
 
 use Piwik\Common;
+use Piwik\DataAccess\TableMetadata;
 use Piwik\DataTable;
 use Piwik\Db;
-use Piwik\Log;
+use Piwik\DbHelper;
 use Piwik\Plugins\CustomDimensions\CustomDimensions;
+use Exception;
 
 class LogTable
 {
@@ -23,10 +25,6 @@ class LogTable
 
     public function __construct($scope)
     {
-        if (empty($scope) || !in_array($scope, CustomDimensions::getScopes())) {
-            throw new \Exception('Invalid custom dimension scope');
-        }
-
         $this->scope = $scope;
         $this->table = Common::prefixTable($this->getTableNameFromScope($scope));
     }
@@ -41,6 +39,8 @@ class LogTable
                 return 'log_visit';
             case CustomDimensions::SCOPE_CONVERSION:
                 return 'log_conversion';
+            default:
+                throw new Exception('Unsupported scope ' . $scope);
         }
     }
 
@@ -76,7 +76,8 @@ class LogTable
 
     private function getCustomDimensionColumnNames()
     {
-        $columns = Db::getColumnNamesFromTable($this->table);
+        $tableMetadataAccess = new TableMetadata();
+        $columns = $tableMetadataAccess->getColumns($this->table);
 
         $dimensionColumns = array_filter($columns, function ($column) {
             return LogTable::isCustomDimensionColumn($column);
@@ -87,12 +88,22 @@ class LogTable
 
     public static function isCustomDimensionColumn($column)
     {
-        return preg_match('/^custom_dimension_(\d+)$/', $column);
+        return (bool) preg_match('/^custom_dimension_(\d+)$/', '' . $column);
     }
 
-    public static function buildCustomDimensionColumnName($index)
+    public static function buildCustomDimensionColumnName($indexOrDimension)
     {
-        return 'custom_dimension_' . (int) $index;
+        if (is_array($indexOrDimension) && isset($indexOrDimension['index'])) {
+            $indexOrDimension = $indexOrDimension['index'];
+        }
+
+        $indexOrDimension = (int) $indexOrDimension;
+
+        if ($indexOrDimension < 1) {
+            return;
+        }
+
+        return 'custom_dimension_' . (int) $indexOrDimension;
     }
 
     public function removeCustomDimension($index)
@@ -103,22 +114,32 @@ class LogTable
 
         $field = self::buildCustomDimensionColumnName($index);
 
-        $sql = sprintf('ALTER TABLE %s DROP COLUMN %s;', $this->table, $field);
-        Db::exec($sql);
+        $this->dropColumn($field);
     }
 
-    public function addManyCustomDimensions($count)
+    public function addManyCustomDimensions($count, $extraAlter = null)
     {
-        if ($count <= 0) {
+        if ($count < 0) {
             return;
         }
 
-        $numDimensionsInstalled = $this->getNumInstalledIndexes();
-        $total = $numDimensionsInstalled + $count;
+        $indexes = $this->getInstalledIndexes();
+
+        if (empty($indexes)) {
+            $highestIndex = 0;
+        } else {
+            $highestIndex = max($indexes);
+        }
+
+        $total = $highestIndex + $count;
 
         $queries = array();
-        for ($index = $numDimensionsInstalled; $index < $total; $index++) {
+        for ($index = $highestIndex; $index < $total; $index++) {
             $queries[] = $this->getAddColumnQueryToAddCustomDimension($index + 1);
+        }
+
+        if (isset($extraAlter)) {
+            $queries[] = $extraAlter;
         }
 
         if (!empty($queries)) {
@@ -129,29 +150,50 @@ class LogTable
 
     private function getAddColumnQueryToAddCustomDimension($index)
     {
-        $maxLen = CustomDimensions::getMaxLengthCustomDimensions();
-        $field  = self::buildCustomDimensionColumnName($index);
+        $field = self::buildCustomDimensionColumnName($index);
 
-        return sprintf('ADD COLUMN %s VARCHAR(%d) DEFAULT NULL', $field, $maxLen);
+        return sprintf('ADD COLUMN %s VARCHAR(255) DEFAULT NULL', $field);
     }
 
     public function install()
     {
-        try {
-            $numDimensionsInstalled = $this->getNumInstalledIndexes();
-            $numDimensionsToAdd = self::DEFAULT_CUSTOM_DIMENSION_COUNT - $numDimensionsInstalled;
+        $numDimensionsInstalled = $this->getNumInstalledIndexes();
+        $numDimensionsToAdd = self::DEFAULT_CUSTOM_DIMENSION_COUNT - $numDimensionsInstalled;
 
-            $this->addManyCustomDimensions($numDimensionsToAdd);
-
-        } catch (\Exception $e) {
-            Log::error('Failed to add custom dimension: ' . $e->getMessage());
+        $query = null;
+        if ($this->scope === CustomDimensions::SCOPE_VISIT && !$this->hasColumn('last_idlink_va')) {
+            $query = 'ADD COLUMN last_idlink_va BIGINT UNSIGNED DEFAULT NULL';
+        } elseif ($this->scope === CustomDimensions::SCOPE_ACTION && !$this->hasColumn('time_spent')) {
+            $query = 'ADD COLUMN time_spent INT UNSIGNED DEFAULT NULL';
         }
+
+        $this->addManyCustomDimensions($numDimensionsToAdd, $query);
     }
 
     public function uninstall()
     {
         foreach ($this->getInstalledIndexes() as $index) {
             $this->removeCustomDimension($index);
+        }
+
+        if ($this->scope === CustomDimensions::SCOPE_VISIT) {
+            $this->dropColumn('last_idlink_va');
+        } elseif ($this->scope === CustomDimensions::SCOPE_ACTION) {
+            $this->dropColumn('time_spent');
+        }
+    }
+
+    private function hasColumn($field)
+    {
+        $columns = DbHelper::getTableColumns($this->table);
+        return array_key_exists($field, $columns);
+    }
+
+    private function dropColumn($field)
+    {
+        if ($this->hasColumn($field)) {
+            $sql = sprintf('ALTER TABLE %s DROP COLUMN %s;', $this->table, $field);
+            Db::exec($sql);
         }
     }
 

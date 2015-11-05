@@ -10,17 +10,17 @@ namespace Piwik\Plugins\CustomDimensions;
 
 use Piwik\ArchiveProcessor;
 use Piwik\Common;
+use Piwik\Container\StaticContainer;
 use Piwik\DataTable;
 use Piwik\Metrics;
-use Piwik\Piwik;
-use Piwik\Plugin\ViewDataTable;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
 use Piwik\Tracker\Cache;
 use Piwik\Tracker;
+use Piwik\Plugin;
 
-class CustomDimensions extends \Piwik\Plugin
+class CustomDimensions extends Plugin
 {
     const SCOPE_ACTION = 'action';
     const SCOPE_VISIT = 'visit';
@@ -47,19 +47,17 @@ class CustomDimensions extends \Piwik\Plugin
     public function registerEvents()
     {
         return array(
-            'API.getSegmentDimensionMetadata' => 'getSegmentsMetadata',
-            'Live.getAllVisitorDetails'       => 'extendVisitorDetails',
-            'Tracker.Cache.getSiteAttributes' => 'addCustomDimensionsAttributes',
-            'SitesManager.deleteSite.end'     => 'deleteCustomDimensionDefinitionsForSite',
-            'AssetManager.getJavaScriptFiles' => 'getJsFiles',
-            'AssetManager.getStylesheetFiles' => 'getStylesheetFiles',
+            'API.getSegmentDimensionMetadata'  => 'getSegmentsMetadata',
+            'Live.getAllVisitorDetails'        => 'extendVisitorDetails',
+            'Tracker.Cache.getSiteAttributes'  => 'addCustomDimensionsAttributes',
+            'SitesManager.deleteSite.end'      => 'deleteCustomDimensionDefinitionsForSite',
+            'AssetManager.getJavaScriptFiles'  => 'getJsFiles',
+            'AssetManager.getStylesheetFiles'  => 'getStylesheetFiles',
             'Translate.getClientSideTranslationKeys' => 'getClientSideTranslationKeys',
-            'ViewDataTable.configure' => 'configureViewDataTable',
-            'API.getReportMetadata' => 'addReportMetadata',
-            'Goals.getReportsWithGoalMetrics' => 'getReportsWithGoalMetrics',
+            'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics',
             'Tracker.newConversionInformation' => 'addConversionInformation',
-            'Tracker.getVisitFieldsToPersist' => 'addVisitFieldsToPersist',
-            'Tracker.setTrackerCacheGeneral' => 'setTrackerCacheGeneral',
+            'Tracker.getVisitFieldsToPersist'  => 'addVisitFieldsToPersist',
+            'Tracker.setTrackerCacheGeneral'   => 'setTrackerCacheGeneral',
         );
     }
 
@@ -76,7 +74,9 @@ class CustomDimensions extends \Piwik\Plugin
 
     public function getStylesheetFiles(&$stylesheets)
     {
+        $stylesheets[] = "plugins/CustomDimensions/angularjs/manage/edit.directive.less";
         $stylesheets[] = "plugins/CustomDimensions/angularjs/manage/list.directive.less";
+        $stylesheets[] = "plugins/CustomDimensions/stylesheets/reports.less";
     }
 
     public function install()
@@ -88,6 +88,8 @@ class CustomDimensions extends \Piwik\Plugin
             $tracking = new Dao\LogTable($scope);
             $tracking->install();
         }
+
+        Cache::clearCacheGeneral();
     }
 
     public function uninstall()
@@ -99,36 +101,46 @@ class CustomDimensions extends \Piwik\Plugin
             $tracking = new Dao\LogTable($scope);
             $tracking->uninstall();
         }
+
+        Cache::clearCacheGeneral();
     }
 
     public function extendVisitorDetails(&$visitor, $details)
     {
+        if (empty($visitor['idSite'])) {
+            return;
+        }
+
         $idSite = $visitor['idSite'];
         $dimensions = $this->configuration->getCustomDimensionsHavingScope($idSite, self::SCOPE_VISIT);
 
-        foreach ($dimensions as $dimension) {
-            $column = 'dimension' . $dimension['idcustomdimension'];
-            $visitor[$column] = $details[$column];
+        $visit  = new Visitor($details);
+        $values = $visit->getCustomDimensionValues($dimensions);
+
+        foreach ($values as $field => $value) {
+            $visitor[$field] = $value;
         }
     }
 
     public function addCustomDimensionsAttributes(&$content, $idSite)
     {
-        $content['custom_dimensions'] = $this->configuration->getCustomDimensionsForSite($idSite);
+        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        $active = array();
+
+        foreach ($dimensions as $dimension) {
+            if (!$dimension['active']) {
+                continue;
+            }
+
+            $active[] = $dimension;
+        }
+
+        $content['custom_dimensions'] = $active;
     }
 
     public function deleteCustomDimensionDefinitionsForSite($idSite)
     {
         $this->configuration->deleteConfigurationsForSite($idSite);
-    }
-
-    /**
-     * There are also some hardcoded places in JavaScript
-     * @return int
-     */
-    public static function getMaxLengthCustomDimensions()
-    {
-        return 255;
     }
 
     public function getSegmentsMetadata(&$segments, $idSites)
@@ -148,20 +160,26 @@ class CustomDimensions extends \Piwik\Plugin
         $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
 
         foreach ($dimensions as $dimension) {
+            if (!$dimension['active']) {
+                continue;
+            }
+
             if ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
-                $table = 'log_link_visit_action';
+                $table    = 'log_link_visit_action';
+                $category = 'General_Actions';
             } elseif ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
-                $table = 'log_visit';
+                $table    = 'log_visit';
+                $category = 'General_Visit';
             } else {
                 continue;
             }
 
             $segments[] = array(
                 'type'       => 'dimension',
-                'category'   => 'CustomDimensions_CustomDimensions',
+                'category'   => $category,
                 'name'       => $dimension['name'],
-                'segment'    => 'dimension' . $dimension['idcustomdimension'],
-                'sqlSegment' => $table . '.' . LogTable::buildCustomDimensionColumnName($dimension['index']),
+                'segment'    => CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension),
+                'sqlSegment' => $table . '.' . LogTable::buildCustomDimensionColumnName($dimension),
             );
         }
     }
@@ -169,47 +187,37 @@ class CustomDimensions extends \Piwik\Plugin
     public function getClientSideTranslationKeys(&$translationKeys)
     {
         $translationKeys[] = 'General_Loading';
-    }
+        $translationKeys[] = 'General_Id';
+        $translationKeys[] = 'General_Name';
+        $translationKeys[] = 'General_Action';
+        $translationKeys[] = 'General_Cancel';
+        $translationKeys[] = 'CorePluginsAdmin_Active';
+        $translationKeys[] = 'Actions_ColumnPageURL';
+        $translationKeys[] = 'Goals_PageTitle';
 
-    public function configureViewDataTable(ViewDataTable $view)
-    {
-        if ($this->pluginName == $view->requestConfig->getApiModuleToRequest()) {
-            $view->config->addTranslations(Metrics::getDefaultMetricTranslations());
-        }
-    }
-
-    public function addReportMetadata(&$availableReports, $parameters)
-    {
-        $idSites = $parameters['idSites'];
-
-        if (is_array($idSites) && count($idSites) !== 1) {
-            return;
-        }
-
-        $idSite = array_shift($idSites);
-
-        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
-
-        foreach ($dimensions as $dimension) {
-            $availableReports[] = array(
-                'category' => 'CustomDimensions_CustomDimensions',
-                'name'     => $dimension['name'],
-                'module'   => $this->pluginName,
-                'action'   => 'getCustomDimension',
-                'parameters' => array('idDimension' => $dimension['idcustomdimension']),
-                'dimension' => 'dimension' . $dimension['idcustomdimension'],
-                'order' => $dimension['idcustomdimension']
-            );
+        // we simply make all translations available via JS as > 90% of them are used in JS anyway
+        $translator = StaticContainer::get('Piwik\Translation\Translator');
+        $t = $translator->getAllTranslations();
+        foreach (array_keys($t[$this->pluginName]) as $key) {
+            $translationKeys[] = $this->pluginName . '_' . $key;
         }
     }
 
     public function getReportsWithGoalMetrics(&$reportsWithGoals)
     {
-        $idSite = Common::getRequestVar('idSite', null, 'int');
+        $idSite = Common::getRequestVar('idSite', 0, 'int');
+
+        if ($idSite < 1) {
+            return;
+        }
 
         $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
 
         foreach ($dimensions as $dimension) {
+            if (!$dimension['active']) {
+                continue;
+            }
+
             if ($dimension['scope'] !== self::SCOPE_VISIT) {
                 continue;
             }
@@ -226,11 +234,19 @@ class CustomDimensions extends \Piwik\Plugin
 
     public function addConversionInformation(&$conversion, $visitInformation, Tracker\Request $request)
     {
-        $customDimensions = CustomDimensionsRequestProcessor::getCachedCustomDimensions($request);
+        $dimensions = CustomDimensionsRequestProcessor::getCachedCustomDimensions($request);
 
-        foreach ($customDimensions as $dimension) {
-            if ($dimension['scope'] === self::SCOPE_VISIT) {
-                $field = LogTable::buildCustomDimensionColumnName($dimension['index']);
+        // we copy all visit custom dimensions, but only if the index also exists in the conversion table
+        // to not fail while conversion custom dimensions are added
+        $conversionIndexes = $this->getCachedInstalledIndexesForScope(self::SCOPE_CONVERSION);
+        $conversionIndexes = array_map(function ($index) {
+            return (int) $index; // make sure we work with integers
+        }, $conversionIndexes);
+
+        foreach ($dimensions as $dimension) {
+            $index = (int) $dimension['index'];
+            if ($dimension['scope'] === self::SCOPE_VISIT && in_array($index, $conversionIndexes)) {
+                $field = LogTable::buildCustomDimensionColumnName($dimension);
 
                 if (array_key_exists($field, $visitInformation)) {
                     $conversion[$field] = $visitInformation[$field];
@@ -241,18 +257,25 @@ class CustomDimensions extends \Piwik\Plugin
 
     public function addVisitFieldsToPersist(&$fields)
     {
-        $cache = Cache::getCacheGeneral();
-        $key = 'custom_dimension_indexes_installed_' . self::SCOPE_VISIT;
+        $indexes = $this->getCachedInstalledIndexesForScope(self::SCOPE_VISIT);
 
-        if (empty($cache[$key])) {
-            return;
-        }
-
-        $indexes = $cache[$key];
+        $fields[] = 'last_idlink_va';
 
         foreach ($indexes as $index) {
             $fields[] = LogTable::buildCustomDimensionColumnName($index);
         }
+    }
+
+    public function getCachedInstalledIndexesForScope($scope)
+    {
+        $cache = Cache::getCacheGeneral();
+        $key = 'custom_dimension_indexes_installed_' . $scope;
+
+        if (empty($cache[$key])) {
+            return array();
+        }
+
+        return $cache[$key];
     }
 
     public function setTrackerCacheGeneral(&$cacheContent)
@@ -265,6 +288,15 @@ class CustomDimensions extends \Piwik\Plugin
 
     public static function getScopes()
     {
-        return array(self::SCOPE_ACTION, self::SCOPE_VISIT, self::SCOPE_CONVERSION);
+        return array(self::SCOPE_VISIT, self::SCOPE_ACTION, self::SCOPE_CONVERSION);
+    }
+
+    /**
+     * These are public scopes that are actually visible to the user, scope Conversion
+     * is not really directly visible to the user and a user cannot manage/configure dimensions in scope conversion.
+     */
+    public static function getPublicScopes()
+    {
+        return array(CustomDimensions::SCOPE_VISIT, CustomDimensions::SCOPE_ACTION);
     }
 }

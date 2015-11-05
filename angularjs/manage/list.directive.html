@@ -1,13 +1,8 @@
 <div>
-    <h2 piwik-enriched-headline>Custom Dimensions</h2>
+    <h2 piwik-enriched-headline>{{ 'CustomDimensions_CustomDimensions'|translate }}</h2>
 
-    By creating <a href="#">Custom Dimensions</a> you can track any custom foo bar lorem ipsum.
-    They are similar to <a href="#">Custom Variables</a> but are different in foo bar.
-
-    <br />
-    <br />
-
-    <div class="alert alert-info">Custom dimensions cannot be deleted, only deactivated...</div>
+    <p ng-bind-html="'CustomDimensions_CustomDimensionsIntro'|translate:'&lt;a>':'&lt;/a>'">
+    </p>
 
     <p ng-show="dimensionsList.model.isLoading">
         <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
@@ -16,33 +11,39 @@
     <div ng-repeat="scope in dimensionsList.model.availableScopes" ng-show="!dimensionsList.model.isLoading">
         <h2 class="secondary"> {{ scope.name|ucfirst }} Dimensions </h2>
 
-        <p>Custom dimensions in scope {{ scope.name|ucfirst }} are foo bar lorem ipsum.</p>
+        <p>
+            {{ 'CustomDimensions_ScopeDescription'+(scope.name|ucfirst) |translate }}
+        </p>
 
         <table class="dataTable entityTable">
             <thead>
             <tr>
-                <th class="index">Index</th>
-                <th class="name">Name</th>
-                <th class="extractions">Extractions</th>
-                <th class="active">Active</th>
-                <th class="action">Action</th>
+                <th class="index">{{ 'General_Id'|translate }}</th>
+                <th class="name">{{ 'General_Name'|translate }}</th>
+                <th class="extractions">{{ 'CustomDimensions_Extractions'|translate }}</th>
+                <th class="active">{{ 'CorePluginsAdmin_Active'|translate }}</th>
+                <th class="action">{{ 'General_Action'|translate }}</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-show="scope.numSlotsUsed == 0 && !dimensionsList.model.isLoading">
-                <td colspan="5">No Custom Dimension configured yet, configure one now.</td>
+                <td colspan="5">{{ 'CustomDimensions_NoCustomDimensionConfigured'|translate }}</td>
             </tr>
-            <tr ng-repeat="customDimensions in dimensionsList.model.customDimensions|filter:{scope: scope.name}|orderBy:'idcustomdimension'">
-                <td class="index">{{ customDimensions.idcustomdimension }}</td>
-                <td class="name">{{ customDimensions.name }}</td>
-                <td class="extractions"><span ng-class="{'icon-ok': customDimensions.extractions[0].pattern}"></span></td>
-                <td class="active"><span ng-class="{'icon-ok': customDimensions.active}"></span></td>
-                <td class="action"><a ng-href="#?id={{ customDimensions.idcustomdimension }}&scope={{ scope.name }}" class="icon-edit" ng-click="addCustomVar"></a></td>
+            <tr ng-repeat="customDimension in dimensionsList.model.customDimensions|filter:{scope: scope.name}|orderBy:'idcustomdimension'"
+                class="customdimension" ng-class="customDimension.idcustomdimension">
+                <td class="index">{{ customDimension.idcustomdimension }}</td>
+                <td class="name">{{ customDimension.name }}</td>
+                <td class="extractions"><span ng-class="{'icon-ok': customDimension.extractions[0].pattern}"></span></td>
+                <td class="active"><span ng-class="{'icon-ok': customDimension.active}"></span></td>
+                <td class="action"><a ng-href="#?idDimension={{ customDimension.idcustomdimension }}&scope={{ scope.name }}" class="icon-edit" ng-click="addCustomVar"></a></td>
             </tr>
             </tbody>
         </table>
         <p>
-            <a class="btn btn-lg btn-flat" ng-show="!dimensionsList.model.isLoading" value="" ng-href="#?id=0&scope={{ scope.name }}" ng-class="{'disabled': !scope.numSlotsLeft}"><span class="icon-add"></span> Configure a new dimension <span class="info">({{ scope.numSlotsLeft }} of {{ scope.numSlotsAvailable}} dimensions left)</span></a>
+            <a class="btn btn-lg btn-flat configure {{scope.name}}" ng-show="!dimensionsList.model.isLoading"
+               value="" ng-href="#?idDimension=0&scope={{ scope.name }}" ng-class="{'disabled': !scope.numSlotsLeft}"
+            ><span class="icon-add"></span> {{ 'CustomDimensions_ConfigureNewDimension'|translate }}
+                <span class="info">({{ 'CustomDimensions_XofYLeft'|translate:scope.numSlotsLeft:scope.numSlotsAvailable }})</span></a>
         </p>
     </div>
 </div>

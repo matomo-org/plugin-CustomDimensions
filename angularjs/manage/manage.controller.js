@@ -26,9 +26,9 @@
 
         function initState() {
             var $search = $location.search();
-            if ('id' in $search) {
+            if ('idDimension' in $search) {
                 self.editMode = true;
-                self.dimensionId = parseInt($search['id'], 10);
+                self.dimensionId = parseInt($search['idDimension'], 10);
                 self.dimensionScope = getValidDimensionScope($search['scope']);
             } else {
                 self.editMode = false;
