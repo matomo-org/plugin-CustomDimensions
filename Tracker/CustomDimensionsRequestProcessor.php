@@ -11,13 +11,14 @@ namespace Piwik\Plugins\CustomDimensions\Tracker;
 use Piwik\Common;
 use Piwik\Plugins\CustomDimensions\CustomDimensions;
 use Piwik\Plugins\CustomDimensions\Dao;
+use Piwik\Plugins\CustomDimensions\Dimension\Extraction;
 use Piwik\Tracker\Action;
 use Piwik\Tracker\Cache;
+use Piwik\Tracker\Model;
 use Piwik\Tracker\Request;
 use Piwik\Tracker\RequestProcessor;
 use Piwik\Tracker\Visit\VisitProperties;
 use Piwik\Url;
-use Piwik\UrlHelper;
 
 /**
  * Handles tracking of custom dimensions
@@ -25,55 +26,139 @@ use Piwik\UrlHelper;
 class CustomDimensionsRequestProcessor extends RequestProcessor
 {
 
+    public function recordLogs(VisitProperties $visitProperties, Request $request)
+    {
+        $model = new Model();
+
+        /** @var Action $action */
+        $action = $request->getMetadata('Actions', 'action');
+
+        if (!empty($action)) {
+            $idLinkVisit = $action->getIdLinkVisitAction();
+            $idVisit     = $visitProperties->getProperty('idvisit');
+            $model->updateVisit($request->getIdSite(), $idVisit, array('last_idlink_va' => $idLinkVisit));
+        }
+
+        $lastIdLinkVa = $visitProperties->getProperty('last_idlink_va');
+        $timeSpent    = $visitProperties->getProperty('time_spent_ref_action');
+
+        if (!empty($lastIdLinkVa) && $timeSpent > 0) {
+            $model->updateAction($lastIdLinkVa, array('time_spent' => $timeSpent));
+        }
+    }
+
+    public function onNewVisit(VisitProperties $visitProperties, Request $request)
+    {
+        $dimensionsToSet = $this->getCustomDimensionsInScope(CustomDimensions::SCOPE_VISIT, $request);
+
+        foreach ($dimensionsToSet as $field => $value) {
+            $visitProperties->setProperty($field, $value);
+        }
+    }
+
     public function onExistingVisit(&$valuesToUpdate, VisitProperties $visitProperties, Request $request)
     {
-        $properties = $visitProperties->getProperties();
+        $dimensionsToSet = $this->getCustomDimensionsInScope(CustomDimensions::SCOPE_VISIT, $request);
 
-        foreach ($properties as $key => $property) {
-            if (Dao\LogTable::isCustomDimensionColumn($key)) {
-                $valuesToUpdate[$key] = $properties[$key];
-            }
+        foreach ($dimensionsToSet as $field => $value) {
+            $valuesToUpdate[$field] = $value;
+            $visitProperties->setProperty($field, $value);
         }
     }
 
     public function afterRequestProcessed(VisitProperties $visitProperties, Request $request)
     {
-        $customDimensions = self::getCachedCustomDimensions($request);
+        $action = $request->getMetadata('Actions', 'action');
+
+        if (empty($action) || !($action instanceof Action)) {
+            return;
+        }
+
+        $dimensionsToSet = $this->getCustomDimensionsInScope(CustomDimensions::SCOPE_ACTION, $request);
+
+        foreach ($dimensionsToSet as $field => $value) {
+            $action->setCustomField($field, $value);
+        }
+    }
+
+    private function getCustomDimensionsInScope($scope, Request $request)
+    {
+        $dimensions = self::getCachedCustomDimensions($request);
         $params = $request->getParams();
 
-        foreach ($customDimensions as $customDimension) {
-            $scope = $customDimension['scope'];
-            $field = 'dimension' . $customDimension['idcustomdimension'];
-            $dbField = Dao\LogTable::buildCustomDimensionColumnName($customDimension['index']);
+        $values = array();
 
-            $value = Common::getRequestVar($field, '', 'string', $params);
-
-            if ($value !== '') {
-                $this->saveValueInCorrectScope($scope, $dbField, $value, $visitProperties, $request);
+        foreach ($dimensions as $dimension) {
+            if ($dimension['scope'] !== $scope) {
                 continue;
             }
 
-            $extractions = $customDimension['extractions'];
+            $field = self::buildCustomDimensionTrackingApiName($dimension);
+            $dbField = Dao\LogTable::buildCustomDimensionColumnName($dimension);
+
+            $value = Common::getRequestVar($field, '', 'string', $params);
+            if ($value !== '') {
+                $values[$dbField] = $value;
+                continue;
+            }
+
+            $extractions = $dimension['extractions'];
             if (is_array($extractions)) {
                 foreach ($extractions as $extraction) {
                     if (!array_key_exists('dimension', $extraction) || !array_key_exists('pattern', $extraction)) {
                         continue;
                     }
 
-                    $value = $this->getValueForDimension($request, $extraction['dimension']);
-                    $value = $this->extractValue($value, $extraction['dimension'], $extraction['pattern']);
+                    $extraction = new Extraction($extraction['dimension'], $extraction['pattern']);
+                    $value = $extraction->extract($request);
 
                     if (!isset($value) || '' === $value) {
                         continue;
                     }
 
-                    $this->saveValueInCorrectScope($scope, $dbField, $value, $visitProperties, $request);
+                    $values[$dbField] = $value;
                     break;
                 }
             }
         }
+
+        return $values;
     }
 
+    public static function buildCustomDimensionTrackingApiName($idDimensionOrDimension)
+    {
+        if (is_array($idDimensionOrDimension) && isset($idDimensionOrDimension['idcustomdimension'])) {
+            $idDimensionOrDimension = $idDimensionOrDimension['idcustomdimension'];
+        }
+
+        $idDimensionOrDimension = (int) $idDimensionOrDimension;
+
+        if ($idDimensionOrDimension < 1) {
+            return;
+        }
+
+        return 'dimension' . (int) $idDimensionOrDimension;
+    }
+
+    public static function getCachedCustomDimensionIndexes($scope)
+    {
+        $cache = Cache::getCacheGeneral();
+        $key = 'custom_dimension_indexes_installed_' . $scope;
+
+        if (empty($cache[$key])) {
+            return array();
+        }
+
+        return $cache[$key];
+    }
+
+    /**
+     * Get Cached Custom Dimensions during tracking. Returns only active custom dimensions.
+     *
+     * @param Request $request
+     * @return array
+     * @throws \Piwik\Exception\UnexpectedWebsiteFoundException
+     */
     public static function getCachedCustomDimensions(Request $request)
     {
         $idSite = $request->getIdSite();
@@ -87,56 +172,4 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
         return $cache['custom_dimensions'];
     }
 
-    private function saveValueInCorrectScope($scope, $dbField, $value, VisitProperties $visitProperties, Request $request)
-    {
-        if ($scope === CustomDimensions::SCOPE_VISIT) {
-            $visitProperties->setProperty($dbField, $value);
-        } elseif ($scope === CustomDimensions::SCOPE_ACTION) {
-            /** @var Action $action */
-            $action = $request->getMetadata('Actions', 'action');
-            $action->setCustomField($dbField, $value);
-        }
-    }
-
-    private function extractValue($dimensionValue, $dimensionName, $pattern)
-    {
-        if (!isset($dimensionValue) || '' === $dimensionValue) {
-            return null;
-        }
-
-        if ($dimensionName === 'urlparam') {
-            $query  = Url::getQueryStringFromUrl($dimensionValue);
-            $params = UrlHelper::getArrayFromQueryString($query);
-
-            if (array_key_exists($pattern, $params)) {
-                return $params[$pattern];
-            }
-        } elseif (preg_match('/' . str_replace('/', '\/', $pattern) . '/', (string) $dimensionValue, $matches)) {
-            // we could improve performance here I reckon by combining all patterns of all configs see eg http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html
-
-            if (array_key_exists(1, $matches)) {
-                return $matches[1];
-            }
-        }
-    }
-
-    private function getValueForDimension(Request $request, $requestedDimension)
-    {
-        /** @var Action $action */
-        $action = $request->getMetadata('Actions', 'action');
-
-        if (in_array($requestedDimension, array('url', 'urlparam'))) {
-            if (!empty($action)) {
-                $dimension = $action->getActionUrlRaw();
-            } else {
-                $dimension = $request->getParam('url');
-            }
-        } elseif ($requestedDimension === 'action_name' && !empty($action)) {
-            $dimension = $action->getActionName();
-        } else {
-            $dimension = $request->getParam($requestedDimension);
-        }
-
-        return $dimension;
-    }
 }

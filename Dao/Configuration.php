@@ -29,68 +29,6 @@ class Configuration
         $this->tableNamePrefixed = Common::prefixTable($this->tableName);
     }
 
-    public function getCustomDimensionsForSite($idSite)
-    {
-        $configs = $this->db->fetchAll("SELECT * FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
-
-        foreach ($configs as $index => $config) {
-            $configs[$index]['extractions'] = $this->decodeExtractions($configs[$index]['extractions']);
-            $configs[$index]['active'] = (bool) $configs[$index]['active'];
-        }
-
-        return $configs;
-    }
-
-    public function getCustomDimension($idSite, $idCustomDimension)
-    {
-        $query = "SELECT * FROM " . $this->tableNamePrefixed . " WHERE idcustomdimension = ? and idsite = ?";
-        $config = $this->db->fetchRow($query, array($idCustomDimension, $idSite));
-
-        $config['extractions'] = $this->decodeExtractions($config['extractions']);
-        $config['active'] = (bool) $config['active'];
-
-        return $config;
-    }
-
-    public function getCustomDimensionsHavingScope($idSite, $scope)
-    {
-        $query= "SELECT * FROM " . $this->tableNamePrefixed . " WHERE idsite = ? and scope = ?";
-        $configs = $this->db->fetchAll($query, array($idSite, $scope));
-
-        return $configs;
-    }
-
-    public function getCustomDimensionsHavingIndex($scope, $index)
-    {
-        $query= "SELECT * FROM " . $this->tableNamePrefixed . " WHERE `index` = ? and scope = ?";
-        $configs = $this->db->fetchAll($query, array($index, $scope));
-
-        return $configs;
-    }
-
-    public function deleteConfigurationsForSite($idSite)
-    {
-        $this->db->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
-    }
-
-    public function deleteConfigurationsForIndex($index)
-    {
-        $this->db->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE `index` = ?", $index);
-    }
-
-    private function getNextCustomDimensionIdForSite($idSite)
-    {
-        $nextId = $this->db->fetchOne("SELECT max(idcustomdimension) FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
-
-        if (empty($nextId)) {
-            $nextId = 1;
-        } else {
-            $nextId = (int) $nextId + 1;
-        }
-
-        return $nextId;
-    }
-
     public function configureNewDimension($idSite, $name, $scope, $index, $active, $extractions)
     {
         $extractions = $this->encodeExtractions($extractions);
@@ -109,9 +47,7 @@ class Configuration
 
         $this->db->insert($this->tableNamePrefixed, $config);
 
-        $idDimension = $this->db->lastInsertId();
-
-        return $idDimension;
+        return $id;
     }
 
     public function configureExistingDimension($idCustomDimension, $idSite, $name, $active, $extractions)
@@ -127,6 +63,89 @@ class Configuration
             ),
             "idcustomdimension = " . (int) $idCustomDimension . " and idsite = " . (int) $idSite
         );
+    }
+
+    public function getCustomDimensionsForSite($idSite)
+    {
+        $query = "SELECT * FROM " . $this->tableNamePrefixed . " WHERE idsite = ?";
+        return $this->fetchAllDimensionsEnriched($query, array($idSite));
+    }
+
+    public function getCustomDimension($idDimension, $idSite)
+    {
+        $query = "SELECT * FROM " . $this->tableNamePrefixed . " WHERE idcustomdimension = ? and idsite = ?";
+        $dimension = $this->db->fetchRow($query, array($idDimension, $idSite));
+        $dimension = $this->enrichDimension($dimension);
+
+        return $dimension;
+    }
+
+    public function getCustomDimensionsHavingScope($idSite, $scope)
+    {
+        $query= "SELECT * FROM " . $this->tableNamePrefixed . " WHERE idsite = ? and scope = ?";
+        return $this->fetchAllDimensionsEnriched($query, array($idSite, $scope));
+    }
+
+    public function getCustomDimensionsHavingIndex($scope, $index)
+    {
+        $query= "SELECT * FROM " . $this->tableNamePrefixed . " WHERE `index` = ? and scope = ?";
+        return $this->fetchAllDimensionsEnriched($query, array($index, $scope));
+    }
+
+    public function deleteConfigurationsForSite($idSite)
+    {
+        $this->db->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
+    }
+
+    public function deleteConfigurationsForIndex($index)
+    {
+        $this->db->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE `index` = ?", $index);
+    }
+
+    private function fetchAllDimensionsEnriched($sql, $bind)
+    {
+        $dimensions = $this->db->fetchAll($sql, $bind);
+        $dimensions = $this->enrichDimensions($dimensions);
+
+        return $dimensions;
+    }
+
+    private function enrichDimensions($dimensions)
+    {
+        if (empty($dimensions)) {
+            return array();
+        }
+
+        foreach ($dimensions as $index => $dimension) {
+            $dimensions[$index] = $this->enrichDimension($dimension);
+        }
+
+        return $dimensions;
+    }
+
+    private function enrichDimension($dimension)
+    {
+        if (empty($dimension)) {
+            return $dimension;
+        }
+
+        $dimension['extractions'] = $this->decodeExtractions($dimension['extractions']);
+        $dimension['active'] = (bool) $dimension['active'];
+
+        return $dimension;
+    }
+
+    private function getNextCustomDimensionIdForSite($idSite)
+    {
+        $nextId = $this->db->fetchOne("SELECT max(idcustomdimension) FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
+
+        if (empty($nextId)) {
+            $nextId = 1;
+        } else {
+            $nextId = (int) $nextId + 1;
+        }
+
+        return $nextId;
     }
 
     public function install()
@@ -151,6 +170,10 @@ class Configuration
 
     private function encodeExtractions($extractions)
     {
+        if (empty($extractions) || !is_array($extractions)) {
+            $extractions = array();
+        }
+
         return json_encode($extractions);
     }
 

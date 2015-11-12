@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<result>
+	<website>Piwik test</website>
+	<prettyDate>2013</prettyDate>
+	<metadata>
+		<category>Actions</category>
+		<name>MyName3</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>3</idDimension>
+		</parameters>
+		<dimension>MyName3</dimension>
+		<metrics>
+			<nb_hits>Actions</nb_hits>
+			<nb_visits>Unique Actions</nb_visits>
+		</metrics>
+		<metricsDocumentation>
+			<nb_hits>The number of times this page was visited.</nb_hits>
+			<nb_visits>If a visitor comes to your website for the first time or if he visits a page more than 30 minutes after his last page view, this will be recorded as a new visit.</nb_visits>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
+			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<exit_rate>Exit rate</exit_rate>
+			<avg_time_generation>Avg. generation time</avg_time_generation>
+		</processedMetrics>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=year&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=year&amp;date=2004-01-01,2013-12-31</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--3</uniqueId>
+	</metadata>
+	<columns>
+		<label>MyName3</label>
+		<nb_hits>Actions</nb_hits>
+		<nb_visits>Unique Actions</nb_visits>
+		<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+		<bounce_rate>Bounce Rate</bounce_rate>
+		<exit_rate>Exit rate</exit_rate>
+		<avg_time_generation>Avg. generation time</avg_time_generation>
+	</columns>
+	<reportData>
+		<row>
+			<label>en</label>
+			<nb_visits>2</nb_visits>
+			<nb_hits>2</nb_hits>
+			<bounce_rate>50%</bounce_rate>
+			<avg_time_on_dimension>00:03:00</avg_time_on_dimension>
+			<exit_rate>50%</exit_rate>
+			<avg_time_generation>0.12s</avg_time_generation>
+		</row>
+		<row>
+			<label>value3</label>
+			<nb_visits>1</nb_visits>
+			<nb_hits>1</nb_hits>
+			<bounce_rate>0%</bounce_rate>
+			<avg_time_on_dimension>00:06:00</avg_time_on_dimension>
+			<exit_rate>0%</exit_rate>
+			<avg_time_generation>0.42s</avg_time_generation>
+		</row>
+		<row>
+			<label>value3 5</label>
+			<nb_visits>1</nb_visits>
+			<nb_hits>1</nb_hits>
+			<bounce_rate>100%</bounce_rate>
+			<avg_time_on_dimension>00:00:00</avg_time_on_dimension>
+			<exit_rate>100%</exit_rate>
+			<avg_time_generation>1.03s</avg_time_generation>
+		</row>
+		<row>
+			<label>value5 3</label>
+			<nb_visits>1</nb_visits>
+			<nb_hits>1</nb_hits>
+			<bounce_rate>0%</bounce_rate>
+			<avg_time_on_dimension>00:00:00</avg_time_on_dimension>
+			<exit_rate>100%</exit_rate>
+			<avg_time_generation>0.34s</avg_time_generation>
+		</row>
+	</reportData>
+	<reportMetadata>
+		<row>
+			<segment>dimension3==en</segment>
+		</row>
+		<row>
+			<segment>dimension3==value3</segment>
+		</row>
+		<row>
+			<segment>dimension3==value3+5</segment>
+		</row>
+		<row>
+			<segment>dimension3==value5+3</segment>
+		</row>
+	</reportMetadata>
+	<reportTotal>
+		<nb_visits>5</nb_visits>
+		<nb_hits>5</nb_hits>
+		<bounce_count>2</bounce_count>
+		<exit_nb_visits>3</exit_nb_visits>
+	</reportTotal>
+</result>

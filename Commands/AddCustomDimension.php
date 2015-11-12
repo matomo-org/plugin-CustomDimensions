@@ -28,7 +28,7 @@ class AddCustomDimension extends ConsoleCommand
         $this->setDescription('Add new Custom Dimension available.');
         $this->setHelp("Example:
 ./console customdimensions:add-custom-dimension --scope=action --count=10
-=> Will add 10 new custom dimensions in scope 'action'.
+=> Will add 10 new Custom Dimensions in scope 'action'.
 ");
 
         $description = sprintf('The scope of the Custom Dimension to add, either "%s" or "%s"', CustomDimensions::SCOPE_VISIT, CustomDimensions::SCOPE_ACTION);

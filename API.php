@@ -8,29 +8,44 @@
  */
 namespace Piwik\Plugins\CustomDimensions;
 
+use Piwik\DataTable\Row;
+
 use Piwik\Archive;
 use Piwik\DataTable;
 use Piwik\Metrics;
 use Piwik\Piwik;
-use Exception;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
+use Piwik\Plugins\CustomDimensions\Dimension\Active;
+use Piwik\Plugins\CustomDimensions\Dimension\Dimension;
+use Piwik\Plugins\CustomDimensions\Dimension\Extraction;
+use Piwik\Plugins\CustomDimensions\Dimension\Extractions;
+use Piwik\Plugins\CustomDimensions\Dimension\Index;
+use Piwik\Plugins\CustomDimensions\Dimension\Name;
+use Piwik\Plugins\CustomDimensions\Dimension\Scope;
+use Piwik\Tracker\Cache;
 
 /**
  * The Custom Dimensions API lets you manage and access reports for your
  * <a href='http://piwik.org/docs/custom-dimensions/' rel='noreferrer' target='_blank'>Custom Dimensions</a>.
  *
- * @method static \Piwik\Plugins\CustomDimensions\API getInstance()
+ * @method static API getInstance()
  */
 class API extends \Piwik\Plugin\API
 {
 
     public function getCustomDimension($idDimension, $idSite, $period, $date, $segment = false)
     {
+        Piwik::checkUserHasViewAccess($idSite);
+
+        $dimension = new Dimension($idDimension, $idSite);
+        $dimension->checkActive();
+
         $record = Archiver::buildRecordNameForCustomDimensionId($idDimension);
 
         $dataTable = Archive::createDataTableFromArchive($record, $idSite, $period, $date, $segment);
-        $dataTable->queueFilter('ColumnDelete', 'nb_uniq_visitors');
+        $dataTable->filter('Piwik\Plugins\CustomDimensions\DataTable\Filter\RemoveUserIfNeeded', array($idSite, $period, $date));
+        $dataTable->queueFilter('Piwik\Plugins\CustomDimensions\DataTable\Filter\AddSegmentMetadata', array($idDimension));
 
         return $dataTable;
     }
@@ -50,67 +65,51 @@ class API extends \Piwik\Plugin\API
 
         $this->validateCustomDimensionConfig($name, $active, $extractions);
 
+        $scopeCheck = new Scope($scope);
+        $scopeCheck->check();
+
+        $index = new Index();
+        $index = $index->getNextIndex($idSite, $scope);
+
         $configuration = $this->getConfiguration();
+        $idDimension   = $configuration->configureNewDimension($idSite, $name, $scope, $index, $active, $extractions);
 
-        $indexes = $this->getTracking($scope)->getInstalledIndexes();
-        $configs = $configuration->getCustomDimensionsHavingScope($idSite, $scope);
-        foreach ($configs as $config) {
-            $key = array_search($config['index'], $indexes);
-            if ($key !== false) {
-                unset($indexes[$key]);
-            }
-        }
+        Cache::clearWebsiteCache($idSite);
+        Cache::clearCacheGeneral();
 
-        if (empty($indexes)) {
-            throw new Exception('No slot left to create a new custom dimension. To create a new slot execute the command ...');
-        }
+        return $idDimension;
+    }
 
-        $index = array_shift($indexes);
+    public function configureExistingCustomDimension($idDimension, $idSite, $name, $active, $extractions = array())
+    {
+        Piwik::checkUserHasAdminAccess($idSite);
 
-        $configs = $configuration->configureNewDimension($idSite, $name, $scope, $index, $active, $extractions);
+        $dimension = new Dimension($idDimension, $idSite);
+        $dimension->checkExists();
 
-        return $configs;
+        $this->validateCustomDimensionConfig($name, $active, $extractions);
+
+        $this->getConfiguration()->configureExistingDimension($idDimension, $idSite, $name, $active, $extractions);
+
+        Cache::clearWebsiteCache($idSite);
+        Cache::clearCacheGeneral();
     }
 
     private function validateCustomDimensionConfig($name, $active, $extractions)
     {
-        if (!preg_match('/[A-Za-z\s\d-_]{1,255}/', $name)) {
-            throw new Exception('Invalid Name');
-        }
+        // ideally we would work with these objects a bit more instead of arrays but we'd have a lot of
+        // serialize/unserialize to do as we need to cache all configured custom dimensions for tracker cache and
+        // we do not want to serialize all php instances there. Also we need to return an array for each
+        // configured dimension in API methods anyway
 
-        if (!is_array($extractions)) {
-            throw new Exception('Extractions has to be an array');
-        }
+        $name = new Name($name);
+        $name->check();
 
-        foreach ($extractions as $extraction) {
-            if (!is_array($extraction)) {
-                throw new Exception('Each extraction within extractions has to be an array');
-            }
+        $active = new Active($active);
+        $active->check();
 
-            if (count($extraction) !== 2 || !array_key_exists('dimension', $extraction) || !array_key_exists('pattern', $extraction)) {
-                throw new Exception('Each extraction within extractions must have a key dimension and pattern only');
-            }
-        }
-
-        if (!is_bool($active) && !in_array($active, array('0', '1'))) {
-            throw new Exception('active has to be a 0 or 1');
-        }
-    }
-
-    public function configureExistingCustomDimension($idCustomDimension, $idSite, $name, $active, $extractions = array())
-    {
-        Piwik::checkUserHasAdminAccess($idSite);
-
-        $this->validateCustomDimensionConfig($name, $active, $extractions);
-
-        $config   = $this->getConfiguration();
-        $existing = $config->getCustomDimension($idSite, $idCustomDimension);
-
-        if (empty($existing)) {
-            throw new Exception('Custom Dimension does not exist');
-        }
-
-        $this->getConfiguration()->configureExistingDimension($idCustomDimension, $idSite, $name, $active, $extractions);
+        $extractions = new Extractions($extractions);
+        $extractions->check();
     }
 
     public function getAvailableScopes($idSite)
@@ -118,7 +117,7 @@ class API extends \Piwik\Plugin\API
         Piwik::checkUserHasAdminAccess($idSite);
 
         $scopes = array();
-        foreach (array(CustomDimensions::SCOPE_VISIT, CustomDimensions::SCOPE_ACTION) as $scope) {
+        foreach (CustomDimensions::getPublicScopes() as $scope) {
 
             $configs = $this->getConfiguration()->getCustomDimensionsHavingScope($idSite, $scope);
             $indexes = $this->getTracking($scope)->getInstalledIndexes();
@@ -134,6 +133,20 @@ class API extends \Piwik\Plugin\API
         return $scopes;
     }
 
+    public function getAvailableExtractionDimensions()
+    {
+        Piwik::checkUserHasSomeAdminAccess();
+
+        $supported = Extraction::getSupportedDimensions();
+
+        $dimensions = array();
+        foreach ($supported as $value => $dimension) {
+            $dimensions[] = array('value' => $value, 'name' => $dimension);
+        }
+
+        return $dimensions;
+    }
+
     private function getTracking($scope)
     {
         return new LogTable($scope);
@@ -143,5 +156,6 @@ class API extends \Piwik\Plugin\API
     {
         return new Configuration();
     }
+
 }
 

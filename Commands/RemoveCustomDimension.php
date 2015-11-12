@@ -29,7 +29,7 @@ class RemoveCustomDimension extends ConsoleCommand
         $this->setDescription('Removes an existing Custom Dimension');
         $this->setHelp("Example:
 ./console customdimensions:remove-custom-dimension --scope=action --index=4
-=> Will remove the custom dimension having the index 4 in scope action.
+=> Will remove the Custom Dimension having the index 4 in scope action.
 ");
 
         $description = sprintf('The scope of the Custom Dimension to remove, either "%s" or "%s"', CustomDimensions::SCOPE_VISIT, CustomDimensions::SCOPE_ACTION);
@@ -46,7 +46,7 @@ class RemoveCustomDimension extends ConsoleCommand
 
         $index = $this->getIndex($input, $installedIndexes);
 
-        $output->writeln(sprintf('Remove custom dimension at index %d in scope %s.', $index, $scope));
+        $output->writeln(sprintf('Remove Custom Dimension at index %d in scope %s.', $index, $scope));
 
         $configuration = new Configuration();
         $configs = $configuration->getCustomDimensionsHavingIndex($scope, $index);
@@ -72,7 +72,7 @@ class RemoveCustomDimension extends ConsoleCommand
         }
 
         $output->writeln('');
-        $output->writeln('Starting to remove this custom dimension');
+        $output->writeln('Starting to remove this Custom Dimension.');
         $output->writeln('');
 
         $tracking = new LogTable($scope);

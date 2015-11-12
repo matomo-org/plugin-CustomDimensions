@@ -3,22 +3,17 @@
     <div ng-show="!manageDimensions.editMode">
         <div piwik-custom-dimensions-list></div>
 
-        <h2 class="secondary">Increase the number of available Custom Dimensions</h2>
+        <h2 class="secondary">{{ 'CustomDimensions_IncreaseAvailableCustomDimensionsTitle'|translate }}</h2>
 
         <p>
-            Creating a new custom dimension slots can take a long time depending on the size of your database.
-            Therefore it is only possible to do this via a command which needs to be executed on the command line.
-            <br><br>To create a new custom dimension slot execute the following command within your Piwik installation:
+            {{ 'CustomDimensions_IncreaseAvailableCustomDimensionsTakesLong'|translate }}
+            <br><br>{{ 'CustomDimensions_HowToCreateCustomDimension'|translate }}
             <br><br>
         </p>
         <pre><code>./console customdimensions:add-custom-dimension --scope=action
-// for scope "action" or
-./console customdimensions:add-custom-dimension --scope=visit
-// for scope "visit"</code></pre>
-
+./console customdimensions:add-custom-dimension --scope=visit</code></pre>
         <p>
-            If you want to create multiple new custom dimensions at once simply append the number of dimensions that shall be created.
-            For example to create 5 new custom dimensions in scope action execute the following command:
+            {{ 'CustomDimensions_HowToManyCreateCustomDimensions'|translate:5 }}
         </p>
         <pre><code>./console customdimensions:add-custom-dimension --scope=action --count=5</code></pre>
 
