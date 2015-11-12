@@ -133,11 +133,9 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
 
         $idDimensionOrDimension = (int) $idDimensionOrDimension;
 
-        if ($idDimensionOrDimension < 1) {
-            return;
+        if ($idDimensionOrDimension >= 1) {
+            return 'dimension' . (int) $idDimensionOrDimension;
         }
-
-        return 'dimension' . (int) $idDimensionOrDimension;
     }
 
     public static function getCachedCustomDimensionIndexes($scope)

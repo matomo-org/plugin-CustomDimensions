@@ -30,14 +30,15 @@ class Menu extends \Piwik\Plugin\Menu
         $idSite = Common::getRequestVar('idSite', $default, 'int');
 
         if (Piwik::isUserHasAdminAccess($idSite)) {
-            $menu->addManageItem('Custom Dimensions', $this->urlForAction('manage'), $orderId = 16);
+            $menu->addManageItem('CustomDimensions_CustomDimensions', $this->urlForAction('manage'), $orderId = 16);
         }
     }
 
     public function configureReportingMenu(MenuReporting $menu)
     {
         $idSite = Common::getRequestVar('idSite', null, 'int');
-        $config = new Configuration();
+
+        $config     = new Configuration();
         $dimensions = $config->getCustomDimensionsForSite($idSite);
 
         foreach ($dimensions as $index => $dimension) {

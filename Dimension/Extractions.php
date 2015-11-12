@@ -23,7 +23,7 @@ class Extractions
     public function check()
     {
         if (!is_array($this->extractions)) {
-            throw new Exception('Extractions has to be an array');
+            throw new Exception('extractions has to be an array');
         }
 
         foreach ($this->extractions as $extraction) {

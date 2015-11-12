@@ -99,11 +99,9 @@ class LogTable
 
         $indexOrDimension = (int) $indexOrDimension;
 
-        if ($indexOrDimension < 1) {
-            return;
+        if ($indexOrDimension >= 1) {
+            return 'custom_dimension_' . (int) $indexOrDimension;
         }
-
-        return 'custom_dimension_' . (int) $indexOrDimension;
     }
 
     public function removeCustomDimension($index)
@@ -134,12 +132,15 @@ class LogTable
         $total = $highestIndex + $count;
 
         $queries = array();
-        for ($index = $highestIndex; $index < $total; $index++) {
-            $queries[] = $this->getAddColumnQueryToAddCustomDimension($index + 1);
-        }
 
         if (isset($extraAlter)) {
+            // we make sure to install needed tracker request processor columns first, before installing custom dimensions
+            // if something fails custom dimensions can be added later any time
             $queries[] = $extraAlter;
+        }
+
+        for ($index = $highestIndex; $index < $total; $index++) {
+            $queries[] = $this->getAddColumnQueryToAddCustomDimension($index + 1);
         }
 
         if (!empty($queries)) {

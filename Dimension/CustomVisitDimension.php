@@ -10,6 +10,10 @@ namespace Piwik\Plugins\CustomDimensions\Dimension;
 
 use Piwik\Plugin\Dimension\VisitDimension;
 
+/**
+ * We do not put this one in columns directory of the plugin since we do not want to have it automatically detected.
+ * We create instances of it dynamically when needed instead.
+ */
 class CustomVisitDimension extends VisitDimension
 {
     public function __construct($column, $name)

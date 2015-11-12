@@ -105,6 +105,11 @@ class CustomDimensions extends Plugin
         Cache::clearCacheGeneral();
     }
 
+    public function isTrackerPlugin()
+    {
+        return true;
+    }
+
     public function extendVisitorDetails(&$visitor, $details)
     {
         if (empty($visitor['idSite'])) {

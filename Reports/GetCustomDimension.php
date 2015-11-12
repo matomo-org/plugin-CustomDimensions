@@ -51,7 +51,8 @@ class GetCustomDimension extends Report
         $this->order = 100;
 
         $idDimension = Common::getRequestVar('idDimension', 0, 'int');
-        $idSite = Common::getRequestVar('idSite', 0, 'int');
+        $idSite      = Common::getRequestVar('idSite', 0, 'int');
+
         if ($idDimension > 0 && $idSite > 0) {
             $dimensions = $this->getActiveDimensionsForSite($idSite);
             foreach ($dimensions as $dimension) {
@@ -101,32 +102,32 @@ class GetCustomDimension extends Report
             $view->config->columns_to_display = array(
                 'label', 'nb_hits', 'nb_visits', 'bounce_rate', 'avg_time_on_dimension', 'exit_rate', 'avg_time_generation'
             );
+
+            $formatter = new Metrics\Formatter();
+
+            // add avg_generation_time tooltip
+            $tooltipCallback = function ($hits, $min, $max) use ($formatter) {
+                if (!$hits) {
+                    return false;
+                }
+
+                return Piwik::translate("Actions_AvgGenerationTimeTooltip", array(
+                    $hits,
+                    "<br />",
+                    $formatter->getPrettyTimeFromSeconds($min, true),
+                    $formatter->getPrettyTimeFromSeconds($max, true)
+                ));
+            };
+            $view->config->filters[] = array('ColumnCallbackAddMetadata',
+                array(
+                    array('nb_hits_with_time_generation', 'min_time_generation', 'max_time_generation'),
+                    'avg_time_generation_tooltip',
+                    $tooltipCallback
+                )
+            );
         }
 
         $view->config->show_table_all_columns = false;
-
-        $formatter = new Metrics\Formatter();
-
-        // add avg_generation_time tooltip
-        $tooltipCallback = function ($hits, $min, $max) use ($formatter) {
-            if (!$hits) {
-                return false;
-            }
-
-            return Piwik::translate("Actions_AvgGenerationTimeTooltip", array(
-                $hits,
-                "<br />",
-                $formatter->getPrettyTimeFromSeconds($min, true),
-                $formatter->getPrettyTimeFromSeconds($max, true)
-            ));
-        };
-        $view->config->filters[] = array('ColumnCallbackAddMetadata',
-            array(
-                array('nb_hits_with_time_generation', 'min_time_generation', 'max_time_generation'),
-                'avg_time_generation_tooltip',
-                $tooltipCallback
-            )
-        );
     }
 
     public function getMetrics()
@@ -187,11 +188,9 @@ class GetCustomDimension extends Report
 
         $idSite = $this->getIdSiteFromInfos($infos);
 
-        if (!isset($idSite)) {
-            return;
+        if (isset($idSite)) {
+            $this->addReportMetadataForEachDimension($availableReports, $idSite);
         }
-
-        $this->addReportMetadataForEachDimension($availableReports, $idSite);
     }
 
     private function getActiveDimensionsForSite($idSite)

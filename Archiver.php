@@ -16,6 +16,9 @@ use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Tracker;
 use Piwik\ArchiveProcessor;
 
+/**
+ * Archives reports for each active Custom Dimension of a website.
+ */
 class Archiver extends \Piwik\Plugin\Archiver
 {
     const LABEL_CUSTOM_VALUE_NOT_DEFINED = "Value not defined";
@@ -67,6 +70,7 @@ class Archiver extends \Piwik\Plugin\Archiver
     private function getActiveCustomDimensions()
     {
         $idSite = $this->processor->getParams()->getSite()->getId();
+
         $config = new Configuration();
         $dimensions = $config->getCustomDimensionsForSite($idSite);
 

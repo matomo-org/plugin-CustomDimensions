@@ -62,7 +62,7 @@ class ApiTest extends IntegrationTestCase
             array(array('message' => 'CustomDimensions_NameAllowedCharacters',   'name' => 'Inval/\\nam&<b>e</b>', 'scope' => CustomDimensions::SCOPE_VISIT, 'active' => '1', 'extractions' => array())),
             array(array('message' => "Invalid value 'anyScOPe' for 'scope'",     'name' => 'Valid Name äöü',       'scope' => 'anyScOPe',                    'active' => '1', 'extractions' => array())),
             array(array('message' => "Invalid value '2' for 'active' specified", 'name' => 'Valid Name äöü',       'scope' => CustomDimensions::SCOPE_VISIT, 'active' => '2', 'extractions' => array())),
-            array(array('message' => 'Extractions has to be an array',           'name' => 'Valid Name äöü',       'scope' => CustomDimensions::SCOPE_VISIT, 'active' => '1', 'extractions' => 5)),
+            array(array('message' => 'extractions has to be an array',           'name' => 'Valid Name äöü',       'scope' => CustomDimensions::SCOPE_VISIT, 'active' => '1', 'extractions' => 5)),
         );
     }
 
@@ -120,7 +120,7 @@ class ApiTest extends IntegrationTestCase
             array(array('message' => "CustomDimensions_ExceptionDimensionDoesNotExist", 'id' => '999', 'name' => 'Valid Name äöü', 'active' => '1', 'extractions' => array())),
             array(array('message' => 'CustomDimensions_NameAllowedCharacters',          'id' => '1',   'name' => 'Inval/\\nam&<b>e</b>', 'active' => '1', 'extractions' => array())),
             array(array('message' => "Invalid value '2' for 'active' specified",        'id' => '1',   'name' => 'Valid Name äöü', 'active' => '2', 'extractions' => array())),
-            array(array('message' => 'Extractions has to be an array',                  'id' => '1',   'name' => 'Valid Name äöü', 'active' => '1', 'extractions' => 5)),
+            array(array('message' => 'extractions has to be an array',                  'id' => '1',   'name' => 'Valid Name äöü', 'active' => '1', 'extractions' => 5)),
         );
     }
 

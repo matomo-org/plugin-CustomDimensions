@@ -20,7 +20,7 @@ class ExtractionsTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage Extractions has to be an array
+     * @expectedExceptionMessage extractions has to be an array
      */
     public function test_check_shouldFailWhenExtractionsIsNotAnArray()
     {

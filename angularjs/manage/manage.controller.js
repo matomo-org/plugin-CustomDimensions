@@ -25,6 +25,7 @@
         }
 
         function initState() {
+            // as we're not using angular router we have to handle it manually here
             var $search = $location.search();
             if ('idDimension' in $search) {
                 self.editMode = true;

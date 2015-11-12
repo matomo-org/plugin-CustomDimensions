@@ -13,6 +13,15 @@ for each configured dimension and be able to get its data. You can also export t
 
 ## FAQ
 
+__I have a large database, can I install the plugin on the command line?__
+
+Yes, this is not only possible but even recommended as the installation may take hours. To do this follow these steps:
+
+* Download the Plugin from [https://plugins.piwik.org/CustomDimensions](https://plugins.piwik.org/CustomDimensions)
+* Extract the files within the downloaded ZIP file
+* Copy the `CustomDimensions` directory into the `plugins` directory of your Piwik
+* Execute the command `./console plugin:activate CustomDimensions` within your Piwik directory
+
 __Where can I manage Custom Dimensions?__
 
 Custom Dimensions can be managed by clicking on your username or user icon in the top right. There will be a menu
@@ -28,8 +37,9 @@ __How do I set a value for a dimension in the JavaScript Tracker?__
 
 `_paq.push(['setCustomDimension', customDimensionId, value]);`
 
-Please note once a Custom Dimension is set, the value will be used across all requests. To delete a custom dimension
-value after a tracking request call `_paq.push(['deleteCustomDimension', customDimensionId]);`
+Please note once a Custom Dimension is set, the value will be used for all following tracking requests and may lead to
+inaccurate results. To delete a Custom Dimension value after a tracking request call
+`_paq.push(['deleteCustomDimension', customDimensionId]);`
 
 __How do I set a value for a dimension in the PHP Tracker?__
 

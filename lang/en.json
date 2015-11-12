@@ -13,7 +13,7 @@
         "HowToTrackManuallyViaPhp": "To track a value in the PHP Tracker call:",
         "HowToTrackManuallyViaHttp": "To track a value via the HTTP Tracker API use the tracking parameter 'dimension' followed by the Custom Dimension Id:",
         "Extractions": "Extractions",
-        "ExtractionsHelp": "This is optional. A regex can be used to extract the value for this Custom Dimension by URL, URL param or page title automatically. This way the value does not have to be set manually via a Tracker client. A value still can be set manually via the Piwik Tracker API. Read more about %sCustom Dimension Extraction%s.",
+        "ExtractionsHelp": "This is optional. A regex can be used to extract the value for this Custom Dimension from a URL, URL parameter or page title automatically. This way the value does not have to be set manually via a Tracking client. A value still can be set manually via the Piwik Tracker API. A manually set dimension value always takes precedence over an extraction. If multiple extractions are defined, the first extraction that matches is used.",
         "ExtractValue": "Extract value",
         "ExampleValue": "dimensionValue",
         "NoCustomDimensionConfigured": "No Custom Dimension configured yet, configure one now.",

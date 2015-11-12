@@ -31,7 +31,7 @@
                     <label for="extractions">{{ 'CustomDimensions_ExtractValue'|translate }}</label>
 
                     <div class="form-help">
-                        <span ng-bind-html="'CustomDimensions_ExtractionsHelp'|translate:'&lt;a>':'&lt;/a>'"></span>
+                        <span ng-bind-html="'CustomDimensions_ExtractionsHelp'|translate"></span>
                     </div>
                     <div ng-repeat="(index, extraction) in editDimension.dimension.extractions" class="extraction {{ index }}">
                         <select name="extractions"

@@ -15,10 +15,6 @@ use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 
 class Index
 {
-    public function __construct()
-    {
-    }
-
     public function getNextIndex($idSite, $scope)
     {
         $indexes = $this->getTracking($scope)->getInstalledIndexes();
