@@ -15,6 +15,7 @@ use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tracker\Cache;
 use Piwik\Tracker\Request;
+use Piwik\Plugin;
 
 /**
  * @group CustomDimensions
@@ -164,7 +165,14 @@ class CustomDimensionsTest extends IntegrationTestCase
 
     public function test_shouldCacheInstalledIndexes()
     {
+        Cache::clearCacheGeneral();
         $cache = Cache::getCacheGeneral();
+
+        $test = array(
+            CustomDimensions::SCOPE_VISIT  => range(1,5),
+            CustomDimensions::SCOPE_ACTION => range(1,5),
+            CustomDimensions::SCOPE_CONVERSION => range(2,5),
+        );
 
         foreach (CustomDimensions::getScopes() as $scope) {
             $key = 'custom_dimension_indexes_installed_' . $scope;

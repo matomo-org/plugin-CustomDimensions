@@ -107,7 +107,7 @@ class CustomDimensions extends Plugin
 
     public function isTrackerPlugin()
     {
-        return true;
+        return $this->isInstalled();
     }
 
     public function extendVisitorDetails(&$visitor, $details)
@@ -260,8 +260,17 @@ class CustomDimensions extends Plugin
         }
     }
 
+    private function isInstalled()
+    {
+        return Plugin\Manager::getInstance()->isPluginInstalled($this->pluginName);
+    }
+
     public function addVisitFieldsToPersist(&$fields)
     {
+        if (!$this->isInstalled()) {
+            return;
+        }
+
         $indexes = $this->getCachedInstalledIndexesForScope(self::SCOPE_VISIT);
 
         $fields[] = 'last_idlink_va';

@@ -25,8 +25,16 @@ class Configuration
 
     public function __construct()
     {
-        $this->db = Db::get();
         $this->tableNamePrefixed = Common::prefixTable($this->tableName);
+    }
+
+    private function getDb()
+    {
+        if (!isset($this->db)) {
+            $this->db = Db::get();
+        }
+
+        return $this->db;
     }
 
     public function configureNewDimension($idSite, $name, $scope, $index, $active, $extractions)
@@ -45,7 +53,7 @@ class Configuration
             'extractions' => $extractions,
         );
 
-        $this->db->insert($this->tableNamePrefixed, $config);
+        $this->getDb()->insert($this->tableNamePrefixed, $config);
 
         return $id;
     }
@@ -55,7 +63,7 @@ class Configuration
         $extractions = $this->encodeExtractions($extractions);
         $active = $active ? '1' : '0';
 
-        $this->db->update($this->tableNamePrefixed,
+        $this->getDb()->update($this->tableNamePrefixed,
             array(
                 'name'        => $name,
                 'active'      => $active,
@@ -74,7 +82,7 @@ class Configuration
     public function getCustomDimension($idDimension, $idSite)
     {
         $query = "SELECT * FROM " . $this->tableNamePrefixed . " WHERE idcustomdimension = ? and idsite = ?";
-        $dimension = $this->db->fetchRow($query, array($idDimension, $idSite));
+        $dimension = $this->getDb()->fetchRow($query, array($idDimension, $idSite));
         $dimension = $this->enrichDimension($dimension);
 
         return $dimension;
@@ -94,17 +102,17 @@ class Configuration
 
     public function deleteConfigurationsForSite($idSite)
     {
-        $this->db->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
+        $this->getDb()->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
     }
 
     public function deleteConfigurationsForIndex($index)
     {
-        $this->db->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE `index` = ?", $index);
+        $this->getDb()->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE `index` = ?", $index);
     }
 
     private function fetchAllDimensionsEnriched($sql, $bind)
     {
-        $dimensions = $this->db->fetchAll($sql, $bind);
+        $dimensions = $this->getDb()->fetchAll($sql, $bind);
         $dimensions = $this->enrichDimensions($dimensions);
 
         return $dimensions;
@@ -137,7 +145,7 @@ class Configuration
 
     private function getNextCustomDimensionIdForSite($idSite)
     {
-        $nextId = $this->db->fetchOne("SELECT max(idcustomdimension) FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
+        $nextId = $this->getDb()->fetchOne("SELECT max(idcustomdimension) FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
 
         if (empty($nextId)) {
             $nextId = 1;

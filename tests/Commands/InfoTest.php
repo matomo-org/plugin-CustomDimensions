@@ -26,7 +26,17 @@ class InfoTest extends IntegrationTestCase
 {
     public function testExecute_ShouldOutputInfoSuccess_IfEverythingIsOk()
     {
-        $this->assertContains('5 Custom Dimensions available in scope "action"
+        $output = $this->executeCommand();
+
+        $this->assertContains('./console customdimensions:add-custom-dimension --scope=visit"
+Installed indexes are:
+1 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=1
+2 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=2
+3 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=3
+4 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=4
+5 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=5
+
+5 Custom Dimensions available in scope "action"
 To add a Custom Dimension execute "./console customdimensions:add-custom-dimension --scope=action"
 Installed indexes are:
 1 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=action --index=1
@@ -35,15 +45,6 @@ Installed indexes are:
 4 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=action --index=4
 5 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=action --index=5
 
-5 Custom Dimensions available in scope "visit"
-To add a Custom Dimension execute "./console customdimensions:add-custom-dimension --scope=visit"
-Installed indexes are:
-1 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=1
-2 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=2
-3 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=3
-4 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=4
-5 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=5
-
 5 Custom Dimensions available in scope "conversion"
 Custom Dimensions are automatically added via the scope "visit" and cannot be added manually
 Installed indexes are:
@@ -51,7 +52,8 @@ Installed indexes are:
 2 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=conversion --index=2
 3 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=conversion --index=3
 4 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=conversion --index=4
-5 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=conversion --index=5', $this->executeCommand());
+5 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=conversion --index=5',
+        $output);
     }
 
     public function testExecute_ShouldOutputErrorMessage_IfColumnsDoNotMatch()

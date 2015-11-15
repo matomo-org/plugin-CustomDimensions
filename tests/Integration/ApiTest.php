@@ -13,6 +13,7 @@ use Piwik\Plugins\CustomDimensions\CustomDimensions;
 use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\Mock\FakeAccess;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
+use Piwik\Plugin;
 use Exception;
 
 /**
