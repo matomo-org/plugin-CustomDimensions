@@ -203,7 +203,7 @@ class GetCustomDimension extends Report
 
             foreach ($dimensions as $index => $dimension) {
                 if ($dimension['active']) {
-                    $this->dimensionCache[$idSite][]= $dimension;
+                    $this->dimensionCache[$idSite][] = $dimension;
                 }
             }
         }

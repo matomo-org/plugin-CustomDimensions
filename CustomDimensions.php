@@ -31,6 +31,8 @@ class CustomDimensions extends Plugin
      */
     private $configuration;
 
+    private $isInstalled;
+
     /**
      * Constructor.
      */
@@ -46,6 +48,10 @@ class CustomDimensions extends Plugin
      */
     public function registerEvents()
     {
+        if (!$this->isInstalled()) {
+            return null;
+        }
+
         return array(
             'API.getSegmentDimensionMetadata'  => 'getSegmentsMetadata',
             'Live.getAllVisitorDetails'        => 'extendVisitorDetails',
@@ -90,6 +96,7 @@ class CustomDimensions extends Plugin
         }
 
         Cache::clearCacheGeneral();
+        $this->isInstalled = true;
     }
 
     public function uninstall()
@@ -103,11 +110,12 @@ class CustomDimensions extends Plugin
         }
 
         Cache::clearCacheGeneral();
+        $this->isInstalled = false;
     }
 
     public function isTrackerPlugin()
     {
-        return $this->isInstalled();
+        return true;
     }
 
     public function extendVisitorDetails(&$visitor, $details)
@@ -262,7 +270,18 @@ class CustomDimensions extends Plugin
 
     private function isInstalled()
     {
-        return Plugin\Manager::getInstance()->isPluginInstalled($this->pluginName);
+        if (!isset($this->isInstalled)) {
+            $names = Plugin\Manager::getInstance()->getInstalledPluginsName();
+            // installed plugins are not yet loaded properly
+
+            if (empty($names)) {
+                return false;
+            }
+
+            $this->isInstalled = Plugin\Manager::getInstance()->isPluginInstalled($this->pluginName);
+        }
+
+        return $this->isInstalled;
     }
 
     public function addVisitFieldsToPersist(&$fields)
