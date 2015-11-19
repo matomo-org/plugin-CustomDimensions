@@ -80,8 +80,15 @@ class GetCustomDimension extends Report
         $method = $view->requestConfig->getApiMethodToRequest();
         $idReport = sprintf('%s_%s_idDimension--%d', $module, $method, $idDimension);
 
+        if ($view->requestConfig->idSubtable) {
+            $view->config->addTranslation('label', Piwik::translate('Actions_ColumnActionURL'));
+        } elseif (!empty($this->dimension)) {
+            $view->config->addTranslation('label', $this->dimension->getName());
+        }
+
         $view->requestConfig->request_parameters_to_modify['idDimension'] = $idDimension;
         $view->requestConfig->request_parameters_to_modify['reportUniqueId'] = $idReport;
+        $view->config->custom_parameters['scopeOfDimension'] = $this->scopeOfDimension;
 
         if ($this->scopeOfDimension === CustomDimensions::SCOPE_VISIT) {
             $view->config->columns_to_display = array(

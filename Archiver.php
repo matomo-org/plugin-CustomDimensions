@@ -161,6 +161,7 @@ class Archiver extends \Piwik\Plugin\Archiver
         $this->dataArray->setActionMetricsIds($metricIds);
 
         $select = "log_link_visit_action.$valueField,
+                  actionAlias.name as url,
                   sum(log_link_visit_action.time_spent) as `" . Metrics::INDEX_PAGE_SUM_TIME_SPENT . "`,
                   sum(case visitAlias.visit_total_actions when 1 then 1 when 0 then 1 else 0 end) as `" . Metrics::INDEX_BOUNCE_COUNT . "`,
                   sum(IF(visitAlias.last_idlink_va = log_link_visit_action.idlink_va, 1, 0)) as `" . Metrics::INDEX_PAGE_EXIT_NB_VISITS . "`";
@@ -173,6 +174,11 @@ class Archiver extends \Piwik\Plugin\Archiver
                 "table"  => "log_visit",
                 "tableAlias"  => "visitAlias",
                 "joinOn" => "visitAlias.idvisit = log_link_visit_action.idvisit"
+            ),
+            array(
+                "table"  => "log_action",
+                "tableAlias"  => "actionAlias",
+                "joinOn" => "log_link_visit_action.idaction_url = actionAlias.idaction"
             )
         );
 
@@ -181,7 +187,7 @@ class Archiver extends \Piwik\Plugin\Archiver
                   AND log_link_visit_action.idsite = ?
                   AND log_link_visit_action.$valueField IS NOT NULL";
 
-        $groupBy = "log_link_visit_action.$valueField";
+        $groupBy = "log_link_visit_action.$valueField, url";
         $orderBy = "`" . Metrics::INDEX_PAGE_NB_HITS . "` DESC";
 
         // get query with segmentation
@@ -191,9 +197,22 @@ class Archiver extends \Piwik\Plugin\Archiver
         $resultSet = $db->query($query['sql'], $query['bind']);
 
         while ($row = $resultSet->fetch()) {
-            $value = $this->cleanCustomDimensionValue($row[$valueField]);
+            $label = $row[$valueField];
+            $value = $this->cleanCustomDimensionValue($label);
 
             $this->dataArray->sumMetricsActions($value, $row);
+
+            // make sure we always work with normalized URL no matter how the individual action stores it
+            $normalized = Tracker\PageUrl::normalizeUrl($row['url']);
+            $row['url'] = $normalized['url'];
+
+            $subLabel = $row['url'];
+
+            if (empty($subLabel)) {
+                continue;
+            }
+
+            $this->dataArray->sumMetricsActionCustomDimensionsPivot($label, $subLabel, $row);
         }
     }
 

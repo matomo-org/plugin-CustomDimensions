@@ -13,20 +13,23 @@ use Piwik\DataTable\Row;
 use Piwik\DataTable;
 use Piwik\Plugins\CustomDimensions\Archiver;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
+use Piwik\Tracker\PageUrl;
 
-class AddSegmentMetadata extends BaseFilter
+class AddSubtableSegmentMetadata extends BaseFilter
 {
     private $idDimension;
+    private $dimensionValue;
 
     /**
      * Constructor.
      *
      * @param DataTable $table The table to eventually filter.
      */
-    public function __construct($table, $idDimension)
+    public function __construct($table, $idDimension, $dimensionValue)
     {
         parent::__construct($table);
         $this->idDimension = $idDimension;
+        $this->dimensionValue = $dimensionValue;
     }
 
     /**
@@ -34,17 +37,19 @@ class AddSegmentMetadata extends BaseFilter
      */
     public function filter($table)
     {
+        if (!$this->dimensionValue || $this->dimensionValue === Archiver::LABEL_CUSTOM_VALUE_NOT_DEFINED) {
+            return;
+        }
+
         $dimension = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($this->idDimension);
+        $conditionAnd = ';';
+
+        $partDimension = $dimension . '==' . urlencode($this->dimensionValue) . $conditionAnd;
 
         foreach ($table->getRows() as $row) {
             $label = $row->getColumn('label');
-            if ($label !== false && $label !== Archiver::LABEL_CUSTOM_VALUE_NOT_DEFINED) {
-                $row->setMetadata('segment', $dimension . '==' . urlencode($label));
-            }
-
-            $subTable = $row->getSubtable();
-            if ($subTable) {
-                $subTable->filter('Piwik\Plugins\CustomDimensions\DataTable\Filter\AddSubtableSegmentMetadata', array($this->idDimension, $label));
+            if ($label !== false) {
+                $row->setMetadata('segment', $partDimension . 'actionUrl=$' . urlencode($label));
             }
         }
     }

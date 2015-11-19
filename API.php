@@ -45,7 +45,7 @@ class API extends \Piwik\Plugin\API
      * @return DataTable|DataTable\Map
      * @throws \Exception
      */
-    public function getCustomDimension($idDimension, $idSite, $period, $date, $segment = false)
+    public function getCustomDimension($idDimension, $idSite, $period, $date, $segment = false, $expanded = false, $idSubtable = null)
     {
         Piwik::checkUserHasViewAccess($idSite);
 
@@ -54,9 +54,22 @@ class API extends \Piwik\Plugin\API
 
         $record = Archiver::buildRecordNameForCustomDimensionId($idDimension);
 
-        $dataTable = Archive::createDataTableFromArchive($record, $idSite, $period, $date, $segment);
+        $dataTable = Archive::createDataTableFromArchive($record, $idSite, $period, $date, $segment, $expanded, $flat = false, $idSubtable);
+
+        if (isset($idSubtable) && $dataTable->getRowsCount()) {
+            $parentTable = Archive::createDataTableFromArchive($record, $idSite, $period, $date, $segment);
+            foreach ($parentTable->getRows() as $row) {
+                if ($row->getIdSubDataTable() == $idSubtable) {
+                    $parentValue = $row->getColumn('label');
+                    $dataTable->queueFilter('Piwik\Plugins\CustomDimensions\DataTable\Filter\AddSubtableSegmentMetadata', array($idDimension, $parentValue));
+                    break;
+                }
+            }
+        } else {
+            $dataTable->queueFilter('Piwik\Plugins\CustomDimensions\DataTable\Filter\AddSegmentMetadata', array($idDimension));
+        }
+
         $dataTable->filter('Piwik\Plugins\CustomDimensions\DataTable\Filter\RemoveUserIfNeeded', array($idSite, $period, $date));
-        $dataTable->queueFilter('Piwik\Plugins\CustomDimensions\DataTable\Filter\AddSegmentMetadata', array($idDimension));
 
         return $dataTable;
     }

@@ -43,4 +43,12 @@ class DataArray extends \Piwik\DataArray
             $oldRowToUpdate[$actionMetric] += $newRowToAdd[$actionMetric];
         }
     }
+
+    public function sumMetricsActionCustomDimensionsPivot($parentLabel, $label, $row)
+    {
+        if (!isset($this->dataTwoLevels[$parentLabel][$label])) {
+            $this->dataTwoLevels[$parentLabel][$label] = $this->makeEmptyActionRow();
+        }
+        $this->doSumActionsMetrics($row, $this->dataTwoLevels[$parentLabel][$label]);
+    }
 }
