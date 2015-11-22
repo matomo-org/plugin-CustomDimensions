@@ -45,7 +45,7 @@ class API extends \Piwik\Plugin\API
      * @return DataTable|DataTable\Map
      * @throws \Exception
      */
-    public function getCustomDimension($idDimension, $idSite, $period, $date, $segment = false, $expanded = false, $idSubtable = null)
+    public function getCustomDimension($idDimension, $idSite, $period, $date, $segment = false, $expanded = false, $flat = false, $idSubtable = null)
     {
         Piwik::checkUserHasViewAccess($idSite);
 
@@ -54,7 +54,7 @@ class API extends \Piwik\Plugin\API
 
         $record = Archiver::buildRecordNameForCustomDimensionId($idDimension);
 
-        $dataTable = Archive::createDataTableFromArchive($record, $idSite, $period, $date, $segment, $expanded, $flat = false, $idSubtable);
+        $dataTable = Archive::createDataTableFromArchive($record, $idSite, $period, $date, $segment, $expanded, $flat, $idSubtable);
 
         if (isset($idSubtable) && $dataTable->getRowsCount()) {
             $parentTable = Archive::createDataTableFromArchive($record, $idSite, $period, $date, $segment);

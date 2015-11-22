@@ -61,7 +61,9 @@ class ApiTest extends SystemTestCase
                         'date'       => self::$fixture->dateTime,
                         'periods'    => array($period),
                         'otherRequestParameters' => array(
-                            'idDimension' => $idDimension
+                            'idDimension' => $idDimension,
+                            'expanded' => '0',
+                            'flat' => '0',
                         ),
                         'testSuffix' => "${period}_site_${idSite}_dimension_${idDimension}"
                     )
@@ -69,6 +71,30 @@ class ApiTest extends SystemTestCase
             }
 
         }
+
+        $apiToTest[] = array($api, array(
+            'idSite'     => 1,
+            'date'       => self::$fixture->dateTime,
+            'periods'    => array('day'),
+            'otherRequestParameters' => array(
+                'idDimension' => 3,
+                'expanded' => '1',
+                'flat' => '0',
+            ),
+            'testSuffix' => "day_site_1_dimension_3_expanded"
+        ));
+
+        $apiToTest[] = array($api, array(
+            'idSite'     => 1,
+            'date'       => self::$fixture->dateTime,
+            'periods'    => array('day'),
+            'otherRequestParameters' => array(
+                'idDimension' => 3,
+                'expanded' => '0',
+                'flat' => '1'
+            ),
+            'testSuffix' => "day_site_1_dimension_3_flat"
+        ));
 
         $apiToTest[] = array($api,
             array(

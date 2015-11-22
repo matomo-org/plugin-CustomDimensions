@@ -81,16 +81,24 @@
 	</reportData>
 	<reportMetadata>
 		<row>
+			
 			<segment>dimension3==en</segment>
+			<idsubdatatable>5997</idsubdatatable>
 		</row>
 		<row>
+			
 			<segment>dimension3==value3</segment>
+			<idsubdatatable>5998</idsubdatatable>
 		</row>
 		<row>
+			
 			<segment>dimension3==value3+5</segment>
+			<idsubdatatable>6000</idsubdatatable>
 		</row>
 		<row>
+			
 			<segment>dimension3==value5+3</segment>
+			<idsubdatatable>5999</idsubdatatable>
 		</row>
 	</reportMetadata>
 	<reportTotal>

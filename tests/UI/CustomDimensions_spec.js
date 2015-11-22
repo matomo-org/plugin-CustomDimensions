@@ -18,6 +18,31 @@ describe("CustomDimensions", function () {
     var manageUrl = "?" + generalParams + "&module=CustomDimensions&action=manage";
     var reportUrl = "?" + urlBase + "#" + generalParams + "&module=CustomDimensions&action=menuGetCustomDimension";
 
+    var rowEvolutionPopupSelector = '.pageWrap,.ui-dialog > .ui-dialog-content > div.rowevolution:visible';
+    var segmentedVisitorLogPopupSelector = '.pageWrap,.ui-dialog > .ui-dialog-content > div.dataTableVizVisitorLog:visible';
+
+    function capturePageWrap (screenName, callback, done) {
+        expect.screenshot(screenName).to.be.captureSelector('.pageWrap', callback, done);
+    }
+
+    function captureSelector (screenName, selector, callback, done) {
+        expect.screenshot(screenName).to.be.captureSelector(selector, callback, done);
+    }
+
+    function closeOpenedPopover(page)
+    {
+        page.click('.ui-dialog:visible .ui-button-icon-primary.ui-icon-closethick:visible');
+    }
+
+    function triggerRowAction(page, labelToClick, nameOfRowActionToTrigger)
+    {
+        var rowToMatch = 'td.label:contains(' + labelToClick + '):first';
+
+        page.mouseMove('table.dataTable tbody ' + rowToMatch);
+        page.mouseMove(rowToMatch + ' a.'+ nameOfRowActionToTrigger + ':visible'); // necessary to get popover to display
+        page.click(rowToMatch + ' a.' + nameOfRowActionToTrigger + ':visible');
+    }
+
     before(function () {
         testEnvironment.pluginsToLoad = ['CustomDimensions'];
         testEnvironment.save();
@@ -27,20 +52,21 @@ describe("CustomDimensions", function () {
      * VISIT DIMENSION REPORTS
      */
 
-    it('should add a menu item for each active visit dimension', function (done) {
-        expect.screenshot('report_visit_mainmenu').to.be.captureSelector('#secondNavBar', function (page) {
-            page.load(reportUrl + "&idDimension=2");
+
+    it('should show the report for the selected visit dimension', function (done) {
+        capturePageWrap('report_visit', function (page) {
+            page.load(reportUrl + '&idDimension=2');
         }, done);
     });
 
-    it('should show the report for the selected visit dimension', function (done) {
-        expect.screenshot('report_visit').to.be.captureSelector('.pageWrap', function (page) {
-
+    it('should add a menu item for each active visit dimension', function (done) {
+        expect.screenshot('report_visit_mainmenu').to.be.captureSelector('#secondNavBar', function (page) {
+            // we only capture a screenshot of a different part of the page, no need to do anything
         }, done);
     });
 
     it('should add visit dimensions to goals report', function (done) {
-        expect.screenshot('report_goals_overview').to.be.captureSelector('.reportsByDimensionView', function (page) {
+        captureSelector('report_goals_overview', '.reportsByDimensionView', function (page) {
             page.load( "?" + urlBase + "#" + generalParams + "&module=Goals&action=index");
             page.click('.reportsByDimensionView .dimension:contains(MyName1)');
         }, done);
@@ -50,75 +76,99 @@ describe("CustomDimensions", function () {
      * ACTION DIMENSION REPORTS
      */
 
-    it('should add a menu item for each active action dimension', function (done) {
-        expect.screenshot('report_actions_mainmenu').to.be.captureSelector('#secondNavBar', function (page) {
-            page.load(reportUrl + "&idDimension=3");
+    it('should show the report for the selected action dimension', function (done) {
+        capturePageWrap('report_action', function (page) {
+            page.load(reportUrl + '&idDimension=3');
         }, done);
     });
 
-    it('should show the report for the selected action dimension', function (done) {
-        expect.screenshot('report_action').to.be.captureSelector('.pageWrap', function (page) {
+    it('should add a menu item for each active action dimension', function (done) {
+        captureSelector('report_actions_mainmenu', '#secondNavBar', function (page) {
+            // we only capture a screenshot of a different part of the page, no need to do anything
+        }, done);
+    });
 
+    it('should offer only segmented visitor log and row action for first level entries', function (done) {
+        capturePageWrap('report_actions_rowactions', function (page) {
+            page.mouseMove('td.label:contains(en):first');
         }, done);
     });
 
     it('should be able to render insights', function (done) {
-        expect.screenshot('report_action_insights').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('report_action_insights', function (page) {
             page.click('.expandDataTableFooterDrawer');
             page.click('[data-footer-icon-id="insightsVisualization"]');
         }, done);
     });
 
     it('should show an error when trying to open an inactive dimension', function (done) {
-        expect.screenshot('report_actions_inactive').to.be.captureSelector('.pageWrap', function (page) {
-            page.load(reportUrl + "&idDimension=4");
+        capturePageWrap('report_actions_inactive', function (page) {
+            page.load(reportUrl + '&idDimension=4');
         }, done);
     });
 
     it('should be able to open segmented visitor log', function (done) {
-        expect.screenshot('report_actions_segmented_visitorlog').to.be.captureSelector('.pageWrap,.ui-dialog > .ui-dialog-content > div.dataTableVizVisitorLog:visible', function (page) {
+        captureSelector('report_actions_segmented_visitorlog', segmentedVisitorLogPopupSelector, function (page) {
             page.load(reportUrl + "&idDimension=3");
-
-            page.click('.segmentationTitle');
-            page.click('.segname:contains(en)');
-
-            page.mouseMove('table.dataTable tbody tr:first-child');
-            page.mouseMove('a.actionSegmentVisitorLog:visible'); // necessary to get popover to display
-            page.click('a.actionSegmentVisitorLog:visible');
+            triggerRowAction(page, 'en', 'actionSegmentVisitorLog');
         }, done);
     });
 
     it('should be able to open row evolution', function (done) {
-        expect.screenshot('report_actions_rowevolution').to.be.captureSelector('.pageWrap,.ui-dialog > .ui-dialog-content > div.rowevolution:visible', function (page) {
+        captureSelector('report_actions_rowevolution', rowEvolutionPopupSelector, function (page) {
             page.load(reportUrl + "&idDimension=3");
-
-            page.click('.segmentationTitle');
-            page.click('.segname:contains(en)');
-
-            page.mouseMove('table.dataTable tbody tr:first-child');
-            page.mouseMove('a.actionRowEvolution:visible'); // necessary to get popover to display
-            page.click('a.actionRowEvolution:visible');
+            triggerRowAction(page, 'en', 'actionRowEvolution');
         }, done);
     });
+
+    it('should be able to show subtable and offer all row actions if scope is action', function (done) {
+        capturePageWrap('report_action_subtable', function (page) {
+            page.load(reportUrl + "&idDimension=3");
+            page.click('.dataTable .subDataTable .value:contains(en):first');
+            page.mouseMove('td.label:contains(en_US)');
+        }, done);
+    });
+
+    it('should be able to show row evolution for subtable', function (done) {
+        captureSelector('report_action_subtable_rowevolution', rowEvolutionPopupSelector, function (page) {
+            triggerRowAction(page, 'en_US', 'actionRowEvolution');
+        }, done);
+    });
+
+    it('should be able to show segmented visitor log for subtable', function (done) {
+        captureSelector('report_action_subtable_segmented_visitor_log', segmentedVisitorLogPopupSelector, function (page) {
+            closeOpenedPopover(page);
+            triggerRowAction(page, 'en_US', 'actionSegmentVisitorLog');
+        }, done);
+    });
+
+    it('should be able to show transitions for subtable', function (done) {
+        captureSelector('report_action_subtable_transitions', segmentedVisitorLogPopupSelector, function (page) {
+            closeOpenedPopover(page);
+            triggerRowAction(page, 'en_US', 'actionTransitions');
+        }, done);
+    });
+
+    return;
 
     /**
      * MANAGE CUSTOM DIMENSIONS
      */
 
     it('should load initial manange page', function (done) {
-        expect.screenshot('manage_inital').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_inital', function (page) {
             page.load(manageUrl);
         }, done);
     });
 
     it('should open a page to create a new visit dimension', function (done) {
-        expect.screenshot('manage_new_visit_dimension_open').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_new_visit_dimension_open', function (page) {
             page.click('.configure.visit');
         }, done);
     });
 
     it('should be possible to define name, active and extractions', function (done) {
-        expect.screenshot('manage_new_visit_dimension_withdata').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_new_visit_dimension_withdata', function (page) {
             page.sendKeys(".editCustomDimension #name", 'My Custom Name');
             page.click('.editCustomDimension #active');
 
@@ -133,25 +183,25 @@ describe("CustomDimensions", function () {
     });
 
     it('should be possible to remove a defined extraction', function (done) {
-        expect.screenshot('manage_new_visit_dimension_remove_an_extraction').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_new_visit_dimension_remove_an_extraction', function (page) {
             page.click('.extraction.1 .icon-minus');
         }, done);
     });
 
     it('should create a new dimension', function (done) {
-        expect.screenshot('manage_new_visit_dimension_created').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_new_visit_dimension_created', function (page) {
             page.click('.editCustomDimension .create');
         }, done);
     });
 
     it('should be able to open created dimension and see same data but this time with tracking instructions', function (done) {
-        expect.screenshot('manage_edit_visit_dimension_verify_created').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_edit_visit_dimension_verify_created', function (page) {
             page.click('.manageCustomDimensions .customdimension.7 .icon-edit');
         }, done);
     });
 
     it('should be possible to change an existing dimension', function (done) {
-        expect.screenshot('manage_edit_visit_dimension_withdata').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_edit_visit_dimension_withdata', function (page) {
             page.sendKeys(".editCustomDimension #name", 'ABC');
             page.click('.editCustomDimension #active');
             page.click('.extraction.0 .icon-minus');
@@ -159,25 +209,25 @@ describe("CustomDimensions", function () {
     });
 
     it('should updated an existing dimension', function (done) {
-        expect.screenshot('manage_edit_visit_dimension_updated').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_edit_visit_dimension_updated', function (page) {
             page.click('.editCustomDimension .update');
         }, done);
     });
 
     it('should have actually updated values', function (done) {
-        expect.screenshot('manage_edit_visit_dimension_verify_updated').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_edit_visit_dimension_verify_updated', function (page) {
             page.click('.manageCustomDimensions .customdimension.7 .icon-edit');
         }, done);
     });
 
     it('should go back to list when pressing cancel', function (done) {
-        expect.screenshot('manage_edit_visit_dimension_cancel').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_edit_visit_dimension_cancel', function (page) {
             page.click('.editCustomDimension .cancel');
         }, done);
     });
 
     it('should disable configure button when no dimensions are left for a scope', function (done) {
-        expect.screenshot('manage_configure_button_disabled').to.be.captureSelector('.pageWrap', function (page) {
+        capturePageWrap('manage_configure_button_disabled', function (page) {
             page.click('.configure.visit');
             page.click('.editCustomDimension #active');
             page.sendKeys(".editCustomDimension #name", 'Last Name');
@@ -186,14 +236,14 @@ describe("CustomDimensions", function () {
     });
 
     it('should be possible to create a new dimension via URL', function (done) {
-        expect.screenshot('manage_create_via_url').to.be.captureSelector('.pageWrap', function (page) {
-            page.load(manageUrl + "#?idDimension=0&scope=action");
+        capturePageWrap('manage_create_via_url', function (page) {
+            page.load(manageUrl + '#?idDimension=0&scope=action');
         }, done);
     });
 
     it('should be possible to open an existing dimension via URL', function (done) {
-        expect.screenshot('manage_edit_via_url').to.be.captureSelector('.pageWrap', function (page) {
-            page.load(manageUrl + "#?idDimension=2&scope=visit");
+        capturePageWrap('manage_edit_via_url', function (page) {
+            page.load(manageUrl + '#?idDimension=2&scope=visit');
         }, done);
     });
 
@@ -202,7 +252,7 @@ describe("CustomDimensions", function () {
      */
 
     it('should group dimensions in menu once there are more than 3', function (done) {
-        expect.screenshot('report_visit_mainmenu_grouped').to.be.captureSelector('#secondNavBar,.menuDropdown .items', function (page) {
+        captureSelector('report_visit_mainmenu_grouped', '#secondNavBar,.menuDropdown .items', function (page) {
             page.load(reportUrl + "&idDimension=2");
             page.click('#UserCountryMap_realtimeWorldMap + li .menuDropdown')
         }, done);
