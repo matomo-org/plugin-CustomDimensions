@@ -45,8 +45,8 @@ class CustomDimensionsRequestProcessorTest extends IntegrationTestCase
         }
 
         Cache::clearCacheGeneral();
-        Cache::clearWebsiteCache($idSite = 1);
-        Cache::clearWebsiteCache($idSite = 2);
+        Cache::deleteCacheWebsiteAttributes($idSite = 1);
+        Cache::deleteCacheWebsiteAttributes($idSite = 2);
 
         $this->processor = new Processor();
     }

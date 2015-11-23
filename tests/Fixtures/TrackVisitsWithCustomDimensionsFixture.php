@@ -71,8 +71,8 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
         $configuration->configureNewDimension($this->idSite,  'MyName5', CustomDimensions::SCOPE_ACTION, 3, $active = true, $extractions = array());
         $configuration->configureNewDimension($this->idSite,  'MyName6', CustomDimensions::SCOPE_VISIT, 4, $active = true, $extractions = array());
 
-        Cache::clearWebsiteCache(1);
-        Cache::clearWebsiteCache(2);
+        Cache::deleteCacheWebsiteAttributes(1);
+        Cache::deleteCacheWebsiteAttributes(2);
         Cache::clearCacheGeneral();
     }
 

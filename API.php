@@ -108,7 +108,7 @@ class API extends \Piwik\Plugin\API
         $configuration = $this->getConfiguration();
         $idDimension   = $configuration->configureNewDimension($idSite, $name, $scope, $index, $active, $extractions);
 
-        Cache::clearWebsiteCache($idSite);
+        Cache::deleteCacheWebsiteAttributes($idSite);
         Cache::clearCacheGeneral();
 
         return $idDimension;
@@ -140,7 +140,7 @@ class API extends \Piwik\Plugin\API
 
         $this->getConfiguration()->configureExistingDimension($idDimension, $idSite, $name, $active, $extractions);
 
-        Cache::clearWebsiteCache($idSite);
+        Cache::deleteCacheWebsiteAttributes($idSite);
         Cache::clearCacheGeneral();
     }
 
