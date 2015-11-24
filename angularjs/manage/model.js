@@ -19,7 +19,6 @@
             isLoading: false,
             isUpdating: false,
             fetchCustomDimensionsConfiguration: fetchCustomDimensionsConfiguration,
-            fetchAvailableScopes: fetchAvailableScopes,
             findCustomDimension: findCustomDimension,
             createOrUpdateDimension: createOrUpdateDimension,
             reload: reload
@@ -31,6 +30,7 @@
         {
             model.customDimensions = [];
             model.availableScopes = [];
+            model.extractionDimensions = [];
             fetchAllPromise = null;
             fetchCustomDimensionsConfiguration();
         }
@@ -42,32 +42,43 @@
 
             model.isLoading = true;
 
-            fetchAllPromise = piwikApi.fetch({method: 'CustomDimensions.getConfiguredCustomDimensions'})
-                .then(function (customDimensions) {
-                    model.customDimensions = customDimensions;
-
-                    return customDimensions;
-                });
-
-            return $q.all(fetchAllPromise, fetchAvailableScopes(), fetchAvailableExtractionDimensions()).then(function () {
-                model.isLoading = false;
+            var deferred = $q.defer();
+            // .fetch does not return a proper promise
+            piwikApi.fetch({method: 'CustomDimensions.getConfiguredCustomDimensions'}).then(function (customDimensions) {
+                model.customDimensions = customDimensions;
+                deferred.resolve(customDimensions);
             });
+
+            fetchAllPromise = $q.all([deferred.promise, fetchAvailableScopes(), fetchAvailableExtractionDimensions()]).then(function () {
+                model.isLoading = false;
+
+                return model.customDimensions;
+            });
+
+            return fetchAllPromise;
         }
 
         function fetchAvailableExtractionDimensions() {
-            return piwikApi.fetch({method: 'CustomDimensions.getAvailableExtractionDimensions'}).then(function (availableExtractionDimensions) {
+            var deferred = $q.defer();
+            // .fetch does not return a proper promise
+            piwikApi.fetch({method: 'CustomDimensions.getAvailableExtractionDimensions'}).then(function (availableExtractionDimensions) {
                 model.extractionDimensions = availableExtractionDimensions;
-
-                return availableExtractionDimensions;
+                deferred.resolve(availableExtractionDimensions);
             });
+
+            return deferred.promise;
         }
 
         function fetchAvailableScopes() {
-            return piwikApi.fetch({method: 'CustomDimensions.getAvailableScopes'}).then(function (availableScopes) {
-                model.availableScopes = availableScopes;
+            var deferred = $q.defer();
 
-                return availableScopes;
+            // .fetch does not return a proper promise
+            piwikApi.fetch({method: 'CustomDimensions.getAvailableScopes'}).then(function (availableScopes) {
+                model.availableScopes = availableScopes;
+                deferred.resolve(availableScopes);
             });
+
+            return deferred.promise;
         }
 
         function findCustomDimension(customDimensionId) {

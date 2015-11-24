@@ -33,7 +33,7 @@ class CustomDimensionsTest extends IntegrationTestCase
     {
         parent::setUp();
 
-        foreach (array(1,2) as $idSite) {
+        foreach (array(1, 2) as $idSite) {
             if (!Fixture::siteCreated($idSite)) {
                 Fixture::createWebsite('2012-01-01 00:00:00');
             }
@@ -46,7 +46,7 @@ class CustomDimensionsTest extends IntegrationTestCase
     {
         foreach (CustomDimensions::getScopes() as $scope) {
             $logTable = new LogTable($scope);
-            $this->assertSame(range(1,5), $logTable->getInstalledIndexes());
+            $this->assertSame(range(1, 5), $logTable->getInstalledIndexes());
         }
 
         // should succeed as table configured
@@ -62,7 +62,7 @@ class CustomDimensionsTest extends IntegrationTestCase
 
         foreach (CustomDimensions::getScopes() as $scope) {
             $logTable = new LogTable($scope);
-            $this->assertSame(range(1,5), $logTable->getInstalledIndexes());
+            $this->assertSame(range(1, 5), $logTable->getInstalledIndexes());
         }
 
         // should succeed as table configured
@@ -160,7 +160,7 @@ class CustomDimensionsTest extends IntegrationTestCase
         $this->plugin->install();
 
         $indexes = $this->plugin->getCachedInstalledIndexesForScope(CustomDimensions::SCOPE_CONVERSION);
-        $this->assertSame(range(1,5), $indexes);
+        $this->assertSame(range(1, 5), $indexes);
     }
 
     public function test_shouldCacheInstalledIndexes()
@@ -169,15 +169,15 @@ class CustomDimensionsTest extends IntegrationTestCase
         $cache = Cache::getCacheGeneral();
 
         $test = array(
-            CustomDimensions::SCOPE_VISIT  => range(1,5),
-            CustomDimensions::SCOPE_ACTION => range(1,5),
-            CustomDimensions::SCOPE_CONVERSION => range(2,5),
+            CustomDimensions::SCOPE_VISIT => range(1, 5),
+            CustomDimensions::SCOPE_ACTION => range(1, 5),
+            CustomDimensions::SCOPE_CONVERSION => range(2, 5),
         );
 
         foreach (CustomDimensions::getScopes() as $scope) {
             $key = 'custom_dimension_indexes_installed_' . $scope;
             $this->assertArrayHasKey($key, $cache);
-            $this->assertSame(range(1,5), $cache[$key]);
+            $this->assertSame(range(1, 5), $cache[$key]);
         }
     }
 
@@ -236,6 +236,24 @@ class CustomDimensionsTest extends IntegrationTestCase
 
         // verify entries for other site still exists
         $this->assertNotEmpty($config->getCustomDimensionsForSite($idSite = 2));
+    }
+
+    /**
+     * @dataProvider getScopesSupportExtractions
+     */
+    public function test_doesScopeSupportExtractions($expectedSupportsExtractions, $scope)
+    {
+        $this->assertSame($expectedSupportsExtractions, CustomDimensions::doesScopeSupportExtractions($scope));
+    }
+
+    public function getScopesSupportExtractions()
+    {
+        return array(
+            array($support = true, CustomDimensions::SCOPE_ACTION),
+            array($support = false, CustomDimensions::SCOPE_VISIT),
+            array($support = false, CustomDimensions::SCOPE_CONVERSION),
+            array($support = false, 'anyRanDOm'),
+        );
     }
 
     private function configureSomeDimensions()

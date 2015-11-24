@@ -44,12 +44,12 @@
 	<reportData>
 		<row>
 			<label>en</label>
-			<nb_visits>2</nb_visits>
-			<nb_hits>2</nb_hits>
-			<bounce_rate>50%</bounce_rate>
-			<avg_time_on_dimension>00:03:00</avg_time_on_dimension>
-			<exit_rate>50%</exit_rate>
-			<avg_time_generation>0.12s</avg_time_generation>
+			<nb_visits>3</nb_visits>
+			<nb_hits>3</nb_hits>
+			<bounce_rate>67%</bounce_rate>
+			<avg_time_on_dimension>00:02:00</avg_time_on_dimension>
+			<exit_rate>67%</exit_rate>
+			<avg_time_generation>0.58s</avg_time_generation>
 		</row>
 		<row>
 			<label>value3</label>
@@ -59,15 +59,6 @@
 			<avg_time_on_dimension>00:06:00</avg_time_on_dimension>
 			<exit_rate>0%</exit_rate>
 			<avg_time_generation>0.42s</avg_time_generation>
-		</row>
-		<row>
-			<label>value3 5</label>
-			<nb_visits>1</nb_visits>
-			<nb_hits>1</nb_hits>
-			<bounce_rate>100%</bounce_rate>
-			<avg_time_on_dimension>00:00:00</avg_time_on_dimension>
-			<exit_rate>100%</exit_rate>
-			<avg_time_generation>1.03s</avg_time_generation>
 		</row>
 		<row>
 			<label>value5 3</label>
@@ -83,22 +74,17 @@
 		<row>
 			
 			<segment>dimension3==en</segment>
-			<idsubdatatable>5997</idsubdatatable>
+			<idsubdatatable>6015</idsubdatatable>
 		</row>
 		<row>
 			
 			<segment>dimension3==value3</segment>
-			<idsubdatatable>5998</idsubdatatable>
-		</row>
-		<row>
-			
-			<segment>dimension3==value3+5</segment>
-			<idsubdatatable>6000</idsubdatatable>
+			<idsubdatatable>6016</idsubdatatable>
 		</row>
 		<row>
 			
 			<segment>dimension3==value5+3</segment>
-			<idsubdatatable>5999</idsubdatatable>
+			<idsubdatatable>6017</idsubdatatable>
 		</row>
 	</reportMetadata>
 	<reportTotal>

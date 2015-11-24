@@ -89,7 +89,8 @@ class API extends \Piwik\Plugin\API
      * @param array $extractions    Either an empty array or if extractions shall be used one or multiple extractions
      *                              the format array(array('dimension' => 'url', 'pattern' => 'index_(.+).html'), array('dimension' => 'urlparam', 'pattern' => '...'))
      *                              Supported dimensions are  eg 'url', 'urlparam' and 'action_name'. To get an up to date list of
-     *                              supported dimensions request the API method `CustomDimensions.getAvailableExtractionDimensions`
+     *                              supported dimensions request the API method `CustomDimensions.getAvailableExtractionDimensions`.
+     *                              Note: Extractions can be only set for dimensions in scope 'action'.
      * @return int Returns the ID of the configured dimension. Note that the same idDimension will be used for different websites.
      * @throws \Exception
      */
@@ -97,10 +98,12 @@ class API extends \Piwik\Plugin\API
     {
         Piwik::checkUserHasAdminAccess($idSite);
 
-        $this->validateCustomDimensionConfig($name, $active, $extractions);
+        $this->checkCustomDimensionConfig($name, $active, $extractions);
 
         $scopeCheck = new Scope($scope);
         $scopeCheck->check();
+
+        $this->checkExtractionsAreSupportedForScope($scope, $extractions);
 
         $index = new Index();
         $index = $index->getNextIndex($idSite, $scope);
@@ -125,7 +128,8 @@ class API extends \Piwik\Plugin\API
      * @param array $extractions    Either an empty array or if extractions shall be used one or multiple extractions
      *                              the format array(array('dimension' => 'url', 'pattern' => 'index_(.+).html'), array('dimension' => 'urlparam', 'pattern' => '...'))
      *                              Supported dimensions are  eg 'url', 'urlparam' and 'action_name'. To get an up to date list of
-     *                              supported dimensions request the API method `CustomDimensions.getAvailableExtractionDimensions`
+     *                              supported dimensions request the API method `CustomDimensions.getAvailableExtractionDimensions`.
+     *                              Note: Extractions can be only set for dimensions in scope 'action'.
      * @return int Returns the ID of the configured dimension. Note that the same idDimension will be used for different websites.
      * @throws \Exception
      */
@@ -136,12 +140,20 @@ class API extends \Piwik\Plugin\API
         $dimension = new Dimension($idDimension, $idSite);
         $dimension->checkExists();
 
-        $this->validateCustomDimensionConfig($name, $active, $extractions);
+        $this->checkCustomDimensionConfig($name, $active, $extractions);
+        $this->checkExtractionsAreSupportedForScope($dimension->getScope(), $extractions);
 
         $this->getConfiguration()->configureExistingDimension($idDimension, $idSite, $name, $active, $extractions);
 
         Cache::deleteCacheWebsiteAttributes($idSite);
         Cache::clearCacheGeneral();
+    }
+
+    private function checkExtractionsAreSupportedForScope($scope, $extractions)
+    {
+        if (!CustomDimensions::doesScopeSupportExtractions($scope) && !empty($extractions)) {
+            throw new \Exception("Extractions can be used only in scope 'action'");
+        }
     }
 
     /**
@@ -160,7 +172,7 @@ class API extends \Piwik\Plugin\API
         return $configs;
     }
 
-    private function validateCustomDimensionConfig($name, $active, $extractions)
+    private function checkCustomDimensionConfig($name, $active, $extractions)
     {
         // ideally we would work with these objects a bit more instead of arrays but we'd have a lot of
         // serialize/unserialize to do as we need to cache all configured custom dimensions for tracker cache and
@@ -196,10 +208,12 @@ class API extends \Piwik\Plugin\API
             $indexes = $this->getTracking($scope)->getInstalledIndexes();
 
             $scopes[] = array(
-                'name' => $scope,
+                'value' => $scope,
+                'name' => Piwik::translate('General_TrackingScope' . ucfirst($scope)),
                 'numSlotsAvailable' => count($indexes),
                 'numSlotsUsed' => count($configs),
-                'numSlotsLeft' => count($indexes) - count($configs)
+                'numSlotsLeft' => count($indexes) - count($configs),
+                'supportsExtractions' => CustomDimensions::doesScopeSupportExtractions($scope)
             );
         }
 

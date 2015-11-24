@@ -55,6 +55,13 @@ class Dimension
         }
     }
 
+    public function getScope()
+    {
+        $this->checkExists();
+
+        return $this->dimension['scope'];
+    }
+
     private function getConfiguration()
     {
         return new Configuration();

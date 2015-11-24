@@ -158,7 +158,7 @@ class CustomDimensions extends Plugin
 
     public function getSegmentsMetadata(&$segments, $idSites)
     {
-        if (is_array($idSites) && count($idSites) !== 1) {
+        if (empty($idSites) || (is_array($idSites) && count($idSites) !== 1)) {
             return array();
         }
 
@@ -330,6 +330,15 @@ class CustomDimensions extends Plugin
      */
     public static function getPublicScopes()
     {
-        return array(CustomDimensions::SCOPE_VISIT, CustomDimensions::SCOPE_ACTION);
+        return array(self::SCOPE_VISIT, self::SCOPE_ACTION);
+    }
+
+    /**
+     * These are public scopes that are actually visible to the user, scope Conversion
+     * is not really directly visible to the user and a user cannot manage/configure dimensions in scope conversion.
+     */
+    public static function doesScopeSupportExtractions($scope)
+    {
+        return $scope === self::SCOPE_ACTION;
     }
 }

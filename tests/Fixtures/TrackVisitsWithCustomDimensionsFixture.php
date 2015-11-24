@@ -60,15 +60,15 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
         $configuration = new Configuration();
         $configuration->configureNewDimension($this->idSite,  'MyName1', CustomDimensions::SCOPE_VISIT, 1, $active = true, $extractions = array());
 
-        $extraction1 = new Extraction('urlparam', 'test');
-        $extraction2 = new Extraction('urlparam', 'param');
-        $configuration->configureNewDimension($this->idSite,  'MyName2', CustomDimensions::SCOPE_VISIT, 2, $active = true, $extractions = array($extraction1->toArray(), $extraction2->toArray()));
+        $configuration->configureNewDimension($this->idSite,  'MyName2', CustomDimensions::SCOPE_VISIT, 2, $active = true, $extractions = array());
         $configuration->configureNewDimension($this->idSite2, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, $active = true, $extractions = array());
 
+        $extraction1 = new Extraction('urlparam', 'test');
+        $extraction2 = new Extraction('urlparam', 'param');
         $extraction3 = new Extraction('url', '/sub_(.{2})/page');
         $configuration->configureNewDimension($this->idSite,  'MyName3', CustomDimensions::SCOPE_ACTION, 1, $active = true, $extractions = array($extraction3->toArray()));
         $configuration->configureNewDimension($this->idSite,  'MyName4', CustomDimensions::SCOPE_ACTION, 2, $active = false, $extractions = array());
-        $configuration->configureNewDimension($this->idSite,  'MyName5', CustomDimensions::SCOPE_ACTION, 3, $active = true, $extractions = array());
+        $configuration->configureNewDimension($this->idSite,  'MyName5', CustomDimensions::SCOPE_ACTION, 3, $active = true, $extractions = array($extraction1->toArray(), $extraction2->toArray()));
         $configuration->configureNewDimension($this->idSite,  'MyName6', CustomDimensions::SCOPE_VISIT, 4, $active = true, $extractions = array());
 
         Cache::deleteCacheWebsiteAttributes(1);
@@ -93,11 +93,13 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
         self::checkResponse($t->doTrackPageView('Viewing homepage'));
 
         $t->setCustomTrackingParameter('dimension1', 'value5 1');
+        $t->setCustomTrackingParameter('dimension2', 'dim 2');
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.2)->getDatetime());
         $t->setUrl('http://example.com/sub_en/page?test=343&param=23');
         $t->setGenerationTime(123);
         self::checkResponse($t->doTrackPageView('Second page view'));
 
+        $t->setCustomTrackingParameter('dimension2', 'en_US');
         $t->setCustomTrackingParameter('dimension3', 'value5 3');
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.3)->getDatetime());
         $t->setUrl('http://example.com/sub_en/page?param=en_US');
@@ -111,7 +113,7 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
 
         $t->setCustomTrackingParameter('dimension1', 'value1');
         $t->setCustomTrackingParameter('dimension2', 'value2');
-        $t->setCustomTrackingParameter('dimension3', 'value3 5');
+        $t->setCustomTrackingParameter('dimension5', 'value5 5');
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addDay(3)->getDatetime());
         $t->setGenerationTime(1029);
         $t->setUrl('http://example.com/sub_en/page?param=en_US');

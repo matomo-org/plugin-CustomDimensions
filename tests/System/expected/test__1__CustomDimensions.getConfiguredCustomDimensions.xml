@@ -18,14 +18,6 @@
 		<scope>visit</scope>
 		<active>1</active>
 		<extractions>
-			<row>
-				<dimension>urlparam</dimension>
-				<pattern>test</pattern>
-			</row>
-			<row>
-				<dimension>urlparam</dimension>
-				<pattern>param</pattern>
-			</row>
 		</extractions>
 	</row>
 	<row>
@@ -60,6 +52,14 @@
 		<scope>action</scope>
 		<active>1</active>
 		<extractions>
+			<row>
+				<dimension>urlparam</dimension>
+				<pattern>test</pattern>
+			</row>
+			<row>
+				<dimension>urlparam</dimension>
+				<pattern>param</pattern>
+			</row>
 		</extractions>
 	</row>
 	<row>

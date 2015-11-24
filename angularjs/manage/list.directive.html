@@ -9,10 +9,10 @@
     </p>
 
     <div ng-repeat="scope in dimensionsList.model.availableScopes" ng-show="!dimensionsList.model.isLoading">
-        <h2 class="secondary"> {{ scope.name|ucfirst }} Dimensions </h2>
+        <h2 class="secondary"> {{ scope.name }} Dimensions </h2>
 
         <p>
-            {{ 'CustomDimensions_ScopeDescription'+(scope.name|ucfirst) |translate }}
+            {{ 'CustomDimensions_ScopeDescription' + scope.name |translate }}
         </p>
 
         <table class="dataTable entityTable">
@@ -20,7 +20,7 @@
             <tr>
                 <th class="index">{{ 'General_Id'|translate }}</th>
                 <th class="name">{{ 'General_Name'|translate }}</th>
-                <th class="extractions">{{ 'CustomDimensions_Extractions'|translate }}</th>
+                <th class="extractions" ng-show="scope.supportsExtractions">{{ 'CustomDimensions_Extractions'|translate }}</th>
                 <th class="active">{{ 'CorePluginsAdmin_Active'|translate }}</th>
                 <th class="action">{{ 'General_Action'|translate }}</th>
             </tr>
@@ -29,19 +29,19 @@
             <tr ng-show="scope.numSlotsUsed == 0 && !dimensionsList.model.isLoading">
                 <td colspan="5">{{ 'CustomDimensions_NoCustomDimensionConfigured'|translate }}</td>
             </tr>
-            <tr ng-repeat="customDimension in dimensionsList.model.customDimensions|filter:{scope: scope.name}|orderBy:'idcustomdimension'"
+            <tr ng-repeat="customDimension in dimensionsList.model.customDimensions|filter:{scope: scope.value}|orderBy:'idcustomdimension'"
                 class="customdimension" ng-class="customDimension.idcustomdimension">
                 <td class="index">{{ customDimension.idcustomdimension }}</td>
                 <td class="name">{{ customDimension.name }}</td>
-                <td class="extractions"><span ng-class="{'icon-ok': customDimension.extractions[0].pattern}"></span></td>
+                <td class="extractions" ng-show="scope.supportsExtractions"><span ng-class="{'icon-ok': customDimension.extractions[0].pattern}"></span></td>
                 <td class="active"><span ng-class="{'icon-ok': customDimension.active}"></span></td>
-                <td class="action"><a ng-href="#?idDimension={{ customDimension.idcustomdimension }}&scope={{ scope.name }}" class="icon-edit" ng-click="addCustomVar"></a></td>
+                <td class="action"><a ng-href="#?idDimension={{ customDimension.idcustomdimension }}&scope={{ scope.value }}" class="icon-edit" ng-click="addCustomVar"></a></td>
             </tr>
             </tbody>
         </table>
         <p>
-            <a class="btn btn-lg btn-flat configure {{scope.name}}" ng-show="!dimensionsList.model.isLoading"
-               value="" ng-href="#?idDimension=0&scope={{ scope.name }}" ng-class="{'disabled': !scope.numSlotsLeft}"
+            <a class="btn btn-lg btn-flat configure {{scope.value }}" ng-show="!dimensionsList.model.isLoading"
+               value="" ng-href="#?idDimension=0&scope={{ scope.value }}" ng-class="{'disabled': !scope.numSlotsLeft}"
             ><span class="icon-add"></span> {{ 'CustomDimensions_ConfigureNewDimension'|translate }}
                 <span class="info">({{ 'CustomDimensions_XofYLeft'|translate:scope.numSlotsLeft:scope.numSlotsAvailable }})</span></a>
         </p>

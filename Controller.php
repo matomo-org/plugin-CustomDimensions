@@ -21,7 +21,7 @@ class Controller extends \Piwik\Plugin\Controller
 
         Piwik::checkUserHasAdminAccess($idSite);
 
-        return $this->renderTemplate('manage', array());
+        return $this->renderTemplate('manage', array('title' => Piwik::translate('CustomDimensions_CustomDimensions')));
     }
 
 }

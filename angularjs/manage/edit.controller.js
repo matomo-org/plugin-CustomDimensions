@@ -13,16 +13,27 @@
 
         var self = this;
         var currentId = null;
+        var notificationId = 'customdimensions';
 
         var translate = $filter('translate');
 
         this.model = customDimensionsModel;
 
-        function showNotification(message, context)
+        function getNotification()
         {
             var UI = require('piwik/UI');
-            var notification = new UI.Notification();
-            notification.show(message, {context: context, id:'customdimensions', type: 'toast'});
+            return new UI.Notification();
+        }
+
+        function removeAnyCustomDimensionNotification()
+        {
+            getNotification().remove(notificationId);
+        }
+
+        function showNotification(message, context)
+        {
+            var notification = getNotification();
+            notification.show(message, {context: context, id: notificationId});
         }
 
         function init(dimensionId)
@@ -30,23 +41,30 @@
             self.create = dimensionId == '0';
             self.edit   = !(dimensionId == '0');
 
-            if (self.edit && dimensionId) {
-                customDimensionsModel.findCustomDimension(dimensionId).then(function (dimension) {
-                    self.dimension = dimension;
-                    if (dimension && !dimension.extractions.length) {
-                        self.addExtraction();
-                    }
-                });
-            } else if (self.create) {
-                self.dimension = {
-                    idSite: piwik.idSite,
-                    name: '',
-                    active: false,
-                    extractions: [],
-                    scope: $scope.dimensionScope
-                };
-                self.addExtraction();
+            if (dimensionId !== null) {
+                removeAnyCustomDimensionNotification();
             }
+
+            self.model.fetchCustomDimensionsConfiguration().then(function () {
+
+                if (self.edit && dimensionId) {
+                    self.model.findCustomDimension(dimensionId).then(function (dimension) {
+                        self.dimension = dimension;
+                        if (dimension && !dimension.extractions.length) {
+                            self.addExtraction();
+                        }
+                    });
+                } else if (self.create) {
+                    self.dimension = {
+                        idSite: piwik.idSite,
+                        name: '',
+                        active: false,
+                        extractions: [],
+                        scope: $scope.dimensionScope
+                    };
+                    self.addExtraction();
+                }
+            });
         }
 
         this.removeExtraction = function(index)
@@ -54,12 +72,30 @@
             if (index > -1) {
                 this.dimension.extractions.splice(index, 1);
             }
-        }
+        };
 
         this.addExtraction = function()
         {
-            this.dimension.extractions.push({dimension: 'url', pattern: ''});
-        }
+            if (this.doesScopeSupportExtraction()) {
+                this.dimension.extractions.push({dimension: 'url', pattern: ''});
+            }
+        };
+
+        this.doesScopeSupportExtraction = function () {
+            if (!this.dimension || !this.dimension.scope || !this.model.availableScopes) {
+                return false;
+            }
+
+            var index, scope;
+            for (index in this.model.availableScopes) {
+                scope = this.model.availableScopes[index];
+                if (scope && scope.value === this.dimension.scope) {
+                    return scope.supportsExtractions;
+                }
+            }
+
+            return false;
+        };
 
         this.createCustomDimension = function () {
             var method = 'CustomDimensions.configureNewCustomDimension';

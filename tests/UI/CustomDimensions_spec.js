@@ -149,8 +149,6 @@ describe("CustomDimensions", function () {
         }, done);
     });
 
-    return;
-
     /**
      * MANAGE CUSTOM DIMENSIONS
      */
@@ -161,15 +159,28 @@ describe("CustomDimensions", function () {
         }, done);
     });
 
-    it('should open a page to create a new visit dimension', function (done) {
+    it('should open a page to create a new visit dimension and not show extractions', function (done) {
         capturePageWrap('manage_new_visit_dimension_open', function (page) {
             page.click('.configure.visit');
         }, done);
     });
 
-    it('should be possible to define name, active and extractions', function (done) {
-        capturePageWrap('manage_new_visit_dimension_withdata', function (page) {
+    it('should be possible to create new visit dimension', function (done) {
+        capturePageWrap('manage_new_visit_dimension_created', function (page) {
             page.sendKeys(".editCustomDimension #name", 'My Custom Name');
+            page.click('.editCustomDimension .create');
+        }, done);
+    });
+
+    it('should open a page to create a new action dimension', function (done) {
+        capturePageWrap('manage_new_action_dimension_open', function (page) {
+            page.click('.configure.action');
+        }, done);
+    });
+
+    it('should be possible to define name, active and extractions for scope action', function (done) {
+        capturePageWrap('manage_new_action_dimension_withdata', function (page) {
+            page.sendKeys(".editCustomDimension #name", 'My Action Name');
             page.click('.editCustomDimension #active');
 
             page.sendKeys('.extraction.0 .pattern', 'myPattern_(.+)');
@@ -183,25 +194,25 @@ describe("CustomDimensions", function () {
     });
 
     it('should be possible to remove a defined extraction', function (done) {
-        capturePageWrap('manage_new_visit_dimension_remove_an_extraction', function (page) {
+        capturePageWrap('manage_new_action_dimension_remove_an_extraction', function (page) {
             page.click('.extraction.1 .icon-minus');
         }, done);
     });
 
     it('should create a new dimension', function (done) {
-        capturePageWrap('manage_new_visit_dimension_created', function (page) {
+        capturePageWrap('manage_new_action_dimension_created', function (page) {
             page.click('.editCustomDimension .create');
         }, done);
     });
 
     it('should be able to open created dimension and see same data but this time with tracking instructions', function (done) {
-        capturePageWrap('manage_edit_visit_dimension_verify_created', function (page) {
-            page.click('.manageCustomDimensions .customdimension.7 .icon-edit');
+        capturePageWrap('manage_edit_action_dimension_verify_created', function (page) {
+            page.click('.manageCustomDimensions .customdimension.8 .icon-edit');
         }, done);
     });
 
     it('should be possible to change an existing dimension', function (done) {
-        capturePageWrap('manage_edit_visit_dimension_withdata', function (page) {
+        capturePageWrap('manage_edit_action_dimension_withdata', function (page) {
             page.sendKeys(".editCustomDimension #name", 'ABC');
             page.click('.editCustomDimension #active');
             page.click('.extraction.0 .icon-minus');
@@ -209,19 +220,19 @@ describe("CustomDimensions", function () {
     });
 
     it('should updated an existing dimension', function (done) {
-        capturePageWrap('manage_edit_visit_dimension_updated', function (page) {
+        capturePageWrap('manage_edit_action_dimension_updated', function (page) {
             page.click('.editCustomDimension .update');
         }, done);
     });
 
     it('should have actually updated values', function (done) {
-        capturePageWrap('manage_edit_visit_dimension_verify_updated', function (page) {
-            page.click('.manageCustomDimensions .customdimension.7 .icon-edit');
+        capturePageWrap('manage_edit_action_dimension_verify_updated', function (page) {
+            page.click('.manageCustomDimensions .customdimension.8 .icon-edit');
         }, done);
     });
 
     it('should go back to list when pressing cancel', function (done) {
-        capturePageWrap('manage_edit_visit_dimension_cancel', function (page) {
+        capturePageWrap('manage_edit_action_dimension_cancel', function (page) {
             page.click('.editCustomDimension .cancel');
         }, done);
     });
@@ -241,9 +252,9 @@ describe("CustomDimensions", function () {
         }, done);
     });
 
-    it('should be possible to open an existing dimension via URL', function (done) {
+    it('should be possible to open an existing visit dimension via URL', function (done) {
         capturePageWrap('manage_edit_via_url', function (page) {
-            page.load(manageUrl + '#?idDimension=2&scope=visit');
+            page.load(manageUrl + '#?idDimension=5&scope=action');
         }, done);
     });
 

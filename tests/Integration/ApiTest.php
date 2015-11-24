@@ -60,16 +60,17 @@ class ApiTest extends IntegrationTestCase
     public function getInvalidConfigForNewDimensions()
     {
         return array(
-            array(array('message' => 'CustomDimensions_NameAllowedCharacters',   'name' => 'Inval/\\nam&<b>e</b>', 'scope' => CustomDimensions::SCOPE_VISIT, 'active' => '1', 'extractions' => array())),
-            array(array('message' => "Invalid value 'anyScOPe' for 'scope'",     'name' => 'Valid Name äöü',       'scope' => 'anyScOPe',                    'active' => '1', 'extractions' => array())),
-            array(array('message' => "Invalid value '2' for 'active' specified", 'name' => 'Valid Name äöü',       'scope' => CustomDimensions::SCOPE_VISIT, 'active' => '2', 'extractions' => array())),
-            array(array('message' => 'extractions has to be an array',           'name' => 'Valid Name äöü',       'scope' => CustomDimensions::SCOPE_VISIT, 'active' => '1', 'extractions' => 5)),
+            array(array('message' => 'CustomDimensions_NameAllowedCharacters',         'name' => 'Inval/\\nam&<b>e</b>', 'scope' => CustomDimensions::SCOPE_ACTION, 'active' => '1', 'extractions' => array())),
+            array(array('message' => "Invalid value 'anyScOPe' for 'scope'",           'name' => 'Valid Name äöü',       'scope' => 'anyScOPe',                    'active' => '1', 'extractions' => array())),
+            array(array('message' => "Invalid value '2' for 'active' specified",       'name' => 'Valid Name äöü',       'scope' => CustomDimensions::SCOPE_ACTION, 'active' => '2', 'extractions' => array())),
+            array(array('message' => 'extractions has to be an array',                 'name' => 'Valid Name äöü',       'scope' => CustomDimensions::SCOPE_ACTION, 'active' => '1', 'extractions' => 5)),
+            array(array('message' => "Extractions can be used only in scope 'action'", 'name' => 'Valid Name äöü',       'scope' => CustomDimensions::SCOPE_VISIT, 'active' => '1', 'extractions' => array(array('dimension' => 'url', 'pattern' => 'i(.*)')))),
         );
     }
 
     public function test_configureNewDimension_shouldReturnCreatedIdOnSuccess()
     {
-        $id = $this->api->configureNewCustomDimension($idSite = 1, 'Valid Name äöü', CustomDimensions::SCOPE_VISIT, '1', array(array('dimension' => 'urlparam', 'pattern' => 'test')));
+        $id = $this->api->configureNewCustomDimension($idSite = 1, 'Valid Name äöü', CustomDimensions::SCOPE_ACTION, '1', array(array('dimension' => 'urlparam', 'pattern' => 'test')));
 
         $this->assertSame(1, $id);
 
@@ -81,7 +82,7 @@ class ApiTest extends IntegrationTestCase
             'idsite' => '1',
             'name' => 'Valid Name äöü',
             'index' => '1',
-            'scope' => 'visit',
+            'scope' => 'action',
             'active' => true,
             'extractions' => array(
                 array ('dimension' => 'urlparam', 'pattern' => 'test'))
@@ -138,6 +139,16 @@ class ApiTest extends IntegrationTestCase
         $this->assertSame('New Valid Name äöü', $dimensions[0]['name']);
         $this->assertFalse($dimensions[0]['active']);
         $this->assertSame('newtest', $dimensions[0]['extractions'][0]['pattern']);
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Extractions can be used only in scope 'action'
+     */
+    public function test_configureExistingCustomDimension_shouldThrowException_WhenTryingToSetExtractionsForNonActionScope()
+    {
+        $id = $this->api->configureNewCustomDimension($idSite = 1, 'Name', CustomDimensions::SCOPE_VISIT, '1');
+        $this->api->configureExistingCustomDimension($id, $idSite, 'Name', '0', array(array('dimension' => 'urlparam', 'pattern' => 'newtest')));
     }
 
     /**
