@@ -27,17 +27,23 @@ env:
   global:
     - PLUGIN_NAME=CustomDimensions
     - PIWIK_ROOT_DIR=$TRAVIS_BUILD_DIR/piwik
-    - PIWIK_LATEST_STABLE_TEST_TARGET=2.15.0
-    - secure: "X9dBgGqUuFDU+XqgPLi3TTuLt+g42Pi2oJYHZl1kqL0fjY6avsfaFVYtLoM7wak6B5cdP+oQIvzbrdN39EpVV3u/ZCEIYWoOLdOB1QtUVZ6M7TaD41RxsF9WaN+1eBKjqv7EJWP+9v/bcBxbsUqzcdd4jrWxWBNKYFcAXPMI4/MdbSKOfU7tT8cWpe4hADeN+mA7LXmvqJ2spEK+EYmL/slwqR+9KMzbNVGAFKnfeBgL4RxT1HIx64dUyVQeKPK3IOCo+7MWWYk5NA2FOlnRljOgME50AAE8pOumeVxoGJGbAQkaa97ImWphf/+i/H+P1OZZlqFGaPg0GYxlH1m1K16OTIdmqIst9MtAhyI7K5VoRbM2kTxf8BCHdti2iA73ENROj+YstzJEFoTBlnsAkYYbIjTS6IvP5Obz3SjaL8fg+8UDradkVEhPQX1AeWXPtO1yQewBjtzk7WP+GOismFzYc69N/CVgbsL0d/7pA0M3mpPk03vmrUAgdvXKguE2m2ujuRDI9gtM24DXB8N21dy8tHv5NFR9ovpAz8x33s3EU+PnwiJ++xRa3GXoEgVwAwlAz2QmwjF+maa6bcPWyGQ8RL/lFuFwpeB2W6pbZtJa0NztwlcKI+9SRADNKuSYEyVqbH9Goo+8+Bm9JzJfsQo+Xjl30E1No2KYEYQJLTY="
+    # this variable controls the version of Piwik your tests will run against. increment it when
+    # making your plugin compatible with the new version of Piwik.
+    - PIWIK_TEST_TARGET=2.15.1-b2
+    - secure: "Ev/dmJ2XI5VFFabMHlepjXKBVvFtSmge8H/nEjkwTgJXu5ZqZKeYcUjVDEC3G8+x5Jqpy0818JNjw1t4G/hK+8kTzB4Zw4PkEIo55xoAGkS8luN+5yT82SooyDjCqhiQ8vkJeD9NKsvWGAybeij1y16hmtdbgD8tBphPC8i6bcLGqkcgnVChF0MchE4weRDAxb49RejkteHOV6ig/6CR31SEYjjL6AqmFhS4aUE908HATYleNhCCDXLaWukO2sNmfTX8y5x5QB6INglUiSJjQcOvis83MWLDCpClNlchqDLU5jlO/2YDH4XnGVLBkl4mfX5vwVmQPr9OA3kaXzAQw3Vj3wymKj8lDxVPhMuld5OWLr/X9zZx0htocht6+6sQmuRjbL5e+GAw2loo4b5XXdpLe1+sEtoYgzc8U1NOA8k3zyikRPucINH/p431dcsncUCu9yjlyJClZxFt5tHgKdwj7gUCyuneSm0xGsBt/bZOKWbcoZvNISGtGeB1qPZFrDmj29INJo6Oecn1DtY2F7SMmy1ZOrUC5SLhrJIKageh30ek7/MJsgIOswg+MXdrvWJNWu53Am4rRHjKpxFjCvMlpNWTt4kg2F865moqswwTFIjTX9dy0ZvfhUx94gc2GDlroNjD76qLHD96BCqrevPmSCJv95O73WJUVNsnxhs="
   matrix:
-    - TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_LATEST_STABLE_TEST_TARGET
+    - TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
     - TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik
+    - TEST_SUITE=UITests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
 
 matrix:
   exclude:
     # execute latest stable tests only w/ PHP 5.5
-    - php: 5.3
+    - php: 5.3.3
       env: TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik
+    # execute UI tests only w/ PHP 5.6
+    - php: 5.3.3
+      env: TEST_SUITE=UITests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_PIWIK_BRANCH=$PIWIK_TEST_TARGET
 
 sudo: required
 
@@ -63,7 +69,7 @@ install:
   - '[ -d ./tests/travis/.git ] || sh -c "rm -rf ./tests/travis && git clone https://github.com/piwik/travis-scripts.git ./tests/travis"'
   - cd ./tests/travis ; git checkout master ; cd ../..
 
-  - export GENERATE_TRAVIS_YML_COMMAND="php ./tests/travis/generator/main.php generate:travis-yml --plugin=\"CustomDimensions\" --verbose"
+  - export GENERATE_TRAVIS_YML_COMMAND="php ./tests/travis/generator/main.php generate:travis-yml --plugin=\"CustomDimensions\" --force-ui-tests --verbose"
   - '[[ "$TRAVIS_JOB_NUMBER" != *.1 || "$TRAVIS_PULL_REQUEST" != "false" ]] || ./tests/travis/autoupdate_travis_yml.sh'
 
   - ./tests/travis/checkout_test_against_branch.sh

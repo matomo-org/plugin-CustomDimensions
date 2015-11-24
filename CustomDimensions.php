@@ -87,8 +87,7 @@ class CustomDimensions extends Plugin
 
     public function install()
     {
-        $config = new Dao\Configuration();
-        $config->install();
+        $this->configuration->install();
 
         foreach (self::getScopes() as $scope) {
             $tracking = new Dao\LogTable($scope);
@@ -101,8 +100,7 @@ class CustomDimensions extends Plugin
 
     public function uninstall()
     {
-        $config = new Dao\Configuration();
-        $config->uninstall();
+        $this->configuration->uninstall();
 
         foreach (self::getScopes() as $scope) {
             $tracking = new Dao\LogTable($scope);

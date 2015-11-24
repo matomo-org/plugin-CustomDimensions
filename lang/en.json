@@ -36,8 +36,5 @@
         "ColumnUniqueActions": "Unique Actions",
         "ColumnAvgTimeOnDimension": "Avg. Time On Dimension",
         "CustomDimensionId": "CustomDimensions (Id %d)"
-    },
-    "Goals": {
-        "CategoryTextCustomDimensions_CustomDimensions": "Custom Dimension"
     }
 }

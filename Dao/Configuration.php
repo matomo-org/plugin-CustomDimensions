@@ -15,11 +15,6 @@ use Piwik\DbHelper;
 
 class Configuration
 {
-    /**
-     * @var Db
-     */
-    private $db;
-
     private $tableName = 'custom_dimensions';
     private $tableNamePrefixed;
 
@@ -30,11 +25,7 @@ class Configuration
 
     private function getDb()
     {
-        if (!isset($this->db)) {
-            $this->db = Db::get();
-        }
-
-        return $this->db;
+        return Db::get();
     }
 
     public function configureNewDimension($idSite, $name, $scope, $index, $active, $extractions)

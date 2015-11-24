@@ -50,7 +50,7 @@ class ConfigurationTest extends IntegrationTestCase
 
     /**
      * @expectedException \Zend_Db_Statement_Exception
-     * @expectedExceptionMessage not found
+     * @expectedExceptionMessage custom_dimensions
      */
     public function test_shouldBeAbleToUninstallConfigTable()
     {
