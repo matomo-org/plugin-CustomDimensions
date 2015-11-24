@@ -137,6 +137,11 @@ class Configuration
             return $dimension;
         }
 
+        // cast to string done
+        $dimension['idcustomdimension'] = (string) $dimension['idcustomdimension'];
+        $dimension['idsite'] = (string) $dimension['idsite'];
+        $dimension['index'] = (string) $dimension['index'];
+
         $dimension['extractions'] = $this->decodeExtractions($dimension['extractions']);
         $dimension['active'] = (bool) $dimension['active'];
 

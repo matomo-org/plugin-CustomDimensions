@@ -267,7 +267,7 @@ class ConfigurationTest extends IntegrationTestCase
         $this->assertSame(array(), $dimensions);
     }
 
-    public function test_ggetCustomDimensionsHavingScope_shouldFindEntriesHavingScopeAndSite()
+    public function test_getCustomDimensionsHavingScope_shouldFindEntriesHavingScopeAndSite()
     {
         $this->createManyCustomDimensionCases();
 
