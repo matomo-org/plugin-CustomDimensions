@@ -30,7 +30,6 @@ class Archiver extends \Piwik\Plugin\Archiver
     protected $dataArray;
     protected $maximumRowsInDataTableLevelZero;
     protected $maximumRowsInSubDataTable;
-    protected $newEmptyRow;
 
     /**
      * @var ArchiveProcessor
@@ -198,9 +197,9 @@ class Archiver extends \Piwik\Plugin\Archiver
 
         while ($row = $resultSet->fetch()) {
             $label = $row[$valueField];
-            $value = $this->cleanCustomDimensionValue($label);
+            $label = $this->cleanCustomDimensionValue($label);
 
-            $this->dataArray->sumMetricsActions($value, $row);
+            $this->dataArray->sumMetricsActions($label, $row);
 
             // make sure we always work with normalized URL no matter how the individual action stores it
             $normalized = Tracker\PageUrl::normalizeUrl($row['url']);

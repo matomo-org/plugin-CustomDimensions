@@ -36,8 +36,8 @@
                     <div ng-repeat="(index, extraction) in editDimension.dimension.extractions" class="extraction {{ index }}">
                         <select name="extractions"
                                 class="dimension"
+                                ng-options="extractionDimension.value as extractionDimension.name for extractionDimension in editDimension.model.extractionDimensions"
                                 ng-model="editDimension.dimension.extractions[index].dimension">
-                            <option value="{{ extractionDimension.value }}" ng-repeat="extractionDimension in editDimension.model.extractionDimensions">{{ extractionDimension.name }}</option>
                         </select>
 
                         <input type="text"

@@ -37,11 +37,14 @@ class API extends \Piwik\Plugin\API
      * Fetch a report for the given idDimension. Only reports for active dimensions can be fetched. Requires at least
      * view access.
      *
-     * @param $idDimension
-     * @param $idSite
-     * @param $period
-     * @param $date
+     * @param int $idDimension
+     * @param int $idSite
+     * @param string $period
+     * @param string $date
      * @param bool|false $segment
+     * @param bool|false $expanded
+     * @param bool|false $flat
+     * @param int|null   $idSubtable
      * @return DataTable|DataTable\Map
      * @throws \Exception
      */

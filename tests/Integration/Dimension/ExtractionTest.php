@@ -119,6 +119,14 @@ class ExtractionTest extends IntegrationTestCase
         $this->assertSame('errer', $value);
     }
 
+    public function test_extract_whenOnlyPatternGiven()
+    {
+        $request = $this->buildRequest();
+
+        $value = $this->buildExtraction('url', '(.+)')->extract($request);
+        $this->assertSame('http://www.example.com/test/index.php?idsite=54&module=CoreHome&action=test', $value);
+    }
+
     /**
      * @expectedException \Exception
      * @expectedExceptionMessage Invald dimension 'anyInvalid' used in an extraction. Available dimensions are: url, urlparam, action_name
