@@ -18,13 +18,13 @@
                            title="{{ 'CustomDimensions_NameAllowedCharacters'|translate }}">
                 </div>
                 <div class="form-group">
-                    <label for="active">
-                        {{ 'CorePluginsAdmin_Active'|translate }}
-                    </label>
                     <div class="form-help">
                         {{ 'CustomDimensions_CannotBeDeleted'|translate }}
                     </div>
-                    <input type="checkbox" id="active" ng-model="editDimension.dimension.active">
+                    <label for="active" class="checkbox">
+                        <input type="checkbox" id="active" ng-model="editDimension.dimension.active">
+                        {{ 'CorePluginsAdmin_Active'|translate }}
+                    </label>
                 </div>
                 <div class="form-group" ng-show="editDimension.doesScopeSupportExtraction()">
 

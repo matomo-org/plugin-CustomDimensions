@@ -211,8 +211,10 @@ class CustomDimensions extends Plugin
         // we simply make all translations available via JS as > 90% of them are used in JS anyway
         $translator = StaticContainer::get('Piwik\Translation\Translator');
         $t = $translator->getAllTranslations();
-        foreach (array_keys($t[$this->pluginName]) as $key) {
-            $translationKeys[] = $this->pluginName . '_' . $key;
+        if (!empty($t[$this->pluginName])) {
+            foreach (array_keys($t[$this->pluginName]) as $key) {
+                $translationKeys[] = $this->pluginName . '_' . $key;
+            }
         }
     }
 
