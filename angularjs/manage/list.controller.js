@@ -12,6 +12,8 @@
     function CustomDimensionsListController(customDimensionsModel) {
         customDimensionsModel.fetchCustomDimensionsConfiguration();
 
+        this.siteName = piwik.siteName;
+
         this.model = customDimensionsModel;
     }
 })();

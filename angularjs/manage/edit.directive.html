@@ -43,7 +43,7 @@
                         <input type="text"
                                class="pattern"
                                ng-model="editDimension.dimension.extractions[index].pattern"
-                               placeholder="{{ editDimension.dimension.extractions[index].dimension === 'urlparam' ? 'urlparamname' : 'test(.*)' }}">
+                               placeholder="{{ editDimension.dimension.extractions[index].dimension === 'urlparam' ? 'url query string parameter' : 'eg. /blog/(.*)/' }}">
 
                         <span ng-click="editDimension.addExtraction()" class="icon-plus"></span>
                         <span ng-click="editDimension.removeExtraction(index)"
