@@ -76,6 +76,7 @@ class CustomDimensions extends Plugin
         $jsFiles[] = "plugins/CustomDimensions/angularjs/manage/edit.directive.js";
         $jsFiles[] = "plugins/CustomDimensions/angularjs/manage/manage.controller.js";
         $jsFiles[] = "plugins/CustomDimensions/angularjs/manage/manage.directive.js";
+        $jsFiles[] = "plugins/CustomDimensions/javascripts/rowactions.js";
     }
 
     public function getStylesheetFiles(&$stylesheets)
