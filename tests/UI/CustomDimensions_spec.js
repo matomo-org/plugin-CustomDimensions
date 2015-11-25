@@ -60,7 +60,7 @@ describe("CustomDimensions", function () {
     });
 
     it('should add a menu item for each active visit dimension', function (done) {
-        expect.screenshot('report_visit_mainmenu').to.be.captureSelector('#secondNavBar', function (page) {
+        captureSelector('report_visit_mainmenu', '#secondNavBar', function (page) {
             // we only capture a screenshot of a different part of the page, no need to do anything
         }, done);
     });

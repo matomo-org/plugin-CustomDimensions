@@ -236,7 +236,7 @@ class CustomDimensions extends Plugin
             }
 
             $reportsWithGoals[] = array(
-                'category' => 'CustomDimensions_CustomDimensions',
+                'category' => 'VisitsSummary_VisitsSummary',
                 'name'     => $dimension['name'],
                 'module'   => $this->pluginName,
                 'action'   => 'getCustomDimension',
