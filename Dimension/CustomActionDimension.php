@@ -31,4 +31,8 @@ class CustomActionDimension extends ActionDimension
         return $this->actualName;
     }
 
+    public function getId()
+    {
+        return 'CustomDimensions.' . $this->columnName;
+    }
 }

@@ -31,4 +31,9 @@ class CustomVisitDimension extends VisitDimension
         return $this->actualName;
     }
 
+    public function getId()
+    {
+        return 'CustomDimensions.' . $this->columnName;
+    }
+
 }
