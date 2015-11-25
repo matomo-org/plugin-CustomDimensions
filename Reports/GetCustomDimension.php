@@ -49,6 +49,7 @@ class GetCustomDimension extends Report
         $this->menuTitle = $this->category;
         $this->name  = Piwik::translate($this->category);
         $this->order = 100;
+        $this->actionToLoadSubTables = $this->action;
 
         $idDimension = Common::getRequestVar('idDimension', 0, 'int');
         $idSite      = Common::getRequestVar('idSite', 0, 'int');
