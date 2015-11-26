@@ -149,7 +149,7 @@ class Archiver extends \Piwik\Plugin\Archiver
         }
     }
 
-    protected function aggregateFromActions($valueField)
+    public function queryCustomDimensionActions(DataArray $dataArray, $valueField)
     {
         $metricsConfig = ActionsMetrics::getActionMetrics();
 
@@ -157,7 +157,7 @@ class Archiver extends \Piwik\Plugin\Archiver
         $metricIds[] = Metrics::INDEX_PAGE_SUM_TIME_SPENT;
         $metricIds[] = Metrics::INDEX_BOUNCE_COUNT;
         $metricIds[] = Metrics::INDEX_PAGE_EXIT_NB_VISITS;
-        $this->dataArray->setActionMetricsIds($metricIds);
+        $dataArray->setActionMetricsIds($metricIds);
 
         $select = "log_link_visit_action.$valueField,
                   actionAlias.name as url,
@@ -194,6 +194,13 @@ class Archiver extends \Piwik\Plugin\Archiver
         $query     = $logAggregator->generateQuery($select, $from, $where, $groupBy, $orderBy);
         $db        = $logAggregator->getDb();
         $resultSet = $db->query($query['sql'], $query['bind']);
+
+        return $resultSet;
+    }
+
+    protected function aggregateFromActions($valueField)
+    {
+        $resultSet = $this->queryCustomDimensionActions($this->dataArray, $valueField);
 
         while ($row = $resultSet->fetch()) {
             $label = $row[$valueField];

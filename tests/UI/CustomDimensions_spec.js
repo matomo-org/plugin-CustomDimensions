@@ -143,7 +143,7 @@ describe("CustomDimensions", function () {
     });
 
     it('should be able to show transitions for subtable', function (done) {
-        captureSelector('report_action_subtable_transitions', segmentedVisitorLogPopupSelector, function (page) {
+        capturePageWrap('report_action_subtable_transitions', function (page) {
             closeOpenedPopover(page);
             triggerRowAction(page, 'en_US', 'actionTransitions');
         }, done);
