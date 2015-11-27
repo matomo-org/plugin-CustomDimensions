@@ -1,0 +1,26 @@
+{
+    "CustomDimensions": {
+        "CustomDimensions": "Vlastní dimenze",
+        "CustomDimensionsIntro": "Vytvořením %sVlastních dimenzí%s můžete sbírat jakákoliv vlastní data pro '%s'.",
+        "CustomDimensionsIntroNext": "Piwik vytvoří report pro každou Vlastní dimenzi (včetně poměrného převodu pro každý z vašich Cílů) a také vás nechá jednoduše dělit návštěvníky na základě těchto hodnot.",
+        "HowToTrackManuallyTitle": "Sledovat hodnotu pro tuto dimenzi ručně",
+        "HowToTrackManuallyViaJs": "Pro sledování hodnoty v JavaScriptu zavolat:",
+        "HowToTrackManuallyViaPhp": "Pro sledování hodnoty v PHP zavolat:",
+        "NoCustomDimensionConfigured": "Není nakonfigurována žádná Vlastní dimenze, chci ji nakonfigurovat.",
+        "ConfigureNewDimension": "Konfigurovat novou dimenzi",
+        "ConfigureDimension": "Konfigurovat %s Vlastní dimenzi %s",
+        "XofYLeft": "Zbývá %s ze %s dimenzí",
+        "CannotBeDeleted": "Vlastní dimenzi nelze smazat, pouze deaktivovat.",
+        "PageUrlParam": "Parametr URL stránky",
+        "NameAllowedCharacters": "Mezi povolené znaky patří písmena, čísla, mezery, pomlčka a podtržítko.",
+        "NameIsRequired": "Je vyžadováno jméno.",
+        "NameIsTooLong": "Jméno obsahuje příliš mnoho znaků, lze použít až %d znaků.",
+        "ExceptionDimensionDoesNotExist": "Dimenze %d pro web %d neexistuje.",
+        "ExceptionDimensionIsNotActive": "Dimenze %d pro web %d není aktivní.",
+        "DimensionCreated": "Vlastní dimenze vytvořena",
+        "DimensionUpdated": "Vlastní dimenze aktualizována",
+        "ColumnUniqueActions": "Unikátní akce",
+        "ColumnAvgTimeOnDimension": "Průměrný čas na dimenzi",
+        "CustomDimensionId": "CustomDimensions (Id %d)"
+    }
+}
