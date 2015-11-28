@@ -42,6 +42,14 @@
 	</columns>
 	<reportData>
 		<row>
+			<label>Value not defined</label>
+			<nb_visits>2</nb_visits>
+			<nb_actions>2</nb_actions>
+			<nb_actions_per_visit>1</nb_actions_per_visit>
+			<avg_time_on_site>00:00:00</avg_time_on_site>
+			<bounce_rate>100%</bounce_rate>
+		</row>
+		<row>
 			<label>value1</label>
 			<nb_visits>1</nb_visits>
 			<nb_actions>1</nb_actions>
@@ -60,6 +68,9 @@
 	</reportData>
 	<reportMetadata>
 		<row>
+			<segment>dimension1==</segment>
+		</row>
+		<row>
 			<segment>dimension1==value1</segment>
 		</row>
 		<row>
@@ -67,10 +78,10 @@
 		</row>
 	</reportMetadata>
 	<reportTotal>
-		<nb_visits>2</nb_visits>
-		<nb_actions>4</nb_actions>
-		<nb_conversions>2</nb_conversions>
-		<bounce_count>1</bounce_count>
+		<nb_visits>4</nb_visits>
+		<nb_actions>6</nb_actions>
+		<nb_conversions>4</nb_conversions>
+		<bounce_count>3</bounce_count>
 		<revenue>0</revenue>
 	</reportTotal>
 </result>

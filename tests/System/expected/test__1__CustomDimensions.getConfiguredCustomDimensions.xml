@@ -9,6 +9,7 @@
 		<active>1</active>
 		<extractions>
 		</extractions>
+		<case_sensitive>1</case_sensitive>
 	</row>
 	<row>
 		<idcustomdimension>2</idcustomdimension>
@@ -19,6 +20,7 @@
 		<active>1</active>
 		<extractions>
 		</extractions>
+		<case_sensitive>1</case_sensitive>
 	</row>
 	<row>
 		<idcustomdimension>3</idcustomdimension>
@@ -33,6 +35,7 @@
 				<pattern>/sub_(.{2})/page</pattern>
 			</row>
 		</extractions>
+		<case_sensitive>1</case_sensitive>
 	</row>
 	<row>
 		<idcustomdimension>4</idcustomdimension>
@@ -43,6 +46,7 @@
 		<active>0</active>
 		<extractions>
 		</extractions>
+		<case_sensitive>1</case_sensitive>
 	</row>
 	<row>
 		<idcustomdimension>5</idcustomdimension>
@@ -61,6 +65,7 @@
 				<pattern>param</pattern>
 			</row>
 		</extractions>
+		<case_sensitive>1</case_sensitive>
 	</row>
 	<row>
 		<idcustomdimension>6</idcustomdimension>
@@ -71,5 +76,6 @@
 		<active>1</active>
 		<extractions>
 		</extractions>
+		<case_sensitive>1</case_sensitive>
 	</row>
 </result>

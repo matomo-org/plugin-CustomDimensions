@@ -18,8 +18,7 @@ describe("CustomDimensions", function () {
     var manageUrl = "?" + generalParams + "&module=CustomDimensions&action=manage";
     var reportUrl = "?" + urlBase + "#" + generalParams + "&module=CustomDimensions&action=menuGetCustomDimension";
 
-    var rowEvolutionPopupSelector = '.pageWrap,.ui-dialog > .ui-dialog-content > div.rowevolution:visible';
-    var segmentedVisitorLogPopupSelector = '.pageWrap,.ui-dialog > .ui-dialog-content > div.dataTableVizVisitorLog:visible';
+    var popupSelector = '.pageWrap,.ui-dialog:visible';
 
     function capturePageWrap (screenName, callback, done) {
         expect.screenshot(screenName).to.be.captureSelector('.pageWrap', callback, done);
@@ -51,7 +50,6 @@ describe("CustomDimensions", function () {
     /**
      * VISIT DIMENSION REPORTS
      */
-
 
     it('should show the report for the selected visit dimension', function (done) {
         capturePageWrap('report_visit', function (page) {
@@ -108,14 +106,14 @@ describe("CustomDimensions", function () {
     });
 
     it('should be able to open segmented visitor log', function (done) {
-        captureSelector('report_actions_segmented_visitorlog', segmentedVisitorLogPopupSelector, function (page) {
+        captureSelector('report_actions_segmented_visitorlog', popupSelector, function (page) {
             page.load(reportUrl + "&idDimension=3");
             triggerRowAction(page, 'en', 'actionSegmentVisitorLog');
         }, done);
     });
 
     it('should be able to open row evolution', function (done) {
-        captureSelector('report_actions_rowevolution', rowEvolutionPopupSelector, function (page) {
+        captureSelector('report_actions_rowevolution', popupSelector, function (page) {
             page.load(reportUrl + "&idDimension=3");
             triggerRowAction(page, 'en', 'actionRowEvolution');
         }, done);
@@ -130,13 +128,13 @@ describe("CustomDimensions", function () {
     });
 
     it('should be able to show row evolution for subtable', function (done) {
-        captureSelector('report_action_subtable_rowevolution', rowEvolutionPopupSelector, function (page) {
+        captureSelector('report_action_subtable_rowevolution', popupSelector, function (page) {
             triggerRowAction(page, 'en_US', 'actionRowEvolution');
         }, done);
     });
 
     it('should be able to show segmented visitor log for subtable', function (done) {
-        captureSelector('report_action_subtable_segmented_visitor_log', segmentedVisitorLogPopupSelector, function (page) {
+        captureSelector('report_action_subtable_segmented_visitor_log', popupSelector, function (page) {
             closeOpenedPopover(page);
             triggerRowAction(page, 'en_US', 'actionSegmentVisitorLog');
         }, done);
@@ -215,6 +213,7 @@ describe("CustomDimensions", function () {
         capturePageWrap('manage_edit_action_dimension_withdata', function (page) {
             page.sendKeys(".editCustomDimension #name", 'ABC');
             page.click('.editCustomDimension #active');
+            page.click('.editCustomDimension #casesensitive');
             page.click('.extraction.0 .icon-minus');
         }, done);
     });

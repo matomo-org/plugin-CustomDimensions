@@ -101,6 +101,9 @@
             var extractions = dimension.extractions;
             delete dimension.extractions;
 
+            dimension.caseSensitive = dimension.case_sensitive ? '1' : '0';
+            delete dimension.case_sensitive;
+
             model.isUpdating = true;
 
             return piwikApi.post(dimension, {extractions: extractions}).then(function (response) {

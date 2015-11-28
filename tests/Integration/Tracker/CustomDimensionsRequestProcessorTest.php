@@ -279,20 +279,20 @@ class CustomDimensionsRequestProcessorTest extends IntegrationTestCase
         $extractions = array(
             array('dimension' => 'url', 'pattern' => 'www(.+).com')
         );
-        $configuration->configureNewDimension($idSite = 1, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions);
+        $configuration->configureNewDimension($idSite = 1, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions, $caseSensitive = true);
 
         $extractions = array(
             array('dimension' => 'url', 'pattern' => 'www.piwik(.+).com'), // first one doesn't match
             array('dimension' => 'url', 'pattern' => 'www.ex(.+).com'), // but second matches
             array('dimension' => 'url', 'pattern' => 'www(.+).com'), // third one matches too but should use the one that matches first
         );
-        $configuration->configureNewDimension($idSite = 1, 'MyName2', CustomDimensions::SCOPE_VISIT, 2, true, $extractions);
+        $configuration->configureNewDimension($idSite = 1, 'MyName2', CustomDimensions::SCOPE_VISIT, 2, true, $extractions, $caseSensitive = true);
 
         $extractions = array(
             array('dimension' => 'urlparam', 'pattern' => 'id'), // first one doesn't match
         );
-        $configuration->configureNewDimension($idSite = 1, 'MyName3', CustomDimensions::SCOPE_VISIT, 3, true, $extractions);
-        $configuration->configureNewDimension($idSite = 1, 'MyName4', CustomDimensions::SCOPE_ACTION, 1, true, $extractions);
+        $configuration->configureNewDimension($idSite = 1, 'MyName3', CustomDimensions::SCOPE_VISIT, 3, true, $extractions, $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName4', CustomDimensions::SCOPE_ACTION, 1, true, $extractions, $caseSensitive = true);
 
         $request = new Request(array('idsite' => 1, 'url' => 'http://www.example.com/test?id=11&module=test'));
         $action = new ActionPageview($request);
@@ -313,16 +313,36 @@ class CustomDimensionsRequestProcessorTest extends IntegrationTestCase
         $this->assertSame(array('custom_dimension_1' => '11'), $action->getCustomFields());
     }
 
+    public function test_afterRequestProcessed_NoActionSet_ShouldBeAbleToHandleCaseSensitive()
+    {
+        $configuration = new Configuration();
+        $extractions = array(
+            array('dimension' => 'url', 'pattern' => 'wwW(.+).com')
+        );
+        $configuration->configureNewDimension($idSite = 1, 'MyName1', CustomDimensions::SCOPE_ACTION, 1, true, $extractions, $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName2', CustomDimensions::SCOPE_ACTION, 2, true, $extractions, $caseSensitive = false);
+
+        $request = new Request(array('idsite' => 1, 'url' => 'http://www.exAmple.com/test?id=11&module=test'));
+        $action = new ActionPageview($request);
+        $request->setMetadata('Actions', 'action', $action);
+
+        $this->processor->afterRequestProcessed(new VisitProperties(), $request);
+
+        $this->assertSame(array(
+            'custom_dimension_2' => '.exAmple',
+        ), $action->getCustomFields());
+    }
+
     private function configureSomeDimensions()
     {
         $configuration = new Configuration();
-        $configuration->configureNewDimension($idSite = 1, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName2', CustomDimensions::SCOPE_VISIT, 2, true, $extractions = array());
-        $configuration->configureNewDimension($idSite = 2, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName3', CustomDimensions::SCOPE_ACTION, 1, true, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName4', CustomDimensions::SCOPE_ACTION, 2, $active = false, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName5', CustomDimensions::SCOPE_ACTION, 3, $active = true, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName6', CustomDimensions::SCOPE_VISIT, 4, $active = true, $extractions = array());
+        $configuration->configureNewDimension($idSite = 1, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName2', CustomDimensions::SCOPE_VISIT, 2, true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 2, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName3', CustomDimensions::SCOPE_ACTION, 1, true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName4', CustomDimensions::SCOPE_ACTION, 2, $active = false, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName5', CustomDimensions::SCOPE_ACTION, 3, $active = true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName6', CustomDimensions::SCOPE_VISIT, 4, $active = true, $extractions = array(), $caseSensitive = true);
     }
 
 }

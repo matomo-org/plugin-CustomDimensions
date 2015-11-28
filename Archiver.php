@@ -105,7 +105,7 @@ class Archiver extends \Piwik\Plugin\Archiver
 
             $valueField = LogTable::buildCustomDimensionColumnName($dimension);
             $dimensions = array($valueField);
-            $where      = "%s.$valueField != ''";
+            $where      = false;
 
             if ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
                 $this->aggregateFromVisits($valueField, $dimensions, $where);
@@ -149,7 +149,7 @@ class Archiver extends \Piwik\Plugin\Archiver
         }
     }
 
-    public function queryCustomDimensionActions(DataArray $dataArray, $valueField)
+    public function queryCustomDimensionActions(DataArray $dataArray, $valueField, $additionalWhere = '')
     {
         $metricsConfig = ActionsMetrics::getActionMetrics();
 
@@ -183,8 +183,11 @@ class Archiver extends \Piwik\Plugin\Archiver
 
         $where = "log_link_visit_action.server_time >= ?
                   AND log_link_visit_action.server_time <= ?
-                  AND log_link_visit_action.idsite = ?
-                  AND log_link_visit_action.$valueField IS NOT NULL";
+                  AND log_link_visit_action.idsite = ?";
+
+        if (!empty($additionalWhere)) {
+            $where .= ' AND ' . $additionalWhere;
+        }
 
         $groupBy = "log_link_visit_action.$valueField, url";
         $orderBy = "`" . Metrics::INDEX_PAGE_NB_HITS . "` DESC";

@@ -79,6 +79,11 @@ not deleted currently.
 
 ## Changelog
 
+* 0.1.2
+  * New feature: Mark an extraction as case sensitive
+  * New feature : Show actions that had no value defined
+  * New feature : Link to Page URLs in subtables
+* 0.1.1 Bugfixes
 * 0.1.0 Initial release
 
 ## Support

@@ -78,7 +78,7 @@ class DimensionTest extends IntegrationTestCase
     private function createIndex($scope, $index, $active)
     {
         $configuration = new Configuration();
-        return $configuration->configureNewDimension($idSite = 1, 'MyName', $scope, $index, $active, array());
+        return $configuration->configureNewDimension($idSite = 1, 'MyName', $scope, $index, $active, array(), $caseSensitive = true);
     }
 
     private function getDimension($idDimension, $idSite)

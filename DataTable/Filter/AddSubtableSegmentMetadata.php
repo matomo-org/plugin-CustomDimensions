@@ -37,19 +37,26 @@ class AddSubtableSegmentMetadata extends BaseFilter
      */
     public function filter($table)
     {
-        if (!$this->dimensionValue || $this->dimensionValue === Archiver::LABEL_CUSTOM_VALUE_NOT_DEFINED) {
+        if (!$this->dimensionValue) {
             return;
         }
 
         $dimension = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($this->idDimension);
-        $conditionAnd = ';';
 
-        $partDimension = $dimension . '==' . urlencode($this->dimensionValue) . $conditionAnd;
+        if ($this->dimensionValue === Archiver::LABEL_CUSTOM_VALUE_NOT_DEFINED) {
+            $dimensionValue = '';
+        } else {
+            $dimensionValue = urlencode($this->dimensionValue);
+        }
+
+        $conditionAnd  = ';';
+        $partDimension = $dimension . '==' . $dimensionValue . $conditionAnd;
 
         foreach ($table->getRows() as $row) {
             $label = $row->getColumn('label');
             if ($label !== false) {
                 $row->setMetadata('segment', $partDimension . 'actionUrl=$' . urlencode($label));
+                $row->setMetadata('url', urlencode($label));
             }
         }
     }

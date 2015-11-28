@@ -206,6 +206,7 @@ class CustomDimensions extends Plugin
         $translationKeys[] = 'CorePluginsAdmin_Active';
         $translationKeys[] = 'Actions_ColumnPageURL';
         $translationKeys[] = 'Goals_PageTitle';
+        $translationKeys[] = 'Goals_CaseSensitive';
 
         // we simply make all translations available via JS as > 90% of them are used in JS anyway
         $translator = StaticContainer::get('Piwik\Translation\Translator');

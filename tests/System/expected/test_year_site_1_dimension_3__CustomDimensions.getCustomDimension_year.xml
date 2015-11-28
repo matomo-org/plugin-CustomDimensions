@@ -2,19 +2,19 @@
 <result>
 	<row>
 		<label>en</label>
-		<nb_visits>3</nb_visits>
-		<nb_hits>3</nb_hits>
-		<nb_hits_with_time_generation>2</nb_hits_with_time_generation>
-		<min_time_generation>1.152</min_time_generation>
-		<max_time_generation>1.152</max_time_generation>
+		<nb_visits>4</nb_visits>
+		<nb_hits>4</nb_hits>
+		<nb_hits_with_time_generation>3</nb_hits_with_time_generation>
+		<min_time_generation>1.197</min_time_generation>
+		<max_time_generation>1.197</max_time_generation>
 		<sum_time_spent>360</sum_time_spent>
-		<bounce_count>2</bounce_count>
-		<exit_nb_visits>2</exit_nb_visits>
-		<sum_daily_nb_uniq_visitors>3</sum_daily_nb_uniq_visitors>
-		<avg_time_on_dimension>120</avg_time_on_dimension>
-		<bounce_rate>67%</bounce_rate>
-		<exit_rate>67%</exit_rate>
-		<avg_time_generation>0.576</avg_time_generation>
+		<bounce_count>3</bounce_count>
+		<exit_nb_visits>3</exit_nb_visits>
+		<sum_daily_nb_uniq_visitors>4</sum_daily_nb_uniq_visitors>
+		<avg_time_on_dimension>90</avg_time_on_dimension>
+		<bounce_rate>75%</bounce_rate>
+		<exit_rate>75%</exit_rate>
+		<avg_time_generation>0.399</avg_time_generation>
 		<segment>dimension3==en</segment>
 	</row>
 	<row>

@@ -2,7 +2,7 @@
 <result>
 	<row>
 		<idSite>1</idSite>
-		<idVisit>3</idVisit>
+		<idVisit>2</idVisit>
 		<visitIp>156.5.3.2</visitIp>
 		
 		<actionDetails>
@@ -11,7 +11,7 @@
 				<goalName>Has sub_en</goalName>
 				<goalId>1</goalId>
 				<revenue>0</revenue>
-				<goalPageId>5</goalPageId>
+				<goalPageId>4</goalPageId>
 				
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
@@ -20,10 +20,125 @@
 			<row>
 				<type>action</type>
 				<url>http://example.com/sub_en/page?param=en_US</url>
-				<pageTitle>Second page view</pageTitle>
-				<pageIdAction>5</pageIdAction>
+				<pageTitle>Fourth page view</pageTitle>
+				<pageIdAction>6</pageIdAction>
 				
-				<pageId>5</pageId>
+				<pageId>4</pageId>
+				<generationTime>0.05s</generationTime>
+				<icon />
+				
+			</row>
+		</actionDetails>
+		<goalConversions>1</goalConversions>
+		<siteCurrency>USD</siteCurrency>
+		<siteCurrencySymbol>$</siteCurrencySymbol>
+		
+		
+		
+		
+		<userId />
+		<visitorType>new</visitorType>
+		<visitorTypeIcon />
+		<visitConverted>1</visitConverted>
+		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
+		<visitCount>1</visitCount>
+		
+		<visitEcommerceStatus>none</visitEcommerceStatus>
+		<visitEcommerceStatusIcon />
+		<daysSinceFirstVisit>0</daysSinceFirstVisit>
+		<daysSinceLastEcommerceOrder>0</daysSinceLastEcommerceOrder>
+		<visitDuration>0</visitDuration>
+		<visitDurationPretty>0s</visitDurationPretty>
+		<searches>0</searches>
+		<actions>1</actions>
+		<referrerType>direct</referrerType>
+		<referrerTypeName>Direct Entry</referrerTypeName>
+		<referrerName />
+		<referrerKeyword />
+		<referrerKeywordPosition />
+		<referrerUrl />
+		<referrerSearchEngineUrl />
+		<referrerSearchEngineIcon />
+		<languageCode>fr</languageCode>
+		<language>French</language>
+		<deviceType>Desktop</deviceType>
+		<deviceTypeIcon>plugins/DevicesDetection/images/screens/normal.gif</deviceTypeIcon>
+		<deviceBrand>Unknown</deviceBrand>
+		<deviceModel />
+		<operatingSystem>Windows XP</operatingSystem>
+		<operatingSystemName>Windows</operatingSystemName>
+		<operatingSystemIcon>plugins/DevicesDetection/images/os/WIN.gif</operatingSystemIcon>
+		<operatingSystemCode>WIN</operatingSystemCode>
+		<operatingSystemVersion>XP</operatingSystemVersion>
+		<browserFamily>Gecko</browserFamily>
+		<browserFamilyDescription>Gecko (Firefox)</browserFamilyDescription>
+		<browser>Firefox 3.6</browser>
+		<browserName>Firefox</browserName>
+		<browserIcon>plugins/DevicesDetection/images/browsers/FF.gif</browserIcon>
+		<browserCode>FF</browserCode>
+		<browserVersion>3.6</browserVersion>
+		<events>0</events>
+		<continent>Europe</continent>
+		<continentCode>eur</continentCode>
+		<country>France</country>
+		<countryCode>fr</countryCode>
+		<countryFlag>plugins/UserCountry/images/flags/fr.png</countryFlag>
+		<region />
+		<regionCode />
+		<city />
+		<location>France</location>
+		<latitude />
+		<longitude />
+		<visitLocalTime>12:34:06</visitLocalTime>
+		<visitLocalHour>12</visitLocalHour>
+		<daysSinceLastVisit>0</daysSinceLastVisit>
+		<customVariables>
+		</customVariables>
+		<resolution>1024x768</resolution>
+		<plugins>flash, java</plugins>
+		<pluginsIcons>
+			<row>
+				<pluginIcon>plugins/DevicePlugins/images/plugins/flash.gif</pluginIcon>
+				<pluginName>flash</pluginName>
+			</row>
+			<row>
+				<pluginIcon>plugins/DevicePlugins/images/plugins/java.gif</pluginIcon>
+				<pluginName>java</pluginName>
+			</row>
+		</pluginsIcons>
+		<dimension1 />
+		<dimension2 />
+		<dimension6 />
+		
+		
+		
+		
+		
+	</row>
+	<row>
+		<idSite>1</idSite>
+		<idVisit>4</idVisit>
+		<visitIp>156.5.3.2</visitIp>
+		
+		<actionDetails>
+			<row>
+				<type>goal</type>
+				<goalName>Has sub_en</goalName>
+				<goalId>1</goalId>
+				<revenue>0</revenue>
+				<goalPageId>6</goalPageId>
+				
+				<url>http://example.com/sub_en/page?param=en_US</url>
+				<icon>plugins/Morpheus/images/goal.png</icon>
+				
+			</row>
+			<row>
+				<type>action</type>
+				<url>http://example.com/sub_en/page?param=en_US</url>
+				<pageTitle>Sixth page view</pageTitle>
+				<pageIdAction>6</pageIdAction>
+				
+				<pageId>6</pageId>
 				<generationTime>1.03s</generationTime>
 				<icon />
 				
@@ -117,7 +232,7 @@
 	</row>
 	<row>
 		<idSite>1</idSite>
-		<idVisit>2</idVisit>
+		<idVisit>3</idVisit>
 		<visitIp>156.5.3.2</visitIp>
 		
 		<actionDetails>
@@ -126,7 +241,7 @@
 				<goalName>Has sub_en</goalName>
 				<goalId>1</goalId>
 				<revenue>0</revenue>
-				<goalPageId>4</goalPageId>
+				<goalPageId>5</goalPageId>
 				
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
@@ -135,10 +250,10 @@
 			<row>
 				<type>action</type>
 				<url>http://example.com/sub_en/page?param=en_US</url>
-				<pageTitle>Second page view</pageTitle>
-				<pageIdAction>5</pageIdAction>
+				<pageTitle>Fifth page view</pageTitle>
+				<pageIdAction>6</pageIdAction>
 				
-				<pageId>4</pageId>
+				<pageId>5</pageId>
 				<icon />
 				
 			</row>
@@ -275,8 +390,8 @@
 			<row>
 				<type>action</type>
 				<url>http://example.com/sub_en/page?param=en_US</url>
-				<pageTitle>Second page view</pageTitle>
-				<pageIdAction>5</pageIdAction>
+				<pageTitle>Third page view</pageTitle>
+				<pageIdAction>6</pageIdAction>
 				
 				<pageId>3</pageId>
 				<generationTime>0.34s</generationTime>

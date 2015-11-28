@@ -93,6 +93,6 @@ class IndexTest extends IntegrationTestCase
     private function createIndex($idSite, $scope, $index)
     {
         $configuration = new Configuration();
-        $configuration->configureNewDimension($idSite, 'MyName', $scope, $index, false, array());
+        $configuration->configureNewDimension($idSite, 'MyName', $scope, $index, false, array(), $caseSensitive = true);
     }
 }
