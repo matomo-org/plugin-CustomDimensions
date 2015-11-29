@@ -12,7 +12,10 @@ use Piwik\ArchiveProcessor;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\DataTable;
+use Piwik\Date;
+use Piwik\Db;
 use Piwik\Metrics;
+use Piwik\Plugins\CustomDimensions\Dao\AutoSuggest;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
@@ -176,23 +179,28 @@ class CustomDimensions extends Plugin
                 continue;
             }
 
+            $segment = new Plugin\Segment();
+            $segment->setSegment(CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension));
+            $segment->setType(Plugin\Segment::TYPE_DIMENSION);
+            $segment->setName($dimension['name']);
+
+            $columnName = LogTable::buildCustomDimensionColumnName($dimension);
+
             if ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
-                $table    = 'log_link_visit_action';
-                $category = 'General_Actions';
+                $segment->setSqlSegment('log_link_visit_action. ' . $columnName);
+                $segment->setCategory('General_Actions');
+                $segment->setSuggestedValuesCallback(function ($idSite, $maxValuesToReturn) use ($dimension) {
+                    $autoSuggest = new AutoSuggest();
+                    return $autoSuggest->getMostUsedActionDimensionValues($dimension, $idSite, $maxValuesToReturn);
+                });
             } elseif ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
-                $table    = 'log_visit';
-                $category = 'General_Visit';
+                $segment->setSqlSegment('log_visit. ' . $columnName);
+                $segment->setCategory('General_Visit');
             } else {
                 continue;
             }
 
-            $segments[] = array(
-                'type'       => 'dimension',
-                'category'   => $category,
-                'name'       => $dimension['name'],
-                'segment'    => CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension),
-                'sqlSegment' => $table . '.' . LogTable::buildCustomDimensionColumnName($dimension),
-            );
+            $segments[] = $segment->toArray();
         }
     }
 
