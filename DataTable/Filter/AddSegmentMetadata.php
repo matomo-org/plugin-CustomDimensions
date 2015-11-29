@@ -38,7 +38,10 @@ class AddSegmentMetadata extends BaseFilter
 
         foreach ($table->getRows() as $row) {
             $label = $row->getColumn('label');
-            if ($label !== false && $label !== Archiver::LABEL_CUSTOM_VALUE_NOT_DEFINED) {
+            if ($label !== false) {
+                if ($label === Archiver::LABEL_CUSTOM_VALUE_NOT_DEFINED) {
+                    $label = '';
+                }
                 $row->setMetadata('segment', $dimension . '==' . urlencode($label));
             }
 

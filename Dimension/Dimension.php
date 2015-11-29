@@ -62,6 +62,13 @@ class Dimension
         return $this->dimension['scope'];
     }
 
+    public function getCaseSensitive()
+    {
+        $this->checkExists();
+
+        return $this->dimension['case_sensitive'];
+    }
+
     private function getConfiguration()
     {
         return new Configuration();

@@ -21,6 +21,7 @@ class Extraction
 {
     private $dimension = '';
     private $pattern = '';
+    private $caseSensitive = true;
 
     public function __construct($dimension, $pattern)
     {
@@ -58,6 +59,11 @@ class Extraction
             'urlparam' => Piwik::translate('CustomDimensions_PageUrlParam'),
             'action_name' => Piwik::translate('Goals_PageTitle')
         );
+    }
+
+    public function setCaseSensitive($caseSensitive)
+    {
+        $this->caseSensitive = (bool) $caseSensitive;
     }
 
     public function extract(Request $request)
@@ -98,14 +104,17 @@ class Extraction
             return null;
         }
 
+        $pattern = $this->pattern;
         if ($this->dimension === 'urlparam') {
-            $query  = Url::getQueryStringFromUrl($value);
-            $params = UrlHelper::getArrayFromQueryString($query);
+            $pattern = '\?.*' . $pattern . '=([^&]*)';
+        }
 
-            if (array_key_exists($this->pattern, $params)) {
-                return $params[$this->pattern];
-            }
-        } elseif (preg_match('/' . str_replace('/', '\/', $this->pattern) . '/', (string) $value, $matches)) {
+        $regex = '/' . str_replace('/', '\/', $pattern) . '/';
+        if (!$this->caseSensitive) {
+            $regex .= 'i';
+        }
+
+        if (preg_match($regex, (string) $value, $matches)) {
             // we could improve performance here I reckon by combining all patterns of all configs see eg http://nikic.github.io/2014/02/18/Fast-request-routing-using-regular-expressions.html
 
             if (array_key_exists(1, $matches)) {

@@ -58,18 +58,18 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
     private function configureSomeDimensions()
     {
         $configuration = new Configuration();
-        $configuration->configureNewDimension($this->idSite,  'MyName1', CustomDimensions::SCOPE_VISIT, 1, $active = true, $extractions = array());
+        $configuration->configureNewDimension($this->idSite,  'MyName1', CustomDimensions::SCOPE_VISIT, 1, $active = true, $extractions = array(), $caseSensitive = true);
 
-        $configuration->configureNewDimension($this->idSite,  'MyName2', CustomDimensions::SCOPE_VISIT, 2, $active = true, $extractions = array());
-        $configuration->configureNewDimension($this->idSite2, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, $active = true, $extractions = array());
+        $configuration->configureNewDimension($this->idSite,  'MyName2', CustomDimensions::SCOPE_VISIT, 2, $active = true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($this->idSite2, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, $active = true, $extractions = array(), $caseSensitive = true);
 
         $extraction1 = new Extraction('urlparam', 'test');
         $extraction2 = new Extraction('urlparam', 'param');
         $extraction3 = new Extraction('url', '/sub_(.{2})/page');
-        $configuration->configureNewDimension($this->idSite,  'MyName3', CustomDimensions::SCOPE_ACTION, 1, $active = true, $extractions = array($extraction3->toArray()));
-        $configuration->configureNewDimension($this->idSite,  'MyName4', CustomDimensions::SCOPE_ACTION, 2, $active = false, $extractions = array());
-        $configuration->configureNewDimension($this->idSite,  'MyName5', CustomDimensions::SCOPE_ACTION, 3, $active = true, $extractions = array($extraction1->toArray(), $extraction2->toArray()));
-        $configuration->configureNewDimension($this->idSite,  'MyName6', CustomDimensions::SCOPE_VISIT, 4, $active = true, $extractions = array());
+        $configuration->configureNewDimension($this->idSite,  'MyName3', CustomDimensions::SCOPE_ACTION, 1, $active = true, $extractions = array($extraction3->toArray()), $caseSensitive = true);
+        $configuration->configureNewDimension($this->idSite,  'MyName4', CustomDimensions::SCOPE_ACTION, 2, $active = false, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($this->idSite,  'MyName5', CustomDimensions::SCOPE_ACTION, 3, $active = true, $extractions = array($extraction1->toArray(), $extraction2->toArray()), $caseSensitive = true);
+        $configuration->configureNewDimension($this->idSite,  'MyName6', CustomDimensions::SCOPE_VISIT, 4, $active = true, $extractions = array(), $caseSensitive = true);
 
         Cache::deleteCacheWebsiteAttributes(1);
         Cache::deleteCacheWebsiteAttributes(2);
@@ -104,12 +104,17 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.3)->getDatetime());
         $t->setUrl('http://example.com/sub_en/page?param=en_US');
         $t->setGenerationTime(344);
-        self::checkResponse($t->doTrackPageView('Second page view'));
+        self::checkResponse($t->doTrackPageView('Third page view'));
+
+        $t->setForceVisitDateTime(Date::factory($this->dateTime)->addDay(0.4)->getDatetime());
+        $t->setGenerationTime(45);
+        $t->setUrl('http://example.com/sub_en/page?param=en_US');
+        self::checkResponse($t->doTrackPageView('Fourth page view'));
 
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addDay(2)->getDatetime());
         $t->setUrl('http://example.com/sub_en/page?param=en_US');
         $t->setGenerationTime(false);
-        self::checkResponse($t->doTrackPageView('Second page view'));
+        self::checkResponse($t->doTrackPageView('Fifth page view'));
 
         $t->setCustomTrackingParameter('dimension1', 'value1');
         $t->setCustomTrackingParameter('dimension2', 'value2');
@@ -117,7 +122,7 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addDay(3)->getDatetime());
         $t->setGenerationTime(1029);
         $t->setUrl('http://example.com/sub_en/page?param=en_US');
-        self::checkResponse($t->doTrackPageView('Second page view'));
+        self::checkResponse($t->doTrackPageView('Sixth page view'));
     }
 
     protected function trackSecondVisit()

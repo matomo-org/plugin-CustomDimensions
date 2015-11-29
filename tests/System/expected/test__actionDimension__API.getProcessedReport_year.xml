@@ -45,12 +45,12 @@
 	<reportData>
 		<row>
 			<label>en</label>
-			<nb_visits>3</nb_visits>
-			<nb_hits>3</nb_hits>
-			<bounce_rate>67%</bounce_rate>
-			<avg_time_on_dimension>00:02:00</avg_time_on_dimension>
-			<exit_rate>67%</exit_rate>
-			<avg_time_generation>0.58s</avg_time_generation>
+			<nb_visits>4</nb_visits>
+			<nb_hits>4</nb_hits>
+			<bounce_rate>75%</bounce_rate>
+			<avg_time_on_dimension>00:01:30</avg_time_on_dimension>
+			<exit_rate>75%</exit_rate>
+			<avg_time_generation>0.4s</avg_time_generation>
 		</row>
 		<row>
 			<label>value3</label>
@@ -75,23 +75,23 @@
 		<row>
 			
 			<segment>dimension3==en</segment>
-			<idsubdatatable>6015</idsubdatatable>
+			<idsubdatatable>6070</idsubdatatable>
 		</row>
 		<row>
 			
 			<segment>dimension3==value3</segment>
-			<idsubdatatable>6016</idsubdatatable>
+			<idsubdatatable>6071</idsubdatatable>
 		</row>
 		<row>
 			
 			<segment>dimension3==value5+3</segment>
-			<idsubdatatable>6017</idsubdatatable>
+			<idsubdatatable>6072</idsubdatatable>
 		</row>
 	</reportMetadata>
 	<reportTotal>
-		<nb_visits>5</nb_visits>
-		<nb_hits>5</nb_hits>
-		<bounce_count>2</bounce_count>
-		<exit_nb_visits>3</exit_nb_visits>
+		<nb_visits>6</nb_visits>
+		<nb_hits>6</nb_hits>
+		<bounce_count>3</bounce_count>
+		<exit_nb_visits>4</exit_nb_visits>
 	</reportTotal>
 </result>

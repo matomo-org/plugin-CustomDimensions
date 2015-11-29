@@ -28,10 +28,11 @@ class Configuration
         return Db::get();
     }
 
-    public function configureNewDimension($idSite, $name, $scope, $index, $active, $extractions)
+    public function configureNewDimension($idSite, $name, $scope, $index, $active, $extractions, $caseSensitive)
     {
         $extractions = $this->encodeExtractions($extractions);
         $active = $active ? '1' : '0';
+        $caseSensitive = $caseSensitive ? '1' : '0';
         $id = $this->getNextCustomDimensionIdForSite($idSite);
 
         $config = array(
@@ -42,6 +43,7 @@ class Configuration
             'name'        => $name,
             'active'      => $active,
             'extractions' => $extractions,
+            'case_sensitive' => $caseSensitive,
         );
 
         $this->getDb()->insert($this->tableNamePrefixed, $config);
@@ -49,16 +51,18 @@ class Configuration
         return $id;
     }
 
-    public function configureExistingDimension($idCustomDimension, $idSite, $name, $active, $extractions)
+    public function configureExistingDimension($idCustomDimension, $idSite, $name, $active, $extractions, $caseSensitive)
     {
         $extractions = $this->encodeExtractions($extractions);
         $active = $active ? '1' : '0';
+        $caseSensitive = $caseSensitive ? '1' : '0';
 
         $this->getDb()->update($this->tableNamePrefixed,
             array(
                 'name'        => $name,
                 'active'      => $active,
                 'extractions' => $extractions,
+                'case_sensitive' => $caseSensitive
             ),
             "idcustomdimension = " . (int) $idCustomDimension . " and idsite = " . (int) $idSite
         );
@@ -135,6 +139,7 @@ class Configuration
 
         $dimension['extractions'] = $this->decodeExtractions($dimension['extractions']);
         $dimension['active'] = (bool) $dimension['active'];
+        $dimension['case_sensitive'] = (bool) $dimension['case_sensitive'];
 
         return $dimension;
     }
@@ -161,6 +166,7 @@ class Configuration
                   `scope` VARCHAR(10) NOT NULL ,
                   `active` TINYINT UNSIGNED NOT NULL DEFAULT 0,
                   `extractions` TEXT NOT NULL DEFAULT '',
+                  `case_sensitive` TINYINT UNSIGNED NOT NULL DEFAULT 1,
                   UNIQUE KEY idcustomdimension_idsite (`idcustomdimension`, `idsite`),
                   UNIQUE KEY uniq_hash(idsite, `scope`, `index`)";
 

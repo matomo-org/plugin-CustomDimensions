@@ -259,13 +259,13 @@ class CustomDimensionsTest extends IntegrationTestCase
     private function configureSomeDimensions()
     {
         $configuration = new Configuration();
-        $configuration->configureNewDimension($idSite = 1, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName2', CustomDimensions::SCOPE_VISIT, 2, false, $extractions = array());
-        $configuration->configureNewDimension($idSite = 2, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName3', CustomDimensions::SCOPE_ACTION, 1, true, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName4', CustomDimensions::SCOPE_ACTION, 2, $active = false, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName5', CustomDimensions::SCOPE_ACTION, 3, $active = true, $extractions = array());
-        $configuration->configureNewDimension($idSite = 1, 'MyName6', CustomDimensions::SCOPE_VISIT, 4, $active = true, $extractions = array());
+        $configuration->configureNewDimension($idSite = 1, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName2', CustomDimensions::SCOPE_VISIT, 2, false, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 2, 'MyName1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName3', CustomDimensions::SCOPE_ACTION, 1, true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName4', CustomDimensions::SCOPE_ACTION, 2, $active = false, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName5', CustomDimensions::SCOPE_ACTION, 3, $active = true, $extractions = array(), $caseSensitive = true);
+        $configuration->configureNewDimension($idSite = 1, 'MyName6', CustomDimensions::SCOPE_VISIT, 4, $active = true, $extractions = array(), $caseSensitive = true);
 
         Cache::deleteCacheWebsiteAttributes(1);
         Cache::deleteCacheWebsiteAttributes(2);

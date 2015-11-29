@@ -45,11 +45,18 @@
                                ng-model="editDimension.dimension.extractions[index].pattern"
                                placeholder="{{ editDimension.dimension.extractions[index].dimension === 'urlparam' ? 'url query string parameter' : 'eg. /blog/(.*)/' }}">
 
-                        <span ng-click="editDimension.addExtraction()" class="icon-plus"></span>
+                        <span ng-click="editDimension.addExtraction()"
+                              ng-show="editDimension.dimension.extractions[index].pattern"
+                              class="icon-plus"></span>
                         <span ng-click="editDimension.removeExtraction(index)"
-                              ng-show="(editDimension.dimension.extractions|length) > 1" class="icon-minus"></span>
-
+                              ng-show="(editDimension.dimension.extractions|length) > 1"
+                              class="icon-minus"></span>
                     </div>
+
+                    <label for="casesensitive" class="checkbox" ng-show="editDimension.dimension.extractions[0].pattern">
+                        <input type="checkbox" id="casesensitive" ng-model="editDimension.dimension.case_sensitive">
+                        {{ 'Goals_CaseSensitive'|translate }}
+                    </label>
 
                 </div>
 

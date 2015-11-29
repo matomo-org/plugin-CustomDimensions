@@ -17,6 +17,7 @@ use Piwik\Piwik;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\CustomDimensions\Dimension\Active;
+use Piwik\Plugins\CustomDimensions\Dimension\CaseSensitive;
 use Piwik\Plugins\CustomDimensions\Dimension\Dimension;
 use Piwik\Plugins\CustomDimensions\Dimension\Extraction;
 use Piwik\Plugins\CustomDimensions\Dimension\Extractions;
@@ -94,14 +95,15 @@ class API extends \Piwik\Plugin\API
      *                              Supported dimensions are  eg 'url', 'urlparam' and 'action_name'. To get an up to date list of
      *                              supported dimensions request the API method `CustomDimensions.getAvailableExtractionDimensions`.
      *                              Note: Extractions can be only set for dimensions in scope 'action'.
+     * @param int|bool $caseSensitive  '0' if extractions should be applied case insensitive, '1' if extractions should be applied case sensitive
      * @return int Returns the ID of the configured dimension. Note that the same idDimension will be used for different websites.
      * @throws \Exception
      */
-    public function configureNewCustomDimension($idSite, $name, $scope, $active, $extractions = array())
+    public function configureNewCustomDimension($idSite, $name, $scope, $active, $extractions = array(), $caseSensitive = true)
     {
         Piwik::checkUserHasAdminAccess($idSite);
 
-        $this->checkCustomDimensionConfig($name, $active, $extractions);
+        $this->checkCustomDimensionConfig($name, $active, $extractions, $caseSensitive);
 
         $scopeCheck = new Scope($scope);
         $scopeCheck->check();
@@ -112,7 +114,7 @@ class API extends \Piwik\Plugin\API
         $index = $index->getNextIndex($idSite, $scope);
 
         $configuration = $this->getConfiguration();
-        $idDimension   = $configuration->configureNewDimension($idSite, $name, $scope, $index, $active, $extractions);
+        $idDimension   = $configuration->configureNewDimension($idSite, $name, $scope, $index, $active, $extractions, $caseSensitive);
 
         Cache::deleteCacheWebsiteAttributes($idSite);
         Cache::clearCacheGeneral();
@@ -133,20 +135,25 @@ class API extends \Piwik\Plugin\API
      *                              Supported dimensions are  eg 'url', 'urlparam' and 'action_name'. To get an up to date list of
      *                              supported dimensions request the API method `CustomDimensions.getAvailableExtractionDimensions`.
      *                              Note: Extractions can be only set for dimensions in scope 'action'.
+     * @param int|bool|null $caseSensitive  '0' if extractions should be applied case insensitive, '1' if extractions should be applied case sensitive, null to keep case sensitive unchanged
      * @return int Returns the ID of the configured dimension. Note that the same idDimension will be used for different websites.
      * @throws \Exception
      */
-    public function configureExistingCustomDimension($idDimension, $idSite, $name, $active, $extractions = array())
+    public function configureExistingCustomDimension($idDimension, $idSite, $name, $active, $extractions = array(), $caseSensitive = null)
     {
         Piwik::checkUserHasAdminAccess($idSite);
 
         $dimension = new Dimension($idDimension, $idSite);
         $dimension->checkExists();
 
-        $this->checkCustomDimensionConfig($name, $active, $extractions);
+        if (!isset($caseSensitive)) {
+            $caseSensitive = $dimension->getCaseSensitive();
+        }
+
+        $this->checkCustomDimensionConfig($name, $active, $extractions, $caseSensitive);
         $this->checkExtractionsAreSupportedForScope($dimension->getScope(), $extractions);
 
-        $this->getConfiguration()->configureExistingDimension($idDimension, $idSite, $name, $active, $extractions);
+        $this->getConfiguration()->configureExistingDimension($idDimension, $idSite, $name, $active, $extractions, $caseSensitive);
 
         Cache::deleteCacheWebsiteAttributes($idSite);
         Cache::clearCacheGeneral();
@@ -175,7 +182,7 @@ class API extends \Piwik\Plugin\API
         return $configs;
     }
 
-    private function checkCustomDimensionConfig($name, $active, $extractions)
+    private function checkCustomDimensionConfig($name, $active, $extractions, $caseSensitive)
     {
         // ideally we would work with these objects a bit more instead of arrays but we'd have a lot of
         // serialize/unserialize to do as we need to cache all configured custom dimensions for tracker cache and
@@ -190,6 +197,9 @@ class API extends \Piwik\Plugin\API
 
         $extractions = new Extractions($extractions);
         $extractions->check();
+
+        $caseSensitive = new CaseSensitive($caseSensitive);
+        $caseSensitive->check();
     }
 
     /**

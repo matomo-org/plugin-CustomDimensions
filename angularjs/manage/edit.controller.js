@@ -60,7 +60,8 @@
                         name: '',
                         active: false,
                         extractions: [],
-                        scope: $scope.dimensionScope
+                        scope: $scope.dimensionScope,
+                        case_sensitive: true,
                     };
                     self.addExtraction();
                 }

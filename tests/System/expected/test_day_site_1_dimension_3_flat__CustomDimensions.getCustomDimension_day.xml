@@ -16,6 +16,7 @@
 		<exit_rate>0%</exit_rate>
 		<avg_time_generation>0.123</avg_time_generation>
 		<segment>dimension3==en;actionUrl=$example.com%2Fsub_en%2Fpage%3Ftest%3D343%26param%3D23</segment>
+		<url>example.com%2Fsub_en%2Fpage%3Ftest%3D343%26param%3D23</url>
 	</row>
 	<row>
 		<label>value3 - example.com/</label>
@@ -33,6 +34,7 @@
 		<exit_rate>0%</exit_rate>
 		<avg_time_generation>0.42</avg_time_generation>
 		<segment>dimension3==value3;actionUrl=$example.com%2F</segment>
+		<url>example.com%2F</url>
 	</row>
 	<row>
 		<label>value5 3 - example.com/sub_en/page?param=en_US</label>
@@ -50,5 +52,6 @@
 		<exit_rate>100%</exit_rate>
 		<avg_time_generation>0.344</avg_time_generation>
 		<segment>dimension3==value5+3;actionUrl=$example.com%2Fsub_en%2Fpage%3Fparam%3Den_US</segment>
+		<url>example.com%2Fsub_en%2Fpage%3Fparam%3Den_US</url>
 	</row>
 </result>

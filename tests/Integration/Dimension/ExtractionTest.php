@@ -111,6 +111,56 @@ class ExtractionTest extends IntegrationTestCase
         $this->assertSame(' Test ', $value);
     }
 
+    /**
+     * @dataProvider getCaseSensitiveTestProvider
+     */
+    public function test_extract_shouldBeCaseSensitiveByDefault($dimension, $pattern, $expectedExtracted)
+    {
+        $request = $this->buildRequest();
+
+        // Title is "My Test Title"
+        $value = $this->buildExtraction($dimension, $pattern)->extract($request);
+        $this->assertSame($expectedExtracted, $value);
+    }
+
+    public function getCaseSensitiveTestProvider()
+    {
+        return array(
+            array('action_name', 'My(.+)Title', ' Test '),
+            array('action_name', 'my(.+)Title', null),
+            array('action_name', 'My(.+)title', null),
+            array('urlparam',    'camelCase',   'fooBarBaz'),
+            array('urlparam',    'camelcase',   null),
+            array('urlparam',    'Camelcase',   null),
+        );
+    }
+
+    /**
+     * @dataProvider getCaseInsensitiveTestProvider
+     */
+    public function test_extract_WhenCaseInsensitiveIsEnabled($dimension, $pattern, $expectedExtracted)
+    {
+        $request = $this->buildRequest();
+
+        $extraction = $this->buildExtraction($dimension, $pattern);
+        $extraction->setCaseSensitive(false);
+        // Title is "My Test Title"
+        $value = $extraction->extract($request);
+        $this->assertSame($expectedExtracted, $value);
+    }
+
+    public function getCaseInsensitiveTestProvider()
+    {
+        return array(
+            array('action_name', 'My(.+)Title', ' Test '),
+            array('action_name', 'my(.+)Title', ' Test '),
+            array('action_name', 'My(.+)title', ' Test '),
+            array('urlparam',    'camelCase',   'fooBarBaz'),
+            array('urlparam',    'camelcase',   'fooBarBaz'),
+            array('urlparam',    'Camelcase',   'fooBarBaz'),
+        );
+    }
+
     public function test_extract_anyRandomTrackingApiParameter()
     {
         $request = $this->buildRequest();
@@ -124,7 +174,7 @@ class ExtractionTest extends IntegrationTestCase
         $request = $this->buildRequest();
 
         $value = $this->buildExtraction('url', '(.+)')->extract($request);
-        $this->assertSame('http://www.example.com/test/index.php?idsite=54&module=CoreHome&action=test', $value);
+        $this->assertSame('http://www.example.com/test/index.php?idsite=54&module=CoreHome&action=test&camelCase=fooBarBaz', $value);
     }
 
     /**
@@ -167,7 +217,7 @@ class ExtractionTest extends IntegrationTestCase
 
     private function buildRequest()
     {
-        $url = 'http://www.example.com/test/index.php?idsite=54&module=CoreHome&action=test';
+        $url = 'http://www.example.com/test/index.php?idsite=54&module=CoreHome&action=test&camelCase=fooBarBaz';
         $referrer = 'http://www.example.com/referrer';
         $actionName = 'My Test Title';
 

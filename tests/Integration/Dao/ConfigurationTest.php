@@ -43,7 +43,7 @@ class ConfigurationTest extends IntegrationTestCase
         $columns = array_keys($columns);
 
         $expected = array(
-            'idcustomdimension', 'idsite', 'name', 'index', 'scope', 'active', 'extractions'
+            'idcustomdimension', 'idsite', 'name', 'index', 'scope', 'active', 'extractions', 'case_sensitive'
         );
         $this->assertSame($expected, $columns);
     }
@@ -78,6 +78,7 @@ class ConfigurationTest extends IntegrationTestCase
             $this->assertSame($case['active'], $dimension['active']);
             $this->assertSame($case['index'] . '', $dimension['index']);
             $this->assertSame($case['expectedId'] . '', $dimension['idcustomdimension']);
+            $this->assertSame($case['case_sensitive'], $dimension['case_sensitive']);
         }
     }
 
@@ -102,7 +103,7 @@ class ConfigurationTest extends IntegrationTestCase
         $index = 5;
         $active = false;
 
-        $idDimension = $this->config->configureNewDimension($idSite, $name, $scope, $index, $active, $extractions);
+        $idDimension = $this->config->configureNewDimension($idSite, $name, $scope, $index, $active, $extractions, $caseSensitive = true);
 
         $dimension = $this->config->getCustomDimension($idDimension, $idSite);
         $this->assertSame($expectedExtractions, $dimension['extractions']);
@@ -131,8 +132,8 @@ class ConfigurationTest extends IntegrationTestCase
         $index = 5;
         $active = false;
 
-        $idDimension = $this->config->configureNewDimension($idSite, $name, $scope, $index, $active, array());
-        $this->config->configureExistingDimension($idDimension, $idSite, $name, $active, $extractions);
+        $idDimension = $this->config->configureNewDimension($idSite, $name, $scope, $index, $active, array(), $caseSensitive = true);
+        $this->config->configureExistingDimension($idDimension, $idSite, $name, $active, $extractions, $caseSensitive = true);
 
         $dimension = $this->config->getCustomDimension($idDimension, $idSite);
         $this->assertSame($expectedExtractions, $dimension['extractions']);
@@ -145,17 +146,19 @@ class ConfigurationTest extends IntegrationTestCase
 
         $extraction1 = array('dimension' => 'url');
 
-        $this->config->configureExistingDimension($idDimension, $idSite, $name = 'new name', $active = false, $extractions = array($extraction1));
+        $this->config->configureExistingDimension($idDimension, $idSite, $name = 'new name', $active = false, $extractions = array($extraction1), $caseSensitive = true);
 
         $dimension = $this->config->getCustomDimension($idDimension, $idSite);
         $this->assertSame('new name', $dimension['name']);
         $this->assertSame(false, $dimension['active']);
+        $this->assertSame(true, $dimension['case_sensitive']);
 
-        $this->config->configureExistingDimension($idDimension, $idSite, $name = 'new nam2', $active = true, $extractions = array($extraction1));
+        $this->config->configureExistingDimension($idDimension, $idSite, $name = 'new nam2', $active = true, $extractions = array($extraction1), $caseSensitive = false);
 
         $dimension = $this->config->getCustomDimension($idDimension, $idSite);
         $this->assertSame('new nam2', $dimension['name']);
         $this->assertSame(true, $dimension['active']);
+        $this->assertSame(false, $dimension['case_sensitive']);
     }
 
     public function test_configureExistingDimension_shouldNotUpdateDimensionIfIdSiteDoesNotMatch()
@@ -164,12 +167,13 @@ class ConfigurationTest extends IntegrationTestCase
 
         $extraction1 = array('dimension' => 'url');
 
-        $this->config->configureExistingDimension($idDimension, $idSite = 2, $name = 'new name', $active = false, $extractions = array($extraction1));
+        $this->config->configureExistingDimension($idDimension, $idSite = 2, $name = 'new name', $active = false, $extractions = array($extraction1), $caseSensitive = false);
 
         // verify it stays unchanged
         $dimension = $this->config->getCustomDimension($idDimension, $idSite = 1);
         $this->assertSame('Test', $dimension['name']);
         $this->assertSame(true, $dimension['active']);
+        $this->assertSame(true, $dimension['case_sensitive']);
 
         // verify no dimension for other site was created
         $dimension = $this->config->getCustomDimension($idDimension, $idSite = 2);
@@ -206,7 +210,7 @@ class ConfigurationTest extends IntegrationTestCase
 
     private function configureNewDimension($idSite = 1, $name = 'Test', $scope = 'action', $index = 5, $active = true, $extractions = array())
     {
-        return $this->config->configureNewDimension($idSite, $name, $scope, $index, $active, $extractions);
+        return $this->config->configureNewDimension($idSite, $name, $scope, $index, $active, $extractions, $caseSensitive = true);
     }
 
     public function test_getCustomDimension_shouldOnlyFindDimensionMatchingIdDimensionAndIdSite()
@@ -236,7 +240,8 @@ class ConfigurationTest extends IntegrationTestCase
             'index' => '1',
             'scope' => 'action',
             'active' => true,
-            'extractions' => array()
+            'extractions' => array(),
+            'case_sensitive' => true,
         );
 
         $this->assertSame($expected, $dimension);
@@ -370,18 +375,18 @@ class ConfigurationTest extends IntegrationTestCase
     private function createManyCustomDimensionCases()
     {
         $cases = array(
-            array('idSite' => 1, 'scope' => 'action', 'index' => 1, 'expectedId' => 1, 'active' => true),
-            array('idSite' => 1, 'scope' => 'visit',  'index' => 1, 'expectedId' => 2, 'active' => false),
-            array('idSite' => 1, 'scope' => 'visit',  'index' => 2, 'expectedId' => 3, 'active' => false),
-            array('idSite' => 2, 'scope' => 'action', 'index' => 1, 'expectedId' => 1, 'active' => false),
-            array('idSite' => 1, 'scope' => 'action', 'index' => 2, 'expectedId' => 4, 'active' => true),
-            array('idSite' => 1, 'scope' => 'visit',  'index' => 3, 'expectedId' => 5, 'active' => false),
-            array('idSite' => 2, 'scope' => 'visit',  'index' => 1, 'expectedId' => 2, 'active' => true),
-            array('idSite' => 2, 'scope' => 'visit',  'index' => 2, 'expectedId' => 3, 'active' => false),
+            array('idSite' => 1, 'scope' => 'action', 'index' => 1, 'expectedId' => 1, 'case_sensitive' => true, 'active' => true),
+            array('idSite' => 1, 'scope' => 'visit',  'index' => 1, 'expectedId' => 2, 'case_sensitive' => false, 'active' => false),
+            array('idSite' => 1, 'scope' => 'visit',  'index' => 2, 'expectedId' => 3, 'case_sensitive' => true, 'active' => false),
+            array('idSite' => 2, 'scope' => 'action', 'index' => 1, 'expectedId' => 1, 'case_sensitive' => false, 'active' => false),
+            array('idSite' => 1, 'scope' => 'action', 'index' => 2, 'expectedId' => 4, 'case_sensitive' => false, 'active' => true),
+            array('idSite' => 1, 'scope' => 'visit',  'index' => 3, 'expectedId' => 5, 'case_sensitive' => false, 'active' => false),
+            array('idSite' => 2, 'scope' => 'visit',  'index' => 1, 'expectedId' => 2, 'case_sensitive' => true, 'active' => true),
+            array('idSite' => 2, 'scope' => 'visit',  'index' => 2, 'expectedId' => 3, 'case_sensitive' => true, 'active' => false),
         );
 
         foreach ($cases as $index => $case) {
-            $idDimension = $this->config->configureNewDimension($case['idSite'], $name = 'Test' . $index, $case['scope'], $case['index'], $case['active'], $extractions = array());
+            $idDimension = $this->config->configureNewDimension($case['idSite'], $name = 'Test' . $index, $case['scope'], $case['index'], $case['active'], $extractions = array(), $case['case_sensitive']);
             $this->assertSame($case['expectedId'], $idDimension);
         }
 
