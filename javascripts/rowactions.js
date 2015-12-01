@@ -26,12 +26,7 @@ $(function () {
                 var segment = prev.attr('data-segment-filter');
                 if (segment) {
                     label = unescape(label);
-                    if (this.transitions === null) {
-                        this.transitions = new Piwik_Transitions('url', label, this, segment);
-                    } else {
-                        this.transitions.reset('url', label, segment);
-                    }
-                    this.transitions.showPopover();
+                    DataTable_RowActions_Transitions.launchForUrl(label, segment);
                 }
             }
         }
