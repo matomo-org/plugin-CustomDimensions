@@ -79,7 +79,8 @@ class GetCustomDimension extends Report
         }
 
         $isWidget = Common::getRequestVar('widget', 0, 'int');
-        if ($isWidget && $view->isViewDataTableId(HtmlTable::ID)) {
+        $module = Common::getRequestVar('module', '', 'string');
+        if ($isWidget && $module !== 'Widgetize' && $view->isViewDataTableId(HtmlTable::ID)) {
             // we disable row evolution as it would not forward the idDimension when requesting the row evolution
             // this is a limitation in row evolution
             $view->config->disable_row_evolution = true;
