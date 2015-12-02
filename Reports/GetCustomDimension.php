@@ -21,6 +21,7 @@ use Piwik\Plugins\CoreHome\Columns\Metrics\ActionsPerVisit;
 use Piwik\Plugins\CoreHome\Columns\Metrics\AverageTimeOnSite;
 use Piwik\Plugins\CoreHome\Columns\Metrics\BounceRate;
 use Piwik\Plugins\CoreHome\Columns\UserId;
+use Piwik\Plugins\CoreVisualizations\Visualizations\HtmlTable;
 use Piwik\Plugins\CustomDimensions\Columns\Metrics\AverageTimeOnDimension;
 use Piwik\Plugins\CustomDimensions\Dimension\CustomActionDimension;
 use Piwik\Plugins\CustomDimensions\Dimension\CustomVisitDimension;
@@ -75,6 +76,13 @@ class GetCustomDimension extends Report
         $idDimension = Common::getRequestVar('idDimension', 0, 'int');
         if ($idDimension < 1) {
             return;
+        }
+
+        $isWidget = Common::getRequestVar('widget', 0, 'int');
+        if ($isWidget && $view->isViewDataTableId(HtmlTable::ID)) {
+            // we disable row evolution as it would not forward the idDimension when requesting the row evolution
+            // this is a limitation in row evolution
+            $view->config->disable_row_evolution = true;
         }
 
         $module = $view->requestConfig->getApiModuleToRequest();
