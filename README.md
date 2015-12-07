@@ -63,7 +63,7 @@ Be aware that this can take a long time depending on the size of your database a
 You can directly create multiple Custom Dimension slots. To do this add the option `--count=X`. Usually it doesn't take much
 longer to create directly multiple new slots.
 
-__Is it possible to delete a Custom Dimension and all of it's data?__
+__Is it possible to delete a Custom Dimension and all of its data?__
 
 In the UI it is only possible to deactivate a dimension. However, on the command line you can remove a Custom Dimension
 and report it's log data by executing the following console command:
