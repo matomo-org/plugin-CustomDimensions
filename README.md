@@ -4,12 +4,10 @@
 
 ## Description
 
-This plugins allows you to configure and track any Custom Dimensions. You can configure a Custom Dimension
+This plugins allows you to configure and track any [Custom Dimensions](https://piwik.org/docs/custom-dimensions/). You can configure a Custom Dimension
 by giving it a name and a scope (Action or Visit). Afterwards you will see a new menu item in the reporting area
 for each configured dimension and be able to get its data. You can also export the report as a widget, segment by this
- dimenson, and more.
-
-*Warning*: This plugin is currently a beta version and it may cause bugs or show incorrect data
+ dimenson, and more. For more information read the [Custom Dimensions user guide](https://piwik.org/docs/custom-dimensions/) or have a look in the FAQ.
 
 *Warning*: Depending on the database size of your Piwik this plugin may take a long time to install.
 
@@ -37,11 +35,7 @@ find the Id in the table that lists all available Custom Dimensions.
 
 __How do I set a value for a dimension in the JavaScript Tracker?__
 
-`_paq.push(['setCustomDimension', customDimensionId, value]);`
-
-Please note once a Custom Dimension is set, the value will be used for all following tracking requests and may lead to
-inaccurate results. To delete a Custom Dimension value after a tracking request call
-`_paq.push(['deleteCustomDimension', customDimensionId]);`
+Please have a look at the [JavaScript Tracker guide for Custom Dimensions](https://developer.piwik.org/guides/tracking-javascript-guide#custom-dimensions).
 
 __How do I set a value for a dimension in the PHP Tracker?__
 

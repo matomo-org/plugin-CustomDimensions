@@ -2,7 +2,7 @@
     "CustomDimensions": {
         "CustomDimensions": "Custom Dimensions",
         "CustomDimensionsIntro": "By creating %sCustom Dimensions%s you can collect any custom data for '%s'.",
-        "CustomDimensionsIntroNext": "Piwik will create a report for each Custom Dimension (including the conversion rate for each of your Goals), as well as let you easily segment your users based on these values.",
+        "CustomDimensionsIntroNext": "Piwik will create a report for each Custom Dimension (including the conversion rate for each of your Goals), as well as let you easily segment your users based on these values. Custom Dimensions are similar to %sCustom Variables%s but there are a few %sdifferences between Custom Dimensions and Custom Variables%s.",
         "ScopeDescriptionVisit": "Custom Dimensions in scope 'Visit' can be sent along any tracking request and are stored in the visit. ",
         "ScopeDescriptionVisitMoreInfo": "If you set different values for a given dimension during the lifetime of a visit, the last value set will be used.",
         "ScopeDescriptionAction": "Custom Dimensions in scope 'Action' can be sent along any action (page view, download, event, etc.).",
@@ -14,6 +14,7 @@
         "ExampleCreateCustomDimensions": "For example to create %s new Custom Dimensions in scope action execute the following command:",
         "HowToTrackManuallyTitle": "Tracking a value for this dimension manually",
         "HowToTrackManuallyViaJs": "To track a value in the JavaScript Tracker call:",
+        "HowToTrackManuallyViaJsDetails": "For more information read the %sJavaScript Tracker guide for Custom Dimensions%s",
         "HowToTrackManuallyViaPhp": "To track a value in the PHP Tracker call:",
         "HowToTrackManuallyViaHttp": "To track a value via the HTTP Tracker API use the tracking parameter 'dimension' followed by the Custom Dimension Id:",
         "Extractions": "Extractions",
