@@ -160,10 +160,10 @@ class Archiver extends \Piwik\Plugin\Archiver
         $dataArray->setActionMetricsIds($metricIds);
 
         $select = "log_link_visit_action.$valueField,
-                  actionAlias.name as url,
+                  log_action.name as url,
                   sum(log_link_visit_action.time_spent) as `" . Metrics::INDEX_PAGE_SUM_TIME_SPENT . "`,
-                  sum(case visitAlias.visit_total_actions when 1 then 1 when 0 then 1 else 0 end) as `" . Metrics::INDEX_BOUNCE_COUNT . "`,
-                  sum(IF(visitAlias.last_idlink_va = log_link_visit_action.idlink_va, 1, 0)) as `" . Metrics::INDEX_PAGE_EXIT_NB_VISITS . "`";
+                  sum(case log_visit.visit_total_actions when 1 then 1 when 0 then 1 else 0 end) as `" . Metrics::INDEX_BOUNCE_COUNT . "`,
+                  sum(IF(log_visit.last_idlink_va = log_link_visit_action.idlink_va, 1, 0)) as `" . Metrics::INDEX_PAGE_EXIT_NB_VISITS . "`";
 
         $select = $this->addMetricsToSelect($select, $metricsConfig);
 
@@ -171,13 +171,11 @@ class Archiver extends \Piwik\Plugin\Archiver
             "log_link_visit_action",
             array(
                 "table"  => "log_visit",
-                "tableAlias"  => "visitAlias",
-                "joinOn" => "visitAlias.idvisit = log_link_visit_action.idvisit"
+                "joinOn" => "log_visit.idvisit = log_link_visit_action.idvisit"
             ),
             array(
                 "table"  => "log_action",
-                "tableAlias"  => "actionAlias",
-                "joinOn" => "log_link_visit_action.idaction_url = actionAlias.idaction"
+                "joinOn" => "log_link_visit_action.idaction_url = log_action.idaction"
             )
         );
 
