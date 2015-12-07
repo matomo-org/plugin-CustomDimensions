@@ -7,9 +7,9 @@
 (function () {
     angular.module('piwikApp').controller('CustomDimensionsListController', CustomDimensionsListController);
 
-    CustomDimensionsListController.$inject = ['customDimensionsModel'];
+    CustomDimensionsListController.$inject = ['customDimensionsModel', 'piwik'];
 
-    function CustomDimensionsListController(customDimensionsModel) {
+    function CustomDimensionsListController(customDimensionsModel, piwik) {
         customDimensionsModel.fetchCustomDimensionsConfiguration();
 
         this.siteName = piwik.siteName;
