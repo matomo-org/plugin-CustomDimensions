@@ -1,0 +1,9 @@
+{
+    "CustomDimensions": {
+        "Extractions": "抽出",
+        "ExtractValue": "値を抽出",
+        "PageUrlParam": "ページ URL パラメーター",
+        "NameIsRequired": "名前が必要です。",
+        "ColumnUniqueActions": "ユニークアクション"
+    }
+}
