@@ -73,6 +73,7 @@ not deleted currently.
 
 ## Changelog
 
+* 0.1.3 Fix UI of Custom Dimensions was not working properly when not using English as language
 * 0.1.2
   * New feature: Mark an extraction as case sensitive
   * New feature : Show actions that had no value defined

@@ -12,8 +12,8 @@
         <h2 class="secondary"> {{ scope.name }} Dimensions </h2>
 
         <p>
-            {{ 'CustomDimensions_ScopeDescription' + scope.name |translate }}
-            {{ 'CustomDimensions_ScopeDescription' + scope.name + 'MoreInfo' |translate }}
+            {{ 'CustomDimensions_ScopeDescription' + (scope.value|ucfirst) |translate }}
+            {{ 'CustomDimensions_ScopeDescription' + (scope.value|ucfirst) + 'MoreInfo' |translate }}
         </p>
 
         <table class="dataTable entityTable">
