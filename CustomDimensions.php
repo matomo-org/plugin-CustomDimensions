@@ -215,15 +215,43 @@ class CustomDimensions extends Plugin
         $translationKeys[] = 'Actions_ColumnPageURL';
         $translationKeys[] = 'Goals_PageTitle';
         $translationKeys[] = 'Goals_CaseSensitive';
-
-        // we simply make all translations available via JS as > 90% of them are used in JS anyway
-        $translator = StaticContainer::get('Piwik\Translation\Translator');
-        $t = $translator->getAllTranslations();
-        if (!empty($t[$this->pluginName])) {
-            foreach (array_keys($t[$this->pluginName]) as $key) {
-                $translationKeys[] = $this->pluginName . '_' . $key;
-            }
-        }
+        $translationKeys[] = 'CustomDimensions_CustomDimensions';
+        $translationKeys[] = 'CustomDimensions_CustomDimensionsIntro';
+        $translationKeys[] = 'CustomDimensions_CustomDimensionsIntroNext';
+        $translationKeys[] = 'CustomDimensions_ScopeDescriptionVisit';
+        $translationKeys[] = 'CustomDimensions_ScopeDescriptionVisitMoreInfo';
+        $translationKeys[] = 'CustomDimensions_ScopeDescriptionAction';
+        $translationKeys[] = 'CustomDimensions_ScopeDescriptionActionMoreInfo';
+        $translationKeys[] = 'CustomDimensions_IncreaseAvailableCustomDimensionsTitle';
+        $translationKeys[] = 'CustomDimensions_IncreaseAvailableCustomDimensionsTakesLong';
+        $translationKeys[] = 'CustomDimensions_HowToCreateCustomDimension';
+        $translationKeys[] = 'CustomDimensions_HowToManyCreateCustomDimensions';
+        $translationKeys[] = 'CustomDimensions_ExampleCreateCustomDimensions';
+        $translationKeys[] = 'CustomDimensions_HowToTrackManuallyTitle';
+        $translationKeys[] = 'CustomDimensions_HowToTrackManuallyViaJs';
+        $translationKeys[] = 'CustomDimensions_HowToTrackManuallyViaJsDetails';
+        $translationKeys[] = 'CustomDimensions_HowToTrackManuallyViaPhp';
+        $translationKeys[] = 'CustomDimensions_HowToTrackManuallyViaHttp';
+        $translationKeys[] = 'CustomDimensions_Extractions';
+        $translationKeys[] = 'CustomDimensions_ExtractionsHelp';
+        $translationKeys[] = 'CustomDimensions_ExtractValue';
+        $translationKeys[] = 'CustomDimensions_ExampleValue';
+        $translationKeys[] = 'CustomDimensions_NoCustomDimensionConfigured';
+        $translationKeys[] = 'CustomDimensions_ConfigureNewDimension';
+        $translationKeys[] = 'CustomDimensions_ConfigureDimension';
+        $translationKeys[] = 'CustomDimensions_XofYLeft';
+        $translationKeys[] = 'CustomDimensions_CannotBeDeleted';
+        $translationKeys[] = 'CustomDimensions_PageUrlParam';
+        $translationKeys[] = 'CustomDimensions_NameAllowedCharacters';
+        $translationKeys[] = 'CustomDimensions_NameIsRequired';
+        $translationKeys[] = 'CustomDimensions_NameIsTooLong';
+        $translationKeys[] = 'CustomDimensions_ExceptionDimensionDoesNotExist';
+        $translationKeys[] = 'CustomDimensions_ExceptionDimensionIsNotActive';
+        $translationKeys[] = 'CustomDimensions_DimensionCreated';
+        $translationKeys[] = 'CustomDimensions_DimensionUpdated';
+        $translationKeys[] = 'CustomDimensions_ColumnUniqueActions';
+        $translationKeys[] = 'CustomDimensions_ColumnAvgTimeOnDimension';
+        $translationKeys[] = 'CustomDimensions_CustomDimensionId';
     }
 
     public function getReportsWithGoalMetrics(&$reportsWithGoals)
