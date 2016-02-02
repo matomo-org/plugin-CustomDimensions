@@ -73,6 +73,7 @@ not deleted currently.
 
 ## Changelog
 
+* 0.1.4 Fix a possible JavaScript error if Transitions plugin is disabled
 * 0.1.3 Fix UI of Custom Dimensions was not working properly when not using English as language
 * 0.1.2
   * New feature: Mark an extraction as case sensitive
