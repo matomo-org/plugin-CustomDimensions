@@ -1,7 +1,7 @@
 <div class="editCustomDimension">
     <h2>{{ 'CustomDimensions_ConfigureDimension'|translate:(dimensionScope|ucfirst):(editDimension.dimension.index || '') }}</h2>
 
-    <p ng-show="editDimension.model.isLoading || editDimension.model.isUpdating">
+    <p ng-show="editDimension.model.isLoading || editDimension.model.isUpdating">
         <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
     </p>
 
@@ -70,17 +70,17 @@
                 <p>
                 {{ 'CustomDimensions_HowToTrackManuallyViaJs'|translate }}
                 </p>
-                <code>_paq.push(['setCustomDimension', {{ editDimension.dimension.idcustomdimension }}, '{{ 'CustomDimensions_ExampleValue'|translate }}');</code>
+                <code>_paq.push(['setCustomDimension', {{ editDimension.dimension.idcustomdimension }}, '{{ 'CustomDimensions_ExampleValue'|translate }}');</code>
                 <p ng-bind-html="'CustomDimensions_HowToTrackManuallyViaJsDetails'|translate:'&lt;a target=_blank href=\'https://developer.piwik.org/guides/tracking-javascript-guide#custom-dimensions\'>':'&lt;/a>'">
                 </p>
                 <p>
                 {{ 'CustomDimensions_HowToTrackManuallyViaPhp'|translate }}
                 </p>
-                <code>$tracker->setCustomTrackingParameter('dimension{{ editDimension.dimension.idcustomdimension }}', '{{ 'CustomDimensions_ExampleValue'|translate }}');</code>
+                <code>$tracker->setCustomTrackingParameter('dimension{{ editDimension.dimension.idcustomdimension }}', '{{ 'CustomDimensions_ExampleValue'|translate }}');</code>
                 <p>
                 {{ 'CustomDimensions_HowToTrackManuallyViaHttp'|translate }}
                 </p>
-                 <code>&dimension{{ editDimension.dimension.idcustomdimension }}={{ 'CustomDimensions_ExampleValue'|translate }}</code>
+                 <code>&dimension{{ editDimension.dimension.idcustomdimension }}={{ 'CustomDimensions_ExampleValue'|translate }}</code>
             </div>
         </div>
     </div>
