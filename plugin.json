@@ -1,6 +1,6 @@
 {
     "name": "CustomDimensions",
-    "version": "0.1.3",
+    "version": "0.1.5",
     "description": "Extend Piwik to your needs by defining and tracking Custom Dimensions in scope Action or Visit",
     "theme": false,
     "keywords": [
