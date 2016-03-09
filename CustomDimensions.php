@@ -9,6 +9,7 @@
 namespace Piwik\Plugins\CustomDimensions;
 
 use Piwik\ArchiveProcessor;
+use Piwik\Category\Subcategory;
 use Piwik\Common;
 use Piwik\Container\StaticContainer;
 use Piwik\DataTable;
@@ -67,7 +68,40 @@ class CustomDimensions extends Plugin
             'Tracker.newConversionInformation' => 'addConversionInformation',
             'Tracker.getVisitFieldsToPersist'  => 'addVisitFieldsToPersist',
             'Tracker.setTrackerCacheGeneral'   => 'setTrackerCacheGeneral',
+            'Category.addSubcategories' => 'addSubcategories'
         );
+    }
+
+
+    public function addSubcategories(&$subcategories)
+    {
+        $idSite = Common::getRequestVar('idSite', 0, 'int');
+
+        if (!$idSite) {
+            return;
+        }
+
+        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        $order = 70;
+
+        foreach ($dimensions as $dimension) {
+            if (!$dimension['active']) {
+                continue;
+            }
+
+            $category = new Subcategory();
+            $category->setName($dimension['name']);
+
+            if ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
+                $category->setCategoryId('General_Actions');
+            } elseif ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
+                $category->setCategoryId('General_Visitors');
+            }
+
+            $category->setId($dimension['idcustomdimension']);
+            $category->setOrder($order++);
+            $subcategories[] = $category;
+        }
     }
 
     public function getJsFiles(&$jsFiles)

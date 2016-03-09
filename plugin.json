@@ -1,6 +1,6 @@
 {
     "name": "CustomDimensions",
-    "version": "0.1.5",
+    "version": "3.0.0",
     "description": "Extend Piwik to your needs by defining and tracking Custom Dimensions in scope Action or Visit",
     "theme": false,
     "keywords": [
@@ -10,7 +10,7 @@
     "license": "GPL v3+",
     "homepage": "http:\/\/piwik.org",
     "require": {
-        "piwik": ">=2.15.1-b8"
+        "piwik": ">=3.0.0-dev,<4.0.0"
     },
     "authors": [
         {

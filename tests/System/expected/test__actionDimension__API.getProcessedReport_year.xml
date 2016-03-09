@@ -4,6 +4,7 @@
 	<prettyDate>2013</prettyDate>
 	<metadata>
 		<category>Actions</category>
+		<subcategory>3</subcategory>
 		<name>MyName3</name>
 		<module>CustomDimensions</module>
 		<action>getCustomDimension</action>
