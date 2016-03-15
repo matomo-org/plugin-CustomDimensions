@@ -29,7 +29,6 @@ env:
   global:
     - PLUGIN_NAME=CustomDimensions
     - PIWIK_ROOT_DIR=$TRAVIS_BUILD_DIR/piwik
-    - UNPROTECTED_ARTIFACTS=1
     # this variable controls the version of Piwik your tests will run against. increment it when
     # making your plugin compatible with the new version of Piwik.
     - PIWIK_TEST_TARGET=2.16.0-b6
