@@ -11,7 +11,7 @@ namespace Piwik\Plugins\CustomDimensions;
 use Piwik\Common;
 use Piwik\Menu\Group;
 use Piwik\Menu\MenuReporting;
-use Piwik\Menu\MenuUser;
+use Piwik\Menu\MenuAdmin;
 use Piwik\Piwik;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\UsersManager\UserPreferences;
@@ -23,7 +23,7 @@ use Piwik\Plugins\UsersManager\UserPreferences;
  */
 class Menu extends \Piwik\Plugin\Menu
 {
-    public function configureUserMenu(MenuUser $menu)
+    public function configureAdminMenu(MenuAdmin $menu)
     {
         $userPreferences = new UserPreferences();
         $default = $userPreferences->getDefaultWebsiteId();
