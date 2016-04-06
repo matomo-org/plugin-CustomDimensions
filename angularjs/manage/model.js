@@ -44,7 +44,7 @@
 
             var deferred = $q.defer();
             // .fetch does not return a proper promise
-            piwikApi.fetch({method: 'CustomDimensions.getConfiguredCustomDimensions'}).then(function (customDimensions) {
+            piwikApi.fetch({method: 'CustomDimensions.getConfiguredCustomDimensions', filter_limit: '-1'}).then(function (customDimensions) {
                 model.customDimensions = customDimensions;
                 deferred.resolve(customDimensions);
             });
@@ -61,7 +61,7 @@
         function fetchAvailableExtractionDimensions() {
             var deferred = $q.defer();
             // .fetch does not return a proper promise
-            piwikApi.fetch({method: 'CustomDimensions.getAvailableExtractionDimensions'}).then(function (availableExtractionDimensions) {
+            piwikApi.fetch({method: 'CustomDimensions.getAvailableExtractionDimensions', filter_limit: '-1'}).then(function (availableExtractionDimensions) {
                 model.extractionDimensions = availableExtractionDimensions;
                 deferred.resolve(availableExtractionDimensions);
             });
@@ -73,7 +73,7 @@
             var deferred = $q.defer();
 
             // .fetch does not return a proper promise
-            piwikApi.fetch({method: 'CustomDimensions.getAvailableScopes'}).then(function (availableScopes) {
+            piwikApi.fetch({method: 'CustomDimensions.getAvailableScopes', filter_limit: '-1'}).then(function (availableScopes) {
                 model.availableScopes = availableScopes;
                 deferred.resolve(availableScopes);
             });
