@@ -183,10 +183,10 @@ class GetCustomDimension extends Report
 
             if ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
                 $this->categoryId = 'General_Actions';
-                $this->subcategoryId = $dimension['idcustomdimension'];
+                $this->subcategoryId = 'customdimension' . $dimension['idcustomdimension'];
             } elseif ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
                 $this->categoryId = 'General_Visitors';
-                $this->subcategoryId = $dimension['idcustomdimension'];
+                $this->subcategoryId = 'customdimension' . $dimension['idcustomdimension'];
             } else {
                 continue;
             }
@@ -246,7 +246,7 @@ class GetCustomDimension extends Report
         $this->menuTitle = $this->name;
         $this->widgetTitle = $this->name;
         $this->scopeOfDimension = $dimension['scope'];
-        $this->subcategoryId = $dimension['idcustomdimension'];
+        $this->subcategoryId = 'customdimension' . $dimension['idcustomdimension'];
         $dimensionField = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
 
         if ($this->scopeOfDimension === CustomDimensions::SCOPE_ACTION) {

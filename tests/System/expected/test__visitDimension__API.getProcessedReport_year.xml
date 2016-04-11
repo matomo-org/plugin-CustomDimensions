@@ -4,7 +4,7 @@
 	<prettyDate>2013</prettyDate>
 	<metadata>
 		<category>Visitors</category>
-		<subcategory>1</subcategory>
+		<subcategory>customdimension1</subcategory>
 		<name>MyName1</name>
 		<module>CustomDimensions</module>
 		<action>getCustomDimension</action>

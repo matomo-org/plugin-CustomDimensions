@@ -16,7 +16,11 @@ describe("CustomDimensions", function () {
         urlBase = 'module=CoreHome&action=index&' + generalParams;
 
     var manageUrl = "?" + generalParams + "&module=CustomDimensions&action=manage";
-    var reportUrl = "?" + urlBase + "#" + generalParams + "&module=CustomDimensions&action=menuGetCustomDimension";
+    var reportUrl = "?" + urlBase + "#" + generalParams;
+
+    var reportUrlDimension2 = reportUrl + "&category=General_Visitors&subcategory=customdimension2";
+    var reportUrlDimension3 = reportUrl + "&category=General_Actions&subcategory=customdimension3";
+    var reportUrlDimension4 = reportUrl + "&category=General_Actions&subcategory=customdimension4";
 
     var popupSelector = '.pageWrap,.ui-dialog:visible';
 
@@ -53,7 +57,7 @@ describe("CustomDimensions", function () {
 
     it('should show the report for the selected visit dimension', function (done) {
         capturePageWrap('report_visit', function (page) {
-            page.load(reportUrl + '&idDimension=2');
+            page.load(reportUrlDimension2);
         }, done);
     });
 
@@ -76,7 +80,7 @@ describe("CustomDimensions", function () {
 
     it('should show the report for the selected action dimension', function (done) {
         capturePageWrap('report_action', function (page) {
-            page.load(reportUrl + '&idDimension=3');
+            page.load(reportUrlDimension3);
         }, done);
     });
 
@@ -101,27 +105,27 @@ describe("CustomDimensions", function () {
 
     it('should show an error when trying to open an inactive dimension', function (done) {
         capturePageWrap('report_actions_inactive', function (page) {
-            page.load(reportUrl + '&idDimension=4');
+            page.load(reportUrlDimension4);
         }, done);
     });
 
     it('should be able to open segmented visitor log', function (done) {
         captureSelector('report_actions_segmented_visitorlog', popupSelector, function (page) {
-            page.load(reportUrl + "&idDimension=3");
+            page.load(reportUrlDimension3);
             triggerRowAction(page, 'en', 'actionSegmentVisitorLog');
         }, done);
     });
 
     it('should be able to open row evolution', function (done) {
         captureSelector('report_actions_rowevolution', popupSelector, function (page) {
-            page.load(reportUrl + "&idDimension=3");
+            page.load(reportUrlDimension3);
             triggerRowAction(page, 'en', 'actionRowEvolution');
         }, done);
     });
 
     it('should be able to show subtable and offer all row actions if scope is action', function (done) {
         capturePageWrap('report_action_subtable', function (page) {
-            page.load(reportUrl + "&idDimension=3");
+            page.load(reportUrlDimension3);
             page.click('.dataTable .subDataTable .value:contains(en):first');
             page.mouseMove('td.label:contains(en_US)');
         }, done);
@@ -263,7 +267,7 @@ describe("CustomDimensions", function () {
 
     it('should group dimensions in menu once there are more than 3', function (done) {
         captureSelector('report_visit_mainmenu_grouped', '#secondNavBar,.menuDropdown .items', function (page) {
-            page.load(reportUrl + "&idDimension=2");
+            page.load(reportUrlDimension2);
             page.click('#UserCountryMap_realtimeWorldMap + li .menuDropdown')
         }, done);
     });

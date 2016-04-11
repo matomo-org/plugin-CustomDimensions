@@ -11,9 +11,7 @@ namespace Piwik\Plugins\CustomDimensions;
 use Piwik\ArchiveProcessor;
 use Piwik\Category\Subcategory;
 use Piwik\Common;
-use Piwik\Container\StaticContainer;
 use Piwik\DataTable;
-use Piwik\Date;
 use Piwik\Db;
 use Piwik\Metrics;
 use Piwik\Plugins\CustomDimensions\Dao\AutoSuggest;
@@ -78,7 +76,12 @@ class CustomDimensions extends Plugin
         $idSite = Common::getRequestVar('idSite', 0, 'int');
 
         if (!$idSite) {
-            return;
+            // fallback for eg API.getReportMetadata which uses idSites
+            $idSite = Common::getRequestVar('idSites', 0, 'int');
+
+            if (!$idSite) {
+                return;
+            }
         }
 
         $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
@@ -98,7 +101,7 @@ class CustomDimensions extends Plugin
                 $category->setCategoryId('General_Visitors');
             }
 
-            $category->setId($dimension['idcustomdimension']);
+            $category->setId('customdimension' . $dimension['idcustomdimension']);
             $category->setOrder($order++);
             $subcategories[] = $category;
         }
