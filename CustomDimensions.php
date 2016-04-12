@@ -70,7 +70,6 @@ class CustomDimensions extends Plugin
         );
     }
 
-
     public function addSubcategories(&$subcategories)
     {
         $idSite = Common::getRequestVar('idSite', 0, 'int');
