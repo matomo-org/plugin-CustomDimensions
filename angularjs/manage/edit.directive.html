@@ -1,63 +1,77 @@
 <div class="editCustomDimension">
-    <h2>{{ 'CustomDimensions_ConfigureDimension'|translate:(dimensionScope|ucfirst):(editDimension.dimension.index || '') }}</h2>
+    <div piwik-content-block content-title="{{ 'CustomDimensions_ConfigureDimension'|translate:(dimensionScope|ucfirst):(editDimension.dimension.index || '') }}">
 
-    <p ng-show="editDimension.model.isLoading || editDimension.model.isUpdating">
-        <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
-    </p>
+        <p ng-show="editDimension.model.isLoading || editDimension.model.isUpdating">
+            <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
+        </p>
 
-    <div class="row" ng-show="!editDimension.model.isLoading">
-        <div class="col-md-12">
+        <div ng-show="!editDimension.model.isLoading">
             <form ng-submit="editDimension.edit ? editDimension.updateCustomDimension() : editDimension.createCustomDimension()">
-                <div class="form-group">
-                    <label for="name">
-                        {{ 'General_Name'|translate }}
-                    </label>
-                    <input type="text" id="name" ng-model="editDimension.dimension.name"
-                           required
-                           max-length="255"
-                           title="{{ 'CustomDimensions_NameAllowedCharacters'|translate }}">
+
+                <div piwik-field uicontrol="text" name="name"
+                     ng-model="editDimension.dimension.name"
+                     title="{{ 'General_Name'|translate }}"
+                     max-length="255"
+                     required="true"
+                     inline-help="{{ 'CustomDimensions_NameAllowedCharacters'|translate }}">
                 </div>
-                <div class="form-group">
-                    <div class="form-help">
-                        {{ 'CustomDimensions_CannotBeDeleted'|translate }}
-                    </div>
-                    <label for="active" class="checkbox">
-                        <input type="checkbox" id="active" ng-model="editDimension.dimension.active">
-                        {{ 'CorePluginsAdmin_Active'|translate }}
-                    </label>
+
+                <div piwik-field uicontrol="checkbox" name="active"
+                     ng-model="editDimension.dimension.active"
+                     title="{{ 'CorePluginsAdmin_Active'|translate }}"
+                     inline-help="{{ 'CustomDimensions_CannotBeDeleted'|translate }}">
                 </div>
-                <div class="form-group" ng-show="editDimension.doesScopeSupportExtraction()">
 
-                    <label for="extractions">{{ 'CustomDimensions_ExtractValue'|translate }}</label>
+                <div class="row form-group" ng-show="editDimension.doesScopeSupportExtraction()">
 
-                    <div class="form-help">
-                        <span ng-bind-html="'CustomDimensions_ExtractionsHelp'|translate"></span>
+                    <h3 class="col s12">{{ 'CustomDimensions_ExtractValue'|translate }}</h3>
+
+                    <div class="col s12 m6">
+
+                        <div ng-repeat="(index, extraction) in editDimension.dimension.extractions" class="extraction {{ index }}">
+
+                            <div class="row">
+
+                                <div class="col s12 m6">
+                                    <div piwik-field uicontrol="select" name="dimension{{index}}"
+                                         ng-model="editDimension.dimension.extractions[index].dimension"
+                                         full-width="true"
+                                         options="editDimension.model.extractionDimensions">
+                                    </div></div>
+                                <div class="col s12 m6">
+                                    <div piwik-field uicontrol="text" name="pattern{{index}}"
+                                         full-width="true"
+                                         ng-model="editDimension.dimension.extractions[index].pattern"
+                                         title="{{ editDimension.dimension.extractions[index].dimension === 'urlparam' ? 'url query string parameter' : 'eg. /blog/(.*)/' }}"
+                                    >
+                                    </div>
+                                </div>
+                                <div class="col s12">
+                                    <span ng-click="editDimension.addExtraction()"
+                                          ng-show="editDimension.dimension.extractions[index].pattern"
+                                          class="icon-plus"></span>
+                                    <span ng-click="editDimension.removeExtraction(index)"
+                                          ng-show="(editDimension.dimension.extractions|length) > 1"
+                                          class="icon-minus"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
+                                <div piwik-field uicontrol="checkbox" name="casesensitive"
+                                     ng-show="editDimension.dimension.extractions[0].pattern"
+                                     ng-model="editDimension.dimension.case_sensitive"
+                                     title="{{ 'Goals_CaseSensitive'|translate }}">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div ng-repeat="(index, extraction) in editDimension.dimension.extractions" class="extraction {{ index }}">
-                        <select name="extractions"
-                                class="dimension"
-                                ng-options="extractionDimension.value as extractionDimension.name for extractionDimension in editDimension.model.extractionDimensions"
-                                ng-model="editDimension.dimension.extractions[index].dimension">
-                        </select>
-
-                        <input type="text"
-                               class="pattern"
-                               ng-model="editDimension.dimension.extractions[index].pattern"
-                               placeholder="{{ editDimension.dimension.extractions[index].dimension === 'urlparam' ? 'url query string parameter' : 'eg. /blog/(.*)/' }}">
-
-                        <span ng-click="editDimension.addExtraction()"
-                              ng-show="editDimension.dimension.extractions[index].pattern"
-                              class="icon-plus"></span>
-                        <span ng-click="editDimension.removeExtraction(index)"
-                              ng-show="(editDimension.dimension.extractions|length) > 1"
-                              class="icon-minus"></span>
+                    <div class="col s12 m6 form-help">
+                        {{ 'CustomDimensions_ExtractionsHelp'|translate }}
                     </div>
-
-                    <label for="casesensitive" class="checkbox" ng-show="editDimension.dimension.extractions[0].pattern">
-                        <input type="checkbox" id="casesensitive" ng-model="editDimension.dimension.case_sensitive">
-                        {{ 'Goals_CaseSensitive'|translate }}
-                    </label>
-
                 </div>
 
                 <input class="btn update" type="submit" ng-show="editDimension.edit" ng-disabled="editDimension.model.isUpdating" value="Update">
@@ -65,7 +79,7 @@
                 <a class="btn cancel" type="button" ng-href="#list">{{ 'General_Cancel'|translate }}</a>
             </form>
 
-            <div class="alert alert-info" ng-show="editDimension.edit">
+            <div class="alert alert-info howToTrackInfo" ng-show="editDimension.edit">
                 <strong>{{ 'CustomDimensions_HowToTrackManuallyTitle'|translate }}</strong>
                 <p>
                 {{ 'CustomDimensions_HowToTrackManuallyViaJs'|translate }}
@@ -83,7 +97,6 @@
                  <code>&dimension{{ editDimension.dimension.idcustomdimension }}={{ 'CustomDimensions_ExampleValue'|translate }}</code>
             </div>
         </div>
+
     </div>
-
-
 </div>

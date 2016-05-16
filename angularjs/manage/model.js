@@ -62,7 +62,11 @@
             var deferred = $q.defer();
             // .fetch does not return a proper promise
             piwikApi.fetch({method: 'CustomDimensions.getAvailableExtractionDimensions', filter_limit: '-1'}).then(function (availableExtractionDimensions) {
-                model.extractionDimensions = availableExtractionDimensions;
+
+                model.extractionDimensions = [];
+                angular.forEach(availableExtractionDimensions, function (value) {
+                    model.extractionDimensions.push({key: value.value, value: value.name});
+                });
                 deferred.resolve(availableExtractionDimensions);
             });
 
