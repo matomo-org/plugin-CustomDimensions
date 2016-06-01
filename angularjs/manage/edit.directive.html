@@ -84,17 +84,17 @@
                 <p>
                 {{ 'CustomDimensions_HowToTrackManuallyViaJs'|translate }}
                 </p>
-                <code>_paq.push(['setCustomDimension', {{ editDimension.dimension.idcustomdimension }}, '{{ 'CustomDimensions_ExampleValue'|translate }}');</code>
+                <pre piwik-select-on-focus><code>_paq.push(['setCustomDimension', {{ editDimension.dimension.idcustomdimension }}, '{{ 'CustomDimensions_ExampleValue'|translate }}');</code></pre>
                 <p ng-bind-html="'CustomDimensions_HowToTrackManuallyViaJsDetails'|translate:'&lt;a target=_blank href=\'https://developer.piwik.org/guides/tracking-javascript-guide#custom-dimensions\'>':'&lt;/a>'">
                 </p>
                 <p>
                 {{ 'CustomDimensions_HowToTrackManuallyViaPhp'|translate }}
                 </p>
-                <code>$tracker->setCustomTrackingParameter('dimension{{ editDimension.dimension.idcustomdimension }}', '{{ 'CustomDimensions_ExampleValue'|translate }}');</code>
+                <pre piwik-select-on-focus><code>$tracker->setCustomTrackingParameter('dimension{{ editDimension.dimension.idcustomdimension }}', '{{ 'CustomDimensions_ExampleValue'|translate }}');</code></pre>
                 <p>
                 {{ 'CustomDimensions_HowToTrackManuallyViaHttp'|translate }}
                 </p>
-                 <code>&dimension{{ editDimension.dimension.idcustomdimension }}={{ 'CustomDimensions_ExampleValue'|translate }}</code>
+                 <pre piwik-select-on-focus><code>&dimension{{ editDimension.dimension.idcustomdimension }}={{ 'CustomDimensions_ExampleValue'|translate }}</code></pre>
             </div>
         </div>
 
