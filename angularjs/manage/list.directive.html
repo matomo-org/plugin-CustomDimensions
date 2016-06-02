@@ -1,12 +1,14 @@
 <div>
-    <h2 piwik-enriched-headline>{{ 'CustomDimensions_CustomDimensions'|translate }}</h2>
+    <div piwik-content-intro>
+        <h2 piwik-enriched-headline>{{ 'CustomDimensions_CustomDimensions'|translate }}</h2>
 
-    <p ng-bind-html="('CustomDimensions_CustomDimensionsIntro'|translate:'&lt;a target=_blank href=\'https://piwik.org/docs/custom-dimensions\'>':'&lt;/a>':dimensionsList.siteName) + ' ' + ('CustomDimensions_CustomDimensionsIntroNext'|translate:'&lt;a target=_blank href=\'http://piwik.org/docs/custom-variables\'>':'&lt;/a>':'&lt;a target=_blank href=\'https://piwik.org/faq/general/faq_21117\'>':'&lt;/a>') ">
-    </p>
+        <p ng-bind-html="('CustomDimensions_CustomDimensionsIntro'|translate:'&lt;a target=_blank href=\'https://piwik.org/docs/custom-dimensions\'>':'&lt;/a>':dimensionsList.siteName) + ' ' + ('CustomDimensions_CustomDimensionsIntroNext'|translate:'&lt;a target=_blank href=\'http://piwik.org/docs/custom-variables\'>':'&lt;/a>':'&lt;a target=_blank href=\'https://piwik.org/faq/general/faq_21117\'>':'&lt;/a>') ">
+        </p>
 
-    <p ng-show="dimensionsList.model.isLoading">
-        <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
-    </p>
+        <p ng-show="dimensionsList.model.isLoading">
+            <span class="loadingPiwik"><img src="plugins/Morpheus/images/loading-blue.gif"/> {{ 'General_LoadingData'|translate }}</span>
+        </p>
+    </div>
 
     <div ng-repeat="scope in dimensionsList.model.availableScopes" ng-show="!dimensionsList.model.isLoading">
         <div piwik-content-block content-title="{{ scope.name }} Dimensions">
