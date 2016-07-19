@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\CustomDimensions\tests\System;
 
+use Piwik\Plugin\Manager;
 use Piwik\Plugins\CustomDimensions\tests\Fixtures\TrackVisitsWithCustomDimensionsFixture;
 use Piwik\Tests\Framework\TestCase\SystemTestCase;
 
@@ -130,21 +131,38 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        $apiToTest[] = array(array('API.getReportMetadata'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('day')
-            )
-        );
+        if (Manager::getInstance()->isPluginInstalled('UserId')) {
+            $apiToTest[] = array(
+                array('API.getReportMetadata'),
+                array(
+                    'idSite'  => 1,
+                    'date'    => self::$fixture->dateTime,
+                    'periods' => array('day')
+                )
+            );
 
-        $apiToTest[] = array(array('API.getSegmentsMetadata'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('year'),
-            )
-        );
+            $apiToTest[] = array(array('API.getSegmentsMetadata'),
+                array(
+                    'idSite'  => 1,
+                    'date'    => self::$fixture->dateTime,
+                    'periods' => array('year'),
+                )
+            );
+
+            $apiToTest[] = array(array('API.getProcessedReport'),
+                                 array(
+                                     'idSite'  => 1,
+                                     'date'    => self::$fixture->dateTime,
+                                     'periods' => array('year'),
+                                     'otherRequestParameters' => array(
+                                         'apiModule' => 'CustomDimensions',
+                                         'apiAction' => 'getCustomDimension',
+                                         'idDimension' => '3'
+                                     ),
+                                     'testSuffix' => '_actionDimension'
+                                 )
+            );
+        }
 
         $apiToTest[] = array(array('API.getProcessedReport'),
             array(
@@ -157,20 +175,6 @@ class ApiTest extends SystemTestCase
                     'idDimension' => '1'
                 ),
                 'testSuffix' => '_visitDimension'
-            )
-        );
-
-        $apiToTest[] = array(array('API.getProcessedReport'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('year'),
-                'otherRequestParameters' => array(
-                    'apiModule' => 'CustomDimensions',
-                    'apiAction' => 'getCustomDimension',
-                    'idDimension' => '3'
-                ),
-                'testSuffix' => '_actionDimension'
             )
         );
 
