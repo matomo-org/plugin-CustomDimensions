@@ -280,6 +280,14 @@ class GetCustomDimension extends Report
 
     protected function getIdSiteFromInfos($infos)
     {
+        if (!empty($infos['idSite'])) {
+            return $infos['idSite'];
+        }
+
+        if (empty($infos['idSites'])) {
+            return;
+        }
+
         $idSites = $infos['idSites'];
 
         if (count($idSites) != 1) {
