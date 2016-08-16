@@ -89,7 +89,7 @@ class AutoSuggestTest extends SystemTestCase
     {
         $autoSuggest = new AutoSuggest();
         $values = $autoSuggest->getMostUsedActionDimensionValues(array('index' => 3), $idSite = 1, $limit = 10);
-        $this->assertEquals(array('343', 'value5', 'en_US'), $values);
+        $this->assertEquals(array('en_US', 'value5', '343', 'value5 5'), $values);
     }
 
     public static function getOutputPrefix()

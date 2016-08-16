@@ -32,7 +32,7 @@ class AutoSuggest
         $table = Common::prefixTable('log_link_visit_action');
         $query = "SELECT $name, count($name) as countName FROM $table
                   WHERE idsite = ? and server_time > $startDate and $name is not null
-                  GROUP by custom_dimension_1
+                  GROUP by $name
                   ORDER BY countName DESC LIMIT $maxValuesToReturn";
         $rows = Db::get()->fetchAll($query, array($idSite));
 
