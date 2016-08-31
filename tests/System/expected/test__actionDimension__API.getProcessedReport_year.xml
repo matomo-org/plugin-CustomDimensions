@@ -76,17 +76,17 @@
 		<row>
 			
 			<segment>dimension3==en</segment>
-			<idsubdatatable>6144</idsubdatatable>
+			<idsubdatatable>6141</idsubdatatable>
 		</row>
 		<row>
 			
 			<segment>dimension3==value3</segment>
-			<idsubdatatable>6145</idsubdatatable>
+			<idsubdatatable>6142</idsubdatatable>
 		</row>
 		<row>
 			
 			<segment>dimension3==value5+3</segment>
-			<idsubdatatable>6146</idsubdatatable>
+			<idsubdatatable>6143</idsubdatatable>
 		</row>
 	</reportMetadata>
 	<reportTotal>
