@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\CustomDimensions\tests\System;
 
+use Piwik\Plugin\Manager;
 use Piwik\Plugins\CustomDimensions\tests\Fixtures\TrackVisitsWithCustomDimensionsFixture;
 use Piwik\Tests\Framework\TestCase\SystemTestCase;
 
@@ -130,7 +131,8 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        $apiToTest[] = array(array('API.getReportMetadata'),
+        $apiToTest[] = array(
+            array('API.getReportMetadata'),
             array(
                 'idSite'  => 1,
                 'date'    => self::$fixture->dateTime,
@@ -147,17 +149,17 @@ class ApiTest extends SystemTestCase
         );
 
         $apiToTest[] = array(array('API.getProcessedReport'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('year'),
-                'otherRequestParameters' => array(
-                    'apiModule' => 'CustomDimensions',
-                    'apiAction' => 'getCustomDimension',
-                    'idDimension' => '1'
-                ),
-                'testSuffix' => '_visitDimension'
-            )
+                             array(
+                                 'idSite'  => 1,
+                                 'date'    => self::$fixture->dateTime,
+                                 'periods' => array('year'),
+                                 'otherRequestParameters' => array(
+                                     'apiModule' => 'CustomDimensions',
+                                     'apiAction' => 'getCustomDimension',
+                                     'idDimension' => '3'
+                                 ),
+                                 'testSuffix' => '_actionDimension'
+                             )
         );
 
         $apiToTest[] = array(array('API.getProcessedReport'),
@@ -168,9 +170,9 @@ class ApiTest extends SystemTestCase
                 'otherRequestParameters' => array(
                     'apiModule' => 'CustomDimensions',
                     'apiAction' => 'getCustomDimension',
-                    'idDimension' => '3'
+                    'idDimension' => '1'
                 ),
-                'testSuffix' => '_actionDimension'
+                'testSuffix' => '_visitDimension'
             )
         );
 
