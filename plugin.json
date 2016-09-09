@@ -12,6 +12,12 @@
     "require": {
         "piwik": ">=3.0.0-dev,<4.0.0"
     },
+    "support": {
+        "issues": "https://github.com/piwik/plugin-CustomDimensions/issues",
+        "forum": "https://forum.piwik.org",
+        "source": "https://github.com/piwik/plugin-CustomDimensions",
+        "wiki": "https://github.com/piwik/plugin-CustomDimensions/wiki"
+    },
     "authors": [
         {
             "name": "Piwik",
