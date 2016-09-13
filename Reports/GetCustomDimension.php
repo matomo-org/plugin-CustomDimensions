@@ -247,7 +247,6 @@ class GetCustomDimension extends Report
         $this->scopeOfDimension = $dimension['scope'];
         $this->subcategoryId = 'customdimension' . $dimension['idcustomdimension'];
         $dimensionField = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
-        $this->hasGoalMetrics = false;
 
         if ($this->scopeOfDimension === CustomDimensions::SCOPE_ACTION) {
             $this->categoryId = 'General_Actions';
@@ -268,7 +267,6 @@ class GetCustomDimension extends Report
                 new BounceRate(),
                 new ActionsPerVisit()
             );
-            $this->hasGoalMetrics = true;
         } else {
             return false;
         }

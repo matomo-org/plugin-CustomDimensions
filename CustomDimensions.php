@@ -40,6 +40,35 @@ class CustomDimensions extends Plugin
         $this->configuration = new Configuration();
     }
 
+    public function getReportsWithGoalMetrics(&$reportsWithGoals)
+    {
+        $idSite = Common::getRequestVar('idSite', 0, 'int');
+
+        if ($idSite < 1) {
+            return;
+        }
+
+        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+
+        foreach ($dimensions as $dimension) {
+            if (!$dimension['active']) {
+                continue;
+            }
+
+            if ($dimension['scope'] !== self::SCOPE_VISIT) {
+                continue;
+            }
+
+            $reportsWithGoals[] = array(
+                'category' => 'VisitsSummary_VisitsSummary',
+                'name'     => $dimension['name'],
+                'module'   => $this->pluginName,
+                'action'   => 'getCustomDimension',
+                'parameters' => array('idDimension' => $dimension['idcustomdimension'])
+            );
+        }
+    }
+
     /**
      * @see \Piwik\Plugin::registerEvents
      */
@@ -59,7 +88,8 @@ class CustomDimensions extends Plugin
             'Tracker.newConversionInformation' => 'addConversionInformation',
             'Tracker.getVisitFieldsToPersist'  => 'addVisitFieldsToPersist',
             'Tracker.setTrackerCacheGeneral'   => 'setTrackerCacheGeneral',
-            'Category.addSubcategories' => 'addSubcategories'
+            'Category.addSubcategories' => 'addSubcategories',
+            'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics'
         );
     }
 
