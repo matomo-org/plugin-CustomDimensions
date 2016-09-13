@@ -1,5 +1,6 @@
 ## Changelog
 
+* 3.0.0: Compatibility with Piwik 3.0
 * 0.1.5 
   * Fix some problems where a wrong whitespace might cause JavaScript errors and causes the UI to not work
   * Fix a typo in the UI in the JavaScript code which sets a custom dimension  
