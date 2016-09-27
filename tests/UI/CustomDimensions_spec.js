@@ -98,7 +98,6 @@ describe("CustomDimensions", function () {
 
     it('should be able to render insights', function (done) {
         capturePageWrap('report_action_insights', function (page) {
-            page.click('.expandDataTableFooterDrawer');
             page.click('[data-footer-icon-id="insightsVisualization"]');
         }, done);
     });

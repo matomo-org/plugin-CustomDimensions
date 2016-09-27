@@ -105,11 +105,10 @@ class Archiver extends \Piwik\Plugin\Archiver
 
             $valueField = LogTable::buildCustomDimensionColumnName($dimension);
             $dimensions = array($valueField);
-            $where      = false;
 
             if ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
-                $this->aggregateFromVisits($valueField, $dimensions, $where);
-                $this->aggregateFromConversions($valueField, $dimensions, $where);
+                $this->aggregateFromVisits($valueField, $dimensions, " log_visit.$valueField is not null");
+                $this->aggregateFromConversions($valueField, $dimensions, " log_conversion.$valueField is not null");
             } elseif ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
                 $this->aggregateFromActions($valueField);
             }
@@ -181,7 +180,8 @@ class Archiver extends \Piwik\Plugin\Archiver
 
         $where = "log_link_visit_action.server_time >= ?
                   AND log_link_visit_action.server_time <= ?
-                  AND log_link_visit_action.idsite = ?";
+                  AND log_link_visit_action.idsite = ?
+                  AND log_link_visit_action.$valueField is not null";
 
         if (!empty($additionalWhere)) {
             $where .= ' AND ' . $additionalWhere;
