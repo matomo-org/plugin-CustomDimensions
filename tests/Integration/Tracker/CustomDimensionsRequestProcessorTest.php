@@ -266,11 +266,11 @@ class CustomDimensionsRequestProcessorTest extends IntegrationTestCase
         ));
 
         $this->processor->onNewVisit($visitProperties, $request);
-        $this->assertSame(array(), $visitProperties->getProperties());
+        $this->assertSame(array('custom_dimension_4' => ''), $visitProperties->getProperties());
 
         $this->processor->afterRequestProcessed($visitProperties, $request);
 
-        $this->assertSame(array(), $visitProperties->getProperties());
+        $this->assertSame(array('custom_dimension_4' => ''), $visitProperties->getProperties());
     }
 
     public function test_afterRequestProcessed_NoActionSet_ShouldBeAbleToExtractAValue()
