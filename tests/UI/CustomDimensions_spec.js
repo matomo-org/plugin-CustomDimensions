@@ -16,7 +16,11 @@ describe("CustomDimensions", function () {
         urlBase = 'module=CoreHome&action=index&' + generalParams;
 
     var manageUrl = "?" + generalParams + "&module=CustomDimensions&action=manage";
-    var reportUrl = "?" + urlBase + "#" + generalParams + "&module=CustomDimensions&action=menuGetCustomDimension";
+    var reportUrl = "?" + urlBase + "#?" + generalParams;
+
+    var reportUrlDimension2 = reportUrl + "&category=General_Visitors&subcategory=customdimension2";
+    var reportUrlDimension3 = reportUrl + "&category=General_Actions&subcategory=customdimension3";
+    var reportUrlDimension4 = reportUrl + "&category=General_Actions&subcategory=customdimension4";
 
     var popupSelector = '.pageWrap,.ui-dialog:visible';
 
@@ -53,7 +57,7 @@ describe("CustomDimensions", function () {
 
     it('should show the report for the selected visit dimension', function (done) {
         capturePageWrap('report_visit', function (page) {
-            page.load(reportUrl + '&idDimension=2');
+            page.load(reportUrlDimension2);
         }, done);
     });
 
@@ -65,7 +69,7 @@ describe("CustomDimensions", function () {
 
     it('should add visit dimensions to goals report', function (done) {
         captureSelector('report_goals_overview', '.reportsByDimensionView', function (page) {
-            page.load( "?" + urlBase + "#" + generalParams + "&module=Goals&action=index");
+            page.load( "?" + urlBase + "#?" + generalParams + "&category=Goals_Goals&subcategory=General_Overview");
             page.click('.reportsByDimensionView .dimension:contains(MyName1)');
         }, done);
     });
@@ -76,7 +80,7 @@ describe("CustomDimensions", function () {
 
     it('should show the report for the selected action dimension', function (done) {
         capturePageWrap('report_action', function (page) {
-            page.load(reportUrl + '&idDimension=3');
+            page.load(reportUrlDimension3);
         }, done);
     });
 
@@ -94,34 +98,33 @@ describe("CustomDimensions", function () {
 
     it('should be able to render insights', function (done) {
         capturePageWrap('report_action_insights', function (page) {
-            page.click('.expandDataTableFooterDrawer');
             page.click('[data-footer-icon-id="insightsVisualization"]');
         }, done);
     });
 
     it('should show an error when trying to open an inactive dimension', function (done) {
         capturePageWrap('report_actions_inactive', function (page) {
-            page.load(reportUrl + '&idDimension=4');
+            page.load(reportUrlDimension4);
         }, done);
     });
 
     it('should be able to open segmented visitor log', function (done) {
         captureSelector('report_actions_segmented_visitorlog', popupSelector, function (page) {
-            page.load(reportUrl + "&idDimension=3");
+            page.load(reportUrlDimension3);
             triggerRowAction(page, 'en', 'actionSegmentVisitorLog');
         }, done);
     });
 
     it('should be able to open row evolution', function (done) {
         captureSelector('report_actions_rowevolution', popupSelector, function (page) {
-            page.load(reportUrl + "&idDimension=3");
+            page.load(reportUrlDimension3);
             triggerRowAction(page, 'en', 'actionRowEvolution');
         }, done);
     });
 
     it('should be able to show subtable and offer all row actions if scope is action', function (done) {
         capturePageWrap('report_action_subtable', function (page) {
-            page.load(reportUrl + "&idDimension=3");
+            page.load(reportUrlDimension3);
             page.click('.dataTable .subDataTable .value:contains(en):first');
             page.mouseMove('td.label:contains(en_US)');
         }, done);
@@ -147,125 +150,5 @@ describe("CustomDimensions", function () {
         }, done);
     });
 
-    /**
-     * MANAGE CUSTOM DIMENSIONS
-     */
-
-    it('should load initial manange page', function (done) {
-        capturePageWrap('manage_inital', function (page) {
-            page.load(manageUrl);
-        }, done);
-    });
-
-    it('should open a page to create a new visit dimension and not show extractions', function (done) {
-        capturePageWrap('manage_new_visit_dimension_open', function (page) {
-            page.click('.configure.visit');
-        }, done);
-    });
-
-    it('should be possible to create new visit dimension', function (done) {
-        capturePageWrap('manage_new_visit_dimension_created', function (page) {
-            page.sendKeys(".editCustomDimension #name", 'My Custom Name');
-            page.click('.editCustomDimension .create');
-        }, done);
-    });
-
-    it('should open a page to create a new action dimension', function (done) {
-        capturePageWrap('manage_new_action_dimension_open', function (page) {
-            page.click('.configure.action');
-        }, done);
-    });
-
-    it('should be possible to define name, active and extractions for scope action', function (done) {
-        capturePageWrap('manage_new_action_dimension_withdata', function (page) {
-            page.sendKeys(".editCustomDimension #name", 'My Action Name');
-            page.click('.editCustomDimension #active');
-
-            page.sendKeys('.extraction.0 .pattern', 'myPattern_(.+)');
-
-            page.click('.extraction.0 .icon-plus');
-            page.sendKeys('.extraction.1 .pattern', 'second pattern_(.+)');
-
-            page.click('.extraction.1 .icon-plus');
-            page.sendKeys('.extraction.2 .pattern', 'thirdpattern_(.+)test');
-        }, done);
-    });
-
-    it('should be possible to remove a defined extraction', function (done) {
-        capturePageWrap('manage_new_action_dimension_remove_an_extraction', function (page) {
-            page.click('.extraction.1 .icon-minus');
-        }, done);
-    });
-
-    it('should create a new dimension', function (done) {
-        capturePageWrap('manage_new_action_dimension_created', function (page) {
-            page.click('.editCustomDimension .create');
-        }, done);
-    });
-
-    it('should be able to open created dimension and see same data but this time with tracking instructions', function (done) {
-        capturePageWrap('manage_edit_action_dimension_verify_created', function (page) {
-            page.click('.manageCustomDimensions .customdimension.8 .icon-edit');
-        }, done);
-    });
-
-    it('should be possible to change an existing dimension', function (done) {
-        capturePageWrap('manage_edit_action_dimension_withdata', function (page) {
-            page.sendKeys(".editCustomDimension #name", 'ABC');
-            page.click('.editCustomDimension #active');
-            page.click('.editCustomDimension #casesensitive');
-            page.click('.extraction.0 .icon-minus');
-        }, done);
-    });
-
-    it('should updated an existing dimension', function (done) {
-        capturePageWrap('manage_edit_action_dimension_updated', function (page) {
-            page.click('.editCustomDimension .update');
-        }, done);
-    });
-
-    it('should have actually updated values', function (done) {
-        capturePageWrap('manage_edit_action_dimension_verify_updated', function (page) {
-            page.click('.manageCustomDimensions .customdimension.8 .icon-edit');
-        }, done);
-    });
-
-    it('should go back to list when pressing cancel', function (done) {
-        capturePageWrap('manage_edit_action_dimension_cancel', function (page) {
-            page.click('.editCustomDimension .cancel');
-        }, done);
-    });
-
-    it('should disable configure button when no dimensions are left for a scope', function (done) {
-        capturePageWrap('manage_configure_button_disabled', function (page) {
-            page.click('.configure.visit');
-            page.click('.editCustomDimension #active');
-            page.sendKeys(".editCustomDimension #name", 'Last Name');
-            page.click('.editCustomDimension .create');
-        }, done);
-    });
-
-    it('should be possible to create a new dimension via URL', function (done) {
-        capturePageWrap('manage_create_via_url', function (page) {
-            page.load(manageUrl + '#?idDimension=0&scope=action');
-        }, done);
-    });
-
-    it('should be possible to open an existing visit dimension via URL', function (done) {
-        capturePageWrap('manage_edit_via_url', function (page) {
-            page.load(manageUrl + '#?idDimension=5&scope=action');
-        }, done);
-    });
-
-    /**
-     * VISIT DIMENSION REPORTS MENU GROUPED
-     */
-
-    it('should group dimensions in menu once there are more than 3', function (done) {
-        captureSelector('report_visit_mainmenu_grouped', '#secondNavBar,.menuDropdown .items', function (page) {
-            page.load(reportUrl + "&idDimension=2");
-            page.click('#UserCountryMap_realtimeWorldMap + li .menuDropdown')
-        }, done);
-    });
 
 });

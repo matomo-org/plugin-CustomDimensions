@@ -34,6 +34,7 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
         $this->configureSomeDimensions();
         $this->trackFirstVisit();
         $this->trackSecondVisit();
+        $this->trackThirdVisit();
     }
 
     public function tearDown()
@@ -148,5 +149,19 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.3)->getDatetime());
         $t->addEcommerceItem($sku = 'SKU_ID2', $name = 'A durable item', $category = 'Best seller', $price = 321);
         self::checkResponse($t->doTrackEcommerceCartUpdate($grandTotal = 33 * 77));
+    }
+
+    // tracking visit with empty dimension values
+    protected function trackThirdVisit()
+    {
+        $t = self::getTracker($this->idSite, $this->dateTime, $defaultInit = true);
+        $t->setIp('56.11.55.79');
+
+        $t->setCustomTrackingParameter('dimension1', '');
+        $t->setCustomTrackingParameter('dimension3', '');
+
+        $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.1)->getDatetime());
+        $t->setUrl('http://example.com/sub_en/page');
+        self::checkResponse($t->doTrackPageView('Viewing homepage'));
     }
 }

@@ -3,21 +3,23 @@
     <div ng-show="!manageDimensions.editMode">
         <div piwik-custom-dimensions-list></div>
 
-        <h2 class="secondary">{{ 'CustomDimensions_IncreaseAvailableCustomDimensionsTitle'|translate }}</h2>
+        <div piwik-content-block content-title="{{ 'CustomDimensions_IncreaseAvailableCustomDimensionsTitle'|translate }}">
 
-        <p>
-            {{ 'CustomDimensions_IncreaseAvailableCustomDimensionsTakesLong'|translate }}
-            <br><br>{{ 'CustomDimensions_HowToCreateCustomDimension'|translate }}
-            <br><br>
-        </p>
-        <pre><code>./console customdimensions:add-custom-dimension --scope=action
+            <p>
+                {{ 'CustomDimensions_IncreaseAvailableCustomDimensionsTakesLong'|translate }}
+                <br><br>{{ 'CustomDimensions_HowToCreateCustomDimension'|translate }}
+                <br><br>
+            </p>
+            <pre piwik-select-on-focus><code>./console customdimensions:add-custom-dimension --scope=action
 ./console customdimensions:add-custom-dimension --scope=visit</code></pre>
-        <p>
-            {{ 'CustomDimensions_HowToManyCreateCustomDimensions'|translate }}
+            <p>
+                {{ 'CustomDimensions_HowToManyCreateCustomDimensions'|translate }}
 
-            {{ 'CustomDimensions_ExampleCreateCustomDimensions'|translate:5 }}
-        </p>
-        <pre><code>./console customdimensions:add-custom-dimension --scope=action --count=5</code></pre>
+                {{ 'CustomDimensions_ExampleCreateCustomDimensions'|translate:5 }}
+            </p>
+            <pre piwik-select-on-focus><code>./console customdimensions:add-custom-dimension --scope=action --count=5</code></pre>
+
+        </div>
 
     </div>
     <div ng-show="manageDimensions.editMode">

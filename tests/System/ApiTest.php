@@ -131,38 +131,36 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        if (Manager::getInstance()->isPluginInstalled('UserId')) {
-            $apiToTest[] = array(
-                array('API.getReportMetadata'),
-                array(
-                    'idSite'  => 1,
-                    'date'    => self::$fixture->dateTime,
-                    'periods' => array('day')
-                )
-            );
+        $apiToTest[] = array(
+            array('API.getReportMetadata'),
+            array(
+                'idSite'  => 1,
+                'date'    => self::$fixture->dateTime,
+                'periods' => array('day')
+            )
+        );
 
-            $apiToTest[] = array(array('API.getSegmentsMetadata'),
-                array(
-                    'idSite'  => 1,
-                    'date'    => self::$fixture->dateTime,
-                    'periods' => array('year'),
-                )
-            );
+        $apiToTest[] = array(array('API.getSegmentsMetadata'),
+            array(
+                'idSite'  => 1,
+                'date'    => self::$fixture->dateTime,
+                'periods' => array('year'),
+            )
+        );
 
-            $apiToTest[] = array(array('API.getProcessedReport'),
-                                 array(
-                                     'idSite'  => 1,
-                                     'date'    => self::$fixture->dateTime,
-                                     'periods' => array('year'),
-                                     'otherRequestParameters' => array(
-                                         'apiModule' => 'CustomDimensions',
-                                         'apiAction' => 'getCustomDimension',
-                                         'idDimension' => '3'
-                                     ),
-                                     'testSuffix' => '_actionDimension'
-                                 )
-            );
-        }
+        $apiToTest[] = array(array('API.getProcessedReport'),
+                             array(
+                                 'idSite'  => 1,
+                                 'date'    => self::$fixture->dateTime,
+                                 'periods' => array('year'),
+                                 'otherRequestParameters' => array(
+                                     'apiModule' => 'CustomDimensions',
+                                     'apiAction' => 'getCustomDimension',
+                                     'idDimension' => '3'
+                                 ),
+                                 'testSuffix' => '_actionDimension'
+                             )
+        );
 
         $apiToTest[] = array(array('API.getProcessedReport'),
             array(

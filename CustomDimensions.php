@@ -8,14 +8,8 @@
  */
 namespace Piwik\Plugins\CustomDimensions;
 
-use Piwik\ArchiveProcessor;
+use Piwik\Category\Subcategory;
 use Piwik\Common;
-use Piwik\Container\StaticContainer;
-use Piwik\DataTable;
-use Piwik\Date;
-use Piwik\Db;
-use Piwik\Metrics;
-use Piwik\Plugins\CustomDimensions\Dao\AutoSuggest;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
@@ -46,8 +40,37 @@ class CustomDimensions extends Plugin
         $this->configuration = new Configuration();
     }
 
+    public function getReportsWithGoalMetrics(&$reportsWithGoals)
+    {
+        $idSite = Common::getRequestVar('idSite', 0, 'int');
+
+        if ($idSite < 1) {
+            return;
+        }
+
+        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+
+        foreach ($dimensions as $dimension) {
+            if (!$dimension['active']) {
+                continue;
+            }
+
+            if ($dimension['scope'] !== self::SCOPE_VISIT) {
+                continue;
+            }
+
+            $reportsWithGoals[] = array(
+                'category' => 'VisitsSummary_VisitsSummary',
+                'name'     => $dimension['name'],
+                'module'   => $this->pluginName,
+                'action'   => 'getCustomDimension',
+                'parameters' => array('idDimension' => $dimension['idcustomdimension'])
+            );
+        }
+    }
+
     /**
-     * @see Piwik\Plugin::registerEvents
+     * @see \Piwik\Plugin::registerEvents
      */
     public function registerEvents()
     {
@@ -56,18 +79,54 @@ class CustomDimensions extends Plugin
         }
 
         return array(
-            'API.getSegmentDimensionMetadata'  => 'getSegmentsMetadata',
             'Live.getAllVisitorDetails'        => 'extendVisitorDetails',
             'Tracker.Cache.getSiteAttributes'  => 'addCustomDimensionsAttributes',
             'SitesManager.deleteSite.end'      => 'deleteCustomDimensionDefinitionsForSite',
             'AssetManager.getJavaScriptFiles'  => 'getJsFiles',
             'AssetManager.getStylesheetFiles'  => 'getStylesheetFiles',
             'Translate.getClientSideTranslationKeys' => 'getClientSideTranslationKeys',
-            'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics',
             'Tracker.newConversionInformation' => 'addConversionInformation',
             'Tracker.getVisitFieldsToPersist'  => 'addVisitFieldsToPersist',
             'Tracker.setTrackerCacheGeneral'   => 'setTrackerCacheGeneral',
+            'Category.addSubcategories' => 'addSubcategories',
+            'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics'
         );
+    }
+
+    public function addSubcategories(&$subcategories)
+    {
+        $idSite = Common::getRequestVar('idSite', 0, 'int');
+
+        if (!$idSite) {
+            // fallback for eg API.getReportMetadata which uses idSites
+            $idSite = Common::getRequestVar('idSites', 0, 'int');
+
+            if (!$idSite) {
+                return;
+            }
+        }
+
+        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        $order = 70;
+
+        foreach ($dimensions as $dimension) {
+            if (!$dimension['active']) {
+                continue;
+            }
+
+            $category = new Subcategory();
+            $category->setName($dimension['name']);
+
+            if ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
+                $category->setCategoryId('General_Actions');
+            } elseif ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
+                $category->setCategoryId('General_Visitors');
+            }
+
+            $category->setId('customdimension' . $dimension['idcustomdimension']);
+            $category->setOrder($order++);
+            $subcategories[] = $category;
+        }
     }
 
     public function getJsFiles(&$jsFiles)
@@ -158,52 +217,6 @@ class CustomDimensions extends Plugin
         $this->configuration->deleteConfigurationsForSite($idSite);
     }
 
-    public function getSegmentsMetadata(&$segments, $idSites)
-    {
-        if (empty($idSites) || (is_array($idSites) && count($idSites) !== 1)) {
-            return array();
-        }
-
-        if (is_array($idSites)) {
-            $idSite = array_shift($idSites);
-        } else {
-            $idSite = $idSites;
-        }
-
-        $idSite = (int) $idSite;
-
-        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
-
-        foreach ($dimensions as $dimension) {
-            if (!$dimension['active']) {
-                continue;
-            }
-
-            $segment = new Plugin\Segment();
-            $segment->setSegment(CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension));
-            $segment->setType(Plugin\Segment::TYPE_DIMENSION);
-            $segment->setName($dimension['name']);
-
-            $columnName = LogTable::buildCustomDimensionColumnName($dimension);
-
-            if ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
-                $segment->setSqlSegment('log_link_visit_action. ' . $columnName);
-                $segment->setCategory('General_Actions');
-                $segment->setSuggestedValuesCallback(function ($idSite, $maxValuesToReturn) use ($dimension) {
-                    $autoSuggest = new AutoSuggest();
-                    return $autoSuggest->getMostUsedActionDimensionValues($dimension, $idSite, $maxValuesToReturn);
-                });
-            } elseif ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
-                $segment->setSqlSegment('log_visit. ' . $columnName);
-                $segment->setCategory('General_Visit');
-            } else {
-                continue;
-            }
-
-            $segments[] = $segment->toArray();
-        }
-    }
-
     public function getClientSideTranslationKeys(&$translationKeys)
     {
         $translationKeys[] = 'General_Loading';
@@ -252,35 +265,6 @@ class CustomDimensions extends Plugin
         $translationKeys[] = 'CustomDimensions_ColumnUniqueActions';
         $translationKeys[] = 'CustomDimensions_ColumnAvgTimeOnDimension';
         $translationKeys[] = 'CustomDimensions_CustomDimensionId';
-    }
-
-    public function getReportsWithGoalMetrics(&$reportsWithGoals)
-    {
-        $idSite = Common::getRequestVar('idSite', 0, 'int');
-
-        if ($idSite < 1) {
-            return;
-        }
-
-        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
-
-        foreach ($dimensions as $dimension) {
-            if (!$dimension['active']) {
-                continue;
-            }
-
-            if ($dimension['scope'] !== self::SCOPE_VISIT) {
-                continue;
-            }
-
-            $reportsWithGoals[] = array(
-                'category' => 'VisitsSummary_VisitsSummary',
-                'name'     => $dimension['name'],
-                'module'   => $this->pluginName,
-                'action'   => 'getCustomDimension',
-                'parameters' => array('idDimension' => $dimension['idcustomdimension'])
-            );
-        }
     }
 
     public function addConversionInformation(&$conversion, $visitInformation, Tracker\Request $request)

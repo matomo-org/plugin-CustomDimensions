@@ -7,9 +7,9 @@
 (function () {
     angular.module('piwikApp').controller('ManageCustomDimensionsController', ManageCustomDimensionsController);
 
-    ManageCustomDimensionsController.$inject = ['$scope', '$rootScope', '$location'];
+    ManageCustomDimensionsController.$inject = ['$scope', '$rootScope', '$location', 'piwik'];
 
-    function ManageCustomDimensionsController($scope, $rootScope, $location) {
+    function ManageCustomDimensionsController($scope, $rootScope, $location, piwik) {
 
         this.editMode = false;
 
@@ -36,6 +36,8 @@
                 self.dimensionId = null;
                 self.dimensionScope = '';
             }
+            
+            piwik.helper.lazyScrollToContent();
         }
 
         initState();

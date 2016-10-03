@@ -97,7 +97,8 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
             $dbField = Dao\LogTable::buildCustomDimensionColumnName($dimension);
 
             $value = Common::getRequestVar($field, '', 'string', $params);
-            if ($value !== '') {
+            $hasSentEmptyString = isset($params[$field]) && $params[$field] === '';
+            if ($value !== '' || $hasSentEmptyString) {
                 $values[$dbField] = $value;
                 continue;
             }

@@ -10,7 +10,6 @@ namespace Piwik\Plugins\CustomDimensions\Reports;
 
 use Piwik\Common;
 use Piwik\DataTable;
-use Piwik\Menu\MenuReporting;
 use Piwik\Metrics;
 use Piwik\Piwik;
 use Piwik\Plugin\Report;
@@ -28,8 +27,9 @@ use Piwik\Plugins\CustomDimensions\Dimension\CustomVisitDimension;
 use Piwik\Plugins\CustomDimensions\CustomDimensions;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
+use Piwik\Report\ReportWidgetFactory;
 use Piwik\View;
-use Piwik\WidgetsList;
+use Piwik\Widget\WidgetsList;
 
 /**
  * This class defines a new report.
@@ -46,9 +46,8 @@ class GetCustomDimension extends Report
     {
         parent::init();
 
-        $this->category = 'CustomDimensions_CustomDimensions';
-        $this->menuTitle = $this->category;
-        $this->name  = Piwik::translate($this->category);
+        $this->categoryId = 'CustomDimensions_CustomDimensions';
+        $this->name  = Piwik::translate($this->categoryId);
         $this->order = 100;
         $this->actionToLoadSubTables = $this->action;
 
@@ -166,7 +165,7 @@ class GetCustomDimension extends Report
         return $metrics;
     }
 
-    public function configureWidget(WidgetsList $widget)
+    public function configureWidgets(WidgetsList $widgetsList, ReportWidgetFactory $factory)
     {
         $idSite = Common::getRequestVar('idSite', 0, 'int');
 
@@ -182,23 +181,20 @@ class GetCustomDimension extends Report
             }
 
             if ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
-                $this->category = 'General_Actions';
+                $this->categoryId = 'General_Actions';
+                $this->subcategoryId = 'customdimension' . $dimension['idcustomdimension'];
             } elseif ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
-                $this->category = 'General_Visitors';
+                $this->categoryId = 'General_Visitors';
+                $this->subcategoryId = 'customdimension' . $dimension['idcustomdimension'];
             } else {
                 continue;
             }
 
-            $this->widgetTitle = $dimension['name'];
-            $this->widgetParams = array('idDimension' => $dimension['idcustomdimension']);
+            $widget = $factory->createWidget()->setName($dimension['name']);
+            $widget->setParameters(array('idDimension' => $dimension['idcustomdimension']));
 
-            parent::configureWidget($widget);
+            $widgetsList->addWidgetConfig($widget);
         }
-    }
-
-    public function configureReportingMenu(MenuReporting $menu)
-    {
-        // we handle this one manually in Menu.php
     }
 
     public function configureReportMetadata(&$availableReports, $infos)
@@ -249,10 +245,11 @@ class GetCustomDimension extends Report
         $this->menuTitle = $this->name;
         $this->widgetTitle = $this->name;
         $this->scopeOfDimension = $dimension['scope'];
+        $this->subcategoryId = 'customdimension' . $dimension['idcustomdimension'];
         $dimensionField = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
 
         if ($this->scopeOfDimension === CustomDimensions::SCOPE_ACTION) {
-            $this->category = 'General_Actions';
+            $this->categoryId = 'General_Actions';
             $this->dimension = new CustomActionDimension($dimensionField, $this->name);
             $this->metrics = array('nb_hits', 'nb_visits');
             $this->processedMetrics = array(
@@ -262,7 +259,7 @@ class GetCustomDimension extends Report
                 new AveragePageGenerationTime()
             );
         } elseif ($this->scopeOfDimension === CustomDimensions::SCOPE_VISIT) {
-            $this->category = 'General_Visitors';
+            $this->categoryId = 'General_Visitors';
             $this->dimension = new CustomVisitDimension($dimensionField, $this->name);
             $this->metrics = array('nb_visits', 'nb_actions');
             $this->processedMetrics = array(
@@ -282,6 +279,14 @@ class GetCustomDimension extends Report
 
     protected function getIdSiteFromInfos($infos)
     {
+        if (!empty($infos['idSite'])) {
+            return $infos['idSite'];
+        }
+
+        if (empty($infos['idSites'])) {
+            return;
+        }
+
         $idSites = $infos['idSites'];
 
         if (count($idSites) != 1) {
