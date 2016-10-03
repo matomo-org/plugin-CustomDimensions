@@ -68,7 +68,7 @@ class AutoSuggestTest extends SystemTestCase
     {
         $autoSuggest = new AutoSuggest();
         $values = $autoSuggest->getMostUsedActionDimensionValues(array('index' => 1), $idSite = 1, $limit = 60);
-        $this->assertEquals(array('en', 'value3', 'value5 3'), $values);
+        $this->assertEquals(array('en', 'value3', 'value5 3', ''), $values);
     }
 
     public function test_getMostUsedActionDimensionValues_shouldApplyLimit()
