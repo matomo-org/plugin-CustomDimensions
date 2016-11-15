@@ -49,6 +49,8 @@ class ApiTest extends SystemTestCase
             array('idSite' => 1, 'idDimension' => 999), // dimension does not exist
         );
 
+        $hideColumns = 'sum_time_generation,sum_bandwidth,nb_hits_with_bandwidth,min_bandwidth,max_bandwidth,avg_bandwidth,nb_total_overall_bandwidth,nb_total_pageview_bandwidth,nb_total_download_bandwidth';
+
         $apiToTest = array();
 
         foreach ($tests as $test) {
@@ -65,6 +67,7 @@ class ApiTest extends SystemTestCase
                             'idDimension' => $idDimension,
                             'expanded' => '0',
                             'flat' => '0',
+                            'hideColumns' => $hideColumns
                         ),
                         'testSuffix' => "${period}_site_${idSite}_dimension_${idDimension}"
                     )
@@ -81,6 +84,7 @@ class ApiTest extends SystemTestCase
                 'idDimension' => 3,
                 'expanded' => '1',
                 'flat' => '0',
+                'hideColumns' => $hideColumns
             ),
             'testSuffix' => "day_site_1_dimension_3_expanded"
         ));
@@ -92,7 +96,8 @@ class ApiTest extends SystemTestCase
             'otherRequestParameters' => array(
                 'idDimension' => 3,
                 'expanded' => '0',
-                'flat' => '1'
+                'flat' => '1',
+                'hideColumns' => $hideColumns
             ),
             'testSuffix' => "day_site_1_dimension_3_flat"
         ));
@@ -104,7 +109,8 @@ class ApiTest extends SystemTestCase
                 'periods'    => array('year'),
                 'segment'    => 'dimension1=@value5',
                 'otherRequestParameters' => array(
-                    'idDimension' => 1
+                    'idDimension' => 1,
+                    'hideColumns' => $hideColumns
                 ),
                 'testSuffix' => "year_site_1_dimension_1_withsegment"
             )
