@@ -4,7 +4,7 @@ language: php
 
 php:
   - 5.6
-  - 5.3
+  - 5.5
 #  - hhvm
 
 services:
@@ -27,8 +27,6 @@ env:
   global:
     - PLUGIN_NAME=CustomDimensions
     - PIWIK_ROOT_DIR=$TRAVIS_BUILD_DIR/piwik
-    - secure: "Ev/dmJ2XI5VFFabMHlepjXKBVvFtSmge8H/nEjkwTgJXu5ZqZKeYcUjVDEC3G8+x5Jqpy0818JNjw1t4G/hK+8kTzB4Zw4PkEIo55xoAGkS8luN+5yT82SooyDjCqhiQ8vkJeD9NKsvWGAybeij1y16hmtdbgD8tBphPC8i6bcLGqkcgnVChF0MchE4weRDAxb49RejkteHOV6ig/6CR31SEYjjL6AqmFhS4aUE908HATYleNhCCDXLaWukO2sNmfTX8y5x5QB6INglUiSJjQcOvis83MWLDCpClNlchqDLU5jlO/2YDH4XnGVLBkl4mfX5vwVmQPr9OA3kaXzAQw3Vj3wymKj8lDxVPhMuld5OWLr/X9zZx0htocht6+6sQmuRjbL5e+GAw2loo4b5XXdpLe1+sEtoYgzc8U1NOA8k3zyikRPucINH/p431dcsncUCu9yjlyJClZxFt5tHgKdwj7gUCyuneSm0xGsBt/bZOKWbcoZvNISGtGeB1qPZFrDmj29INJo6Oecn1DtY2F7SMmy1ZOrUC5SLhrJIKageh30ek7/MJsgIOswg+MXdrvWJNWu53Am4rRHjKpxFjCvMlpNWTt4kg2F865moqswwTFIjTX9dy0ZvfhUx94gc2GDlroNjD76qLHD96BCqrevPmSCJv95O73WJUVNsnxhs="
-    - secure: "H8AdBEzr4JmcZSvdO8pFhOvC71sZQgT4fSi2a+dbXo6GyWUjHEh0meMOdRlo62+S/Ung+mSfCE6l8r9IHjrtJpVv4CYtcVTPT0IAHYGe1OU9+ylWV5rRmATJXj6qzL8goBZHuPLRNuqu6Zm5NxmGz4QPUF2VbC6mmEhF6l0EU6ORjYG6X5QmcPtUuObB5DcZMpfLFFp0t0d04ZXjaL4DYw3RYJkzTF6rIB6JS2YqHswdL4yFxDdHO3AQjuOEJZjVf7oGt6o8OXibZUOJupl7gojlzhaj8w2phZ0OQ5+7iPdQM/z/qjwDCxQoYTjhcK11UVQzsX5ma9jvt2E7ZWzbtheCWfZnU5oIjGI72refoDa57Ing8j+HNYD/KiMeeo/4ZBTM9cup4qQ7H9TaUUk0ZTgizeV06xiauJwJDyBiN5NjkXu+4uroFhR08xaGj14gFxuqn9aGm3CzRSs+nB632/HoqLewakm+TshJYRMzcWbYAtCPzoqLiC7QyLehqxHDkclatv5WIUBk9MK+RGaTyjXHDzeK5yfETzcWOvcPylSNf+dbLVzeL97OY7co/+UQyQ/COyOLq6pHQwzuA8SK6IIbG1xOwI2i1Uk8pRdYzFk6khbhN4bhDM6V7XzXWCUwdlxxo9+lX2TziafAh8QbvtCLKoNw6iMyKl3Faey9aTQ="
     # this variable controls the version of Piwik your tests will run against.
     # by default it will run against the maximum support version read from plugin.json
     # (PIWIK_TEST_TARGET=maximum_supported_piwik).
@@ -43,7 +41,7 @@ env:
 matrix:
   exclude:
     # execute latest stable tests only w/ PHP 5.5
-    - php: 5.6
+    - php: 5.5
       env: TEST_SUITE=PluginTests MYSQL_ADAPTER=PDO_MYSQL TEST_AGAINST_CORE=minimum_required_piwik
     # execute UI tests only w/ PHP 5.6
     - php: 5.5
@@ -137,6 +135,7 @@ before_script:
 
   - ./tests/travis/prepare.sh
   - ./tests/travis/setup_webserver.sh
+  - if [[ "$TRAVIS_PHP_VERSION" != 5.3* ]]; then ./tests/travis/install_phantomjs.sh; export PATH=$PWD/travis_phantomjs/phantomjs-2.1.1-linux-x86_64/bin:$PATH; fi
 
   - cd tests/PHPUnit
 
