@@ -103,7 +103,7 @@ describe("CustomDimensions", function () {
     });
 
     it('should show an error when trying to open an inactive dimension', function (done) {
-        capturePageWrap('report_actions_inactive', function (page) {
+        expect.page("").contains(".pageWrap:contains('This page does not exist')", function (page) {
             page.load(reportUrlDimension4);
         }, done);
     });
