@@ -1,0 +1,29 @@
+{
+    "CustomDimensions": {
+        "CustomDimensions": "Custom Dimensions",
+        "CustomDimensionsIntro": "Door het maken van %1$sCustom Dimensions%2$s kan je elke custom data verzamelen voor '%3$s'.",
+        "ScopeDescriptionVisitMoreInfo": "Wanneer je een waarde van een custom dimension wijzigt gedurende een bezoek aan website, dan zal de laatste waarde welke is ingevuld gebruikt worden.",
+        "IncreaseAvailableCustomDimensionsTitle": "Verhoog het aantal beschikbare Custom Dimensions",
+        "HowToCreateCustomDimension": "Om nieuwe Custom Dimensions the maken voer het volgende commando uit voor je Piwik installatie:",
+        "ExampleCreateCustomDimensions": "Als voorbeeld om nieuwe %s Custom Dimensions in de scope action te maken voer het volgende commando uit:",
+        "HowToTrackManuallyViaJsDetails": "Voor meer informatie lees de %1$sJavaScript Tracker handleiding voor Custom Dimensions%2$s",
+        "HowToTrackManuallyViaPhp": "Om een waarde te verzamelen met de PHP tracker aanroep:",
+        "Extractions": "Extracties",
+        "NoCustomDimensionConfigured": "Nog geen Custom Dimension geconfigureerd, configureer er eentje direct.",
+        "ConfigureNewDimension": "Configureer een nieuwe dimension",
+        "ConfigureDimension": "Configureer %1$s Custom Dimension %2$s",
+        "XofYLeft": "%1$s van de %2$s dimensions zijn nog niet gebruikt",
+        "CannotBeDeleted": "Een Custom Dimension kan niet worden verwijderd, alleen worden gearchiveerd.",
+        "PageUrlParam": "Pagina URL parameter",
+        "NameAllowedCharacters": "Toegestaande karakters zijn alle letters, nummers, wit ruimte, een streep en onderstreepte toegestaande karakters.",
+        "NameIsRequired": "Een naam is vereist.",
+        "NameIsTooLong": "De naam bevat teveel karakters. Gebruik maximaal %d karakters.",
+        "ExceptionDimensionDoesNotExist": "Dimension %d voor website %d bestaat niet.",
+        "ExceptionDimensionIsNotActive": "Dimension %d voor website %d is niet geactiveerd.",
+        "DimensionCreated": "Custom Dimension is aangemaakt",
+        "DimensionUpdated": "Custom Dimension is geupdate",
+        "ColumnUniqueActions": "Unieke acties",
+        "ColumnAvgTimeOnDimension": "Gem. tijd op Dimension",
+        "CustomDimensionId": "CustomDimensions (Id %d)"
+    }
+}
