@@ -24,6 +24,7 @@
 				<pageIdAction>6</pageIdAction>
 				
 				<pageId>4</pageId>
+				<generationTimeMilliseconds>45</generationTimeMilliseconds>
 				<generationTime>0.05s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<icon />
@@ -141,6 +142,7 @@
 				<pageIdAction>6</pageIdAction>
 				
 				<pageId>6</pageId>
+				<generationTimeMilliseconds>1029</generationTimeMilliseconds>
 				<generationTime>1.03s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<icon />
@@ -363,6 +365,7 @@
 				<pageIdAction>2</pageIdAction>
 				
 				<pageId>1</pageId>
+				<generationTimeMilliseconds>420</generationTimeMilliseconds>
 				<generationTime>0.42s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<timeSpent>360</timeSpent>
@@ -388,6 +391,7 @@
 				<pageIdAction>4</pageIdAction>
 				
 				<pageId>2</pageId>
+				<generationTimeMilliseconds>123</generationTimeMilliseconds>
 				<generationTime>0.12s</generationTime>
 				<interactionPosition>2</interactionPosition>
 				<timeSpent>360</timeSpent>
@@ -402,6 +406,7 @@
 				<pageIdAction>6</pageIdAction>
 				
 				<pageId>3</pageId>
+				<generationTimeMilliseconds>344</generationTimeMilliseconds>
 				<generationTime>0.34s</generationTime>
 				<interactionPosition>3</interactionPosition>
 				<icon />
