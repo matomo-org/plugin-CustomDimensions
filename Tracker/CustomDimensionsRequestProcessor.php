@@ -69,15 +69,24 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
     public function afterRequestProcessed(VisitProperties $visitProperties, Request $request)
     {
         $action = $request->getMetadata('Actions', 'action');
+        $goalsConverted = $request->getMetadata('Goals', 'goalsConverted');
 
-        if (empty($action) || !($action instanceof Action)) {
+        $addToAction = (!empty($action) && ($action instanceof Action));
+        $addToGoals = !empty($goalsConverted);
+
+        if (!$addToAction && !$addToGoals) {
             return;
         }
 
         $dimensionsToSet = $this->getCustomDimensionsInScope(CustomDimensions::SCOPE_ACTION, $request);
 
-        foreach ($dimensionsToSet as $field => $value) {
-            $action->setCustomField($field, $value);
+        if ($addToAction) {
+            foreach ($dimensionsToSet as $field => $value) {
+                $action->setCustomField($field, $value);
+            }
+        }
+        else if ($addToGoals) {
+            $request->setMetadata('Goals', 'customDimensions', $dimensionsToSet);
         }
     }
 
