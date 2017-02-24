@@ -270,8 +270,9 @@ class CustomDimensions extends Plugin
     public function addConversionInformation(&$conversion, $visitInformation, Tracker\Request $request)
     {
         $dimensions = CustomDimensionsRequestProcessor::getCachedCustomDimensions($request);
+        $actionDimensions = CustomDimensionsRequestProcessor::getCustomDimensionsInScope(CustomDimensions::SCOPE_ACTION, $request);
 
-        // we copy all visit custom dimensions, but only if the index also exists in the conversion table
+        // we copy all custom dimensions, but only if the index also exists in the conversion table
         // to not fail while conversion custom dimensions are added
         $conversionIndexes = $this->getCachedInstalledIndexesForScope(self::SCOPE_CONVERSION);
         $conversionIndexes = array_map(function ($index) {
@@ -280,10 +281,13 @@ class CustomDimensions extends Plugin
 
         foreach ($dimensions as $dimension) {
             $index = (int) $dimension['index'];
-            if ($dimension['scope'] === self::SCOPE_VISIT && in_array($index, $conversionIndexes)) {
+            if (in_array($dimension['scope'], array(self::SCOPE_ACTION, self::SCOPE_VISIT)) && in_array($index, $conversionIndexes)) {
                 $field = LogTable::buildCustomDimensionColumnName($dimension);
 
-                if (array_key_exists($field, $visitInformation)) {
+                if ($dimension['scope'] === self::SCOPE_ACTION && array_key_exists($field, $actionDimensions)) {
+                    $conversion[$field] = $actionDimensions[$field];
+                }
+                else if (array_key_exists($field, $visitInformation)) {
                     $conversion[$field] = $visitInformation[$field];
                 }
             }

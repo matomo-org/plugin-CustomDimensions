@@ -49,7 +49,7 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
 
     public function onNewVisit(VisitProperties $visitProperties, Request $request)
     {
-        $dimensionsToSet = $this->getCustomDimensionsInScope(CustomDimensions::SCOPE_VISIT, $request);
+        $dimensionsToSet = self::getCustomDimensionsInScope(CustomDimensions::SCOPE_VISIT, $request);
 
         foreach ($dimensionsToSet as $field => $value) {
             $visitProperties->setProperty($field, $value);
@@ -58,7 +58,7 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
 
     public function onExistingVisit(&$valuesToUpdate, VisitProperties $visitProperties, Request $request)
     {
-        $dimensionsToSet = $this->getCustomDimensionsInScope(CustomDimensions::SCOPE_VISIT, $request);
+        $dimensionsToSet = self::getCustomDimensionsInScope(CustomDimensions::SCOPE_VISIT, $request);
 
         foreach ($dimensionsToSet as $field => $value) {
             $valuesToUpdate[$field] = $value;
@@ -69,28 +69,19 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
     public function afterRequestProcessed(VisitProperties $visitProperties, Request $request)
     {
         $action = $request->getMetadata('Actions', 'action');
-        $goalsConverted = $request->getMetadata('Goals', 'goalsConverted');
 
-        $addToAction = (!empty($action) && ($action instanceof Action));
-        $addToGoals = !empty($goalsConverted);
-
-        if (!$addToAction && !$addToGoals) {
-            return;
+        if (empty($action) || !($action instanceof Action)) {
+           return;
         }
 
-        $dimensionsToSet = $this->getCustomDimensionsInScope(CustomDimensions::SCOPE_ACTION, $request);
+        $dimensionsToSet = self::getCustomDimensionsInScope(CustomDimensions::SCOPE_ACTION, $request);
 
-        if ($addToAction) {
-            foreach ($dimensionsToSet as $field => $value) {
-                $action->setCustomField($field, $value);
-            }
-        }
-        else if ($addToGoals) {
-            $request->setMetadata('Goals', 'customDimensions', $dimensionsToSet);
+        foreach ($dimensionsToSet as $field => $value) {
+            $action->setCustomField($field, $value);
         }
     }
 
-    private function getCustomDimensionsInScope($scope, Request $request)
+    public static function getCustomDimensionsInScope($scope, Request $request)
     {
         $dimensions = self::getCachedCustomDimensions($request);
         $params = $request->getParams();
