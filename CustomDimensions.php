@@ -267,10 +267,10 @@ class CustomDimensions extends Plugin
         $translationKeys[] = 'CustomDimensions_CustomDimensionId';
     }
 
-    public function addConversionInformation(&$conversion, $visitInformation, Tracker\Request $request)
+    public function addConversionInformation(&$conversion, $visitInformation, Tracker\Request $request, Tracker\Action $action)
     {
         $dimensions = CustomDimensionsRequestProcessor::getCachedCustomDimensions($request);
-        $actionDimensions = CustomDimensionsRequestProcessor::getCustomDimensionsInScope(CustomDimensions::SCOPE_ACTION, $request);
+        $actionDimensions = is_null($action) ? CustomDimensionsRequestProcessor::getCustomDimensionsInScope(CustomDimensions::SCOPE_ACTION, $request) : $action->getCustomFields();
 
         // we copy all custom dimensions, but only if the index also exists in the conversion table
         // to not fail while conversion custom dimensions are added
