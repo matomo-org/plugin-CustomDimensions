@@ -267,7 +267,7 @@ class CustomDimensions extends Plugin
         $translationKeys[] = 'CustomDimensions_CustomDimensionId';
     }
 
-    public function addConversionInformation(&$conversion, $visitInformation, Tracker\Request $request, Tracker\Action $action)
+    public function addConversionInformation(&$conversion, $visitInformation, Tracker\Request $request, $action = null)
     {
         $dimensions = CustomDimensionsRequestProcessor::getCachedCustomDimensions($request);
         $actionDimensions = is_null($action) ? CustomDimensionsRequestProcessor::getCustomDimensionsInScope(CustomDimensions::SCOPE_ACTION, $request) : $action->getCustomFields();
@@ -281,13 +281,13 @@ class CustomDimensions extends Plugin
 
         foreach ($dimensions as $dimension) {
             $index = (int) $dimension['index'];
-            if (in_array($dimension['scope'], array(self::SCOPE_ACTION, self::SCOPE_VISIT)) && in_array($index, $conversionIndexes)) {
+            if (in_array($index, $conversionIndexes)) {
                 $field = LogTable::buildCustomDimensionColumnName($dimension);
 
                 if ($dimension['scope'] === self::SCOPE_ACTION && array_key_exists($field, $actionDimensions)) {
                     $conversion[$field] = $actionDimensions[$field];
                 }
-                else if (array_key_exists($field, $visitInformation)) {
+                else if ($dimension['scope'] === self::SCOPE_VISIT  && array_key_exists($field, $visitInformation)) {
                     $conversion[$field] = $visitInformation[$field];
                 }
             }
