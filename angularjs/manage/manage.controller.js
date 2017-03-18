@@ -28,6 +28,18 @@
             // as we're not using angular router we have to handle it manually here
             var $search = $location.search();
             if ('idDimension' in $search) {
+                if ($search.idDimension === 0 || $search.idDimension === '0') {
+                    var parameters = {isAllowed: true};
+                    $rootScope.$emit('CustomDimensions.initAddDimension', parameters);
+                    if (parameters && !parameters.isAllowed) {
+                        self.editMode = false;
+                        self.dimensionId = null;
+                        self.dimensionScope = '';
+
+                        return;
+                    }
+                }
+
                 self.editMode = true;
                 self.dimensionId = parseInt($search['idDimension'], 10);
                 self.dimensionScope = getValidDimensionScope($search['scope']);
