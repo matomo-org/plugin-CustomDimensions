@@ -16,6 +16,8 @@
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
 				
+				<dimension3 />
+				<dimension5 />
 			</row>
 			<row>
 				<type>action</type>
@@ -23,12 +25,15 @@
 				<pageTitle>Fourth page view</pageTitle>
 				<pageIdAction>6</pageIdAction>
 				
+				
 				<pageId>4</pageId>
 				<generationTimeMilliseconds>45</generationTimeMilliseconds>
 				<generationTime>0.05s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<icon />
 				
+				<dimension3>en</dimension3>
+				<dimension5>en_US</dimension5>
 			</row>
 		</actionDetails>
 		<goalConversions>1</goalConversions>
@@ -138,6 +143,8 @@
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
 				
+				<dimension3 />
+				<dimension5 />
 			</row>
 			<row>
 				<type>action</type>
@@ -145,12 +152,15 @@
 				<pageTitle>Sixth page view</pageTitle>
 				<pageIdAction>6</pageIdAction>
 				
+				
 				<pageId>6</pageId>
 				<generationTimeMilliseconds>1029</generationTimeMilliseconds>
 				<generationTime>1.03s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<icon />
 				
+				<dimension3>en</dimension3>
+				<dimension5>value5 5</dimension5>
 			</row>
 		</actionDetails>
 		<goalConversions>1</goalConversions>
@@ -260,6 +270,8 @@
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
 				
+				<dimension3 />
+				<dimension5 />
 			</row>
 			<row>
 				<type>action</type>
@@ -267,10 +279,13 @@
 				<pageTitle>Fifth page view</pageTitle>
 				<pageIdAction>6</pageIdAction>
 				
+				
 				<pageId>5</pageId>
 				<interactionPosition>1</interactionPosition>
 				<icon />
 				
+				<dimension3>en</dimension3>
+				<dimension5>en_US</dimension5>
 			</row>
 		</actionDetails>
 		<goalConversions>1</goalConversions>
@@ -376,14 +391,17 @@
 				<pageTitle>Viewing homepage</pageTitle>
 				<pageIdAction>2</pageIdAction>
 				
+				
 				<pageId>1</pageId>
+				<timeSpent>360</timeSpent>
+				<timeSpentPretty>6 min 0s</timeSpentPretty>
 				<generationTimeMilliseconds>420</generationTimeMilliseconds>
 				<generationTime>0.42s</generationTime>
 				<interactionPosition>1</interactionPosition>
-				<timeSpent>360</timeSpent>
-				<timeSpentPretty>6 min 0s</timeSpentPretty>
 				<icon />
 				
+				<dimension3>value3</dimension3>
+				<dimension5>value5</dimension5>
 			</row>
 			<row>
 				<type>goal</type>
@@ -395,6 +413,8 @@
 				<url>http://example.com/sub_en/page?test=343&amp;param=23</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
 				
+				<dimension3 />
+				<dimension5 />
 			</row>
 			<row>
 				<type>action</type>
@@ -402,14 +422,17 @@
 				<pageTitle>Second page view</pageTitle>
 				<pageIdAction>4</pageIdAction>
 				
+				
 				<pageId>2</pageId>
+				<timeSpent>360</timeSpent>
+				<timeSpentPretty>6 min 0s</timeSpentPretty>
 				<generationTimeMilliseconds>123</generationTimeMilliseconds>
 				<generationTime>0.12s</generationTime>
 				<interactionPosition>2</interactionPosition>
-				<timeSpent>360</timeSpent>
-				<timeSpentPretty>6 min 0s</timeSpentPretty>
 				<icon />
 				
+				<dimension3>en</dimension3>
+				<dimension5>343</dimension5>
 			</row>
 			<row>
 				<type>action</type>
@@ -417,12 +440,15 @@
 				<pageTitle>Third page view</pageTitle>
 				<pageIdAction>6</pageIdAction>
 				
+				
 				<pageId>3</pageId>
 				<generationTimeMilliseconds>344</generationTimeMilliseconds>
 				<generationTime>0.34s</generationTime>
 				<interactionPosition>3</interactionPosition>
 				<icon />
 				
+				<dimension3>value5 3</dimension3>
+				<dimension5>en_US</dimension5>
 			</row>
 		</actionDetails>
 		<goalConversions>1</goalConversions>
@@ -532,6 +558,8 @@
 				<url>http://example.com/sub_en/page</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
 				
+				<dimension3 />
+				<dimension5 />
 			</row>
 			<row>
 				<type>action</type>
@@ -539,10 +567,13 @@
 				<pageTitle>Viewing homepage</pageTitle>
 				<pageIdAction>10</pageIdAction>
 				
+				
 				<pageId>9</pageId>
 				<interactionPosition>1</interactionPosition>
 				<icon />
 				
+				<dimension3 />
+				<dimension5 />
 			</row>
 		</actionDetails>
 		<goalConversions>1</goalConversions>
