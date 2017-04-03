@@ -79,7 +79,6 @@ class CustomDimensions extends Plugin
         }
 
         return array(
-            'Live.getAllVisitorDetails'        => 'extendVisitorDetails',
             'Tracker.Cache.getSiteAttributes'  => 'addCustomDimensionsAttributes',
             'SitesManager.deleteSite.end'      => 'deleteCustomDimensionDefinitionsForSite',
             'AssetManager.getJavaScriptFiles'  => 'getJsFiles',
@@ -177,23 +176,6 @@ class CustomDimensions extends Plugin
     public function isTrackerPlugin()
     {
         return true;
-    }
-
-    public function extendVisitorDetails(&$visitor, $details)
-    {
-        if (empty($visitor['idSite'])) {
-            return;
-        }
-
-        $idSite = $visitor['idSite'];
-        $dimensions = $this->configuration->getCustomDimensionsHavingScope($idSite, self::SCOPE_VISIT);
-
-        $visit  = new Visitor($details);
-        $values = $visit->getCustomDimensionValues($dimensions);
-
-        foreach ($values as $field => $value) {
-            $visitor[$field] = $value;
-        }
     }
 
     public function addCustomDimensionsAttributes(&$content, $idSite)

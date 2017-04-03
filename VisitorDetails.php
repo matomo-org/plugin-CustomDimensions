@@ -2,25 +2,37 @@
 /**
  * Piwik - free/libre analytics platform
  *
- * @link http://piwik.org
+ * @link    http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  *
  */
 namespace Piwik\Plugins\CustomDimensions;
 
+use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
+use Piwik\Plugins\Live\VisitorDetailsAbstract;
 
-class Visitor
+class VisitorDetails extends VisitorDetailsAbstract
 {
-    private $details = array();
-
-    public function __construct($details)
+    public function extendVisitorDetails(&$visitor)
     {
-        $this->details = $details;
+        if (empty($visitor['idSite'])) {
+            return;
+        }
+
+        $idSite        = $visitor['idSite'];
+        $configuration = new Configuration();
+        $dimensions    = $configuration->getCustomDimensionsHavingScope($idSite, CustomDimensions::SCOPE_VISIT);
+
+        $values = $this->getCustomDimensionValues($dimensions);
+
+        foreach ($values as $field => $value) {
+            $visitor[$field] = $value;
+        }
     }
 
-    public function getCustomDimensionValues($configuredVisitDimensions)
+    protected function getCustomDimensionValues($configuredVisitDimensions)
     {
         $values = array();
 
