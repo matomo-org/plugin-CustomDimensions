@@ -88,7 +88,8 @@ class CustomDimensions extends Plugin
             'Tracker.getVisitFieldsToPersist'  => 'addVisitFieldsToPersist',
             'Tracker.setTrackerCacheGeneral'   => 'setTrackerCacheGeneral',
             'Category.addSubcategories' => 'addSubcategories',
-            'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics'
+            'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics',
+            'Actions.getCustomActionDimensionFieldsAndJoins' => 'provideActionDimensionFields'
         );
     }
 
@@ -300,6 +301,19 @@ class CustomDimensions extends Plugin
 
         foreach ($indexes as $index) {
             $fields[] = LogTable::buildCustomDimensionColumnName($index);
+        }
+    }
+
+    public function provideActionDimensionFields(&$fields, &$joins, $idSite)
+    {
+        $configuration = new Dao\Configuration();
+        $dimensions    = $configuration->getCustomDimensionsHavingScope($idSite, CustomDimensions::SCOPE_ACTION);
+
+        foreach ($dimensions as $dimension) {
+            if ($dimension['active'] && $dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
+                $field    = Dao\LogTable::buildCustomDimensionColumnName($dimension);
+                $fields[] = $field;
+            }
         }
     }
 

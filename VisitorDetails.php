@@ -8,10 +8,12 @@
  */
 namespace Piwik\Plugins\CustomDimensions;
 
+use Piwik\Piwik;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
 use Piwik\Plugins\Live\VisitorDetailsAbstract;
+use Piwik\View;
 
 class VisitorDetails extends VisitorDetailsAbstract
 {
@@ -21,36 +23,99 @@ class VisitorDetails extends VisitorDetailsAbstract
             return;
         }
 
-        $idSite        = $visitor['idSite'];
-        $configuration = new Configuration();
-        $dimensions    = $configuration->getCustomDimensionsHavingScope($idSite, CustomDimensions::SCOPE_VISIT);
+        $idSite     = $visitor['idSite'];
+        $dimensions = $this->getActiveCustomDimensionsInScope($idSite, CustomDimensions::SCOPE_VISIT);
 
-        $values = $this->getCustomDimensionValues($dimensions);
-
-        foreach ($values as $field => $value) {
-            $visitor[$field] = $value;
+        foreach ($dimensions as $dimension) {
+            // field in DB, eg custom_dimension_1
+            $field = LogTable::buildCustomDimensionColumnName($dimension);
+            // field for user, eg dimension1
+            $column = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
+            if (array_key_exists($field, $this->details)) {
+                $visitor[$column] = $this->details[$field];
+            } else {
+                $visitor[$column] = null;
+            }
         }
     }
 
-    protected function getCustomDimensionValues($configuredVisitDimensions)
+    public function extendActionDetails(&$action, $nextAction, $visitorDetails)
     {
-        $values = array();
+        if (empty($visitorDetails['idSite'])) {
+            return;
+        }
 
-        foreach ($configuredVisitDimensions as $dimension) {
-            if ($dimension['active'] && $dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
-                // field in DB, eg custom_dimension_1
-                $field = LogTable::buildCustomDimensionColumnName($dimension);
-                // field for user, eg dimension1
-                $column = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
+        $idSite     = $visitorDetails['idSite'];
+        $dimensions = $this->getActiveCustomDimensionsInScope($idSite, CustomDimensions::SCOPE_ACTION);
 
-                if (array_key_exists($field, $this->details)) {
-                    $values[$column] = $this->details[$field];
-                } else {
-                    $values[$column] = null;
-                }
+        foreach ($dimensions as $dimension) {
+            // field in DB, eg custom_dimension_1
+            $field = LogTable::buildCustomDimensionColumnName($dimension);
+            // field for user, eg dimension1
+            $column = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
+
+            if (array_key_exists($field, $action)) {
+                $action[$column] = $action[$field];
+            } else {
+                $action[$column] = null;
+            }
+            unset($action[$field]);
+        }
+    }
+
+    public function renderVisitorDetails($visitorDetails)
+    {
+        if (empty($visitorDetails['idSite'])) {
+            return '';
+        }
+
+        $idSite           = $visitorDetails['idSite'];
+        $dimensions       = $this->getActiveCustomDimensionsInScope($idSite, CustomDimensions::SCOPE_VISIT);
+        $customDimensions = array();
+
+        if (count($dimensions) > 0) {
+            foreach ($dimensions as $dimension) {
+                $column             = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
+                $customDimensions[] = array(
+                    'id'    => $dimension['idcustomdimension'],
+                    'name'  => $dimension['name'],
+                    'value' => $visitorDetails[$column]
+                );
             }
         }
 
-        return $values;
+        $view                   = new View('@CustomDimensions/_visitorDetails');
+        $view->visitInfo        = $visitorDetails;
+        $view->customDimensions = $customDimensions;
+        return $view->render();
+    }
+
+    public function renderActionTooltip($action, $visitInfo)
+    {
+        $idSite           = $visitInfo['idSite'];
+        $dimensions       = $this->getActiveCustomDimensionsInScope($idSite, CustomDimensions::SCOPE_ACTION);
+        $customDimensions = array();
+
+        foreach ($dimensions as $dimension) {
+            $column                               = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
+            $customDimensions[$dimension['name']] = $action[$column];
+        }
+
+        if (!empty($customDimensions)) {
+            $action['customDimensions'] = $customDimensions;
+        }
+
+        $view         = new View('@CustomDimensions/_actionTooltip');
+        $view->action = $action;
+        return $view->render();
+    }
+
+    protected function getActiveCustomDimensionsInScope($idSite, $scope)
+    {
+        $configuration = new Configuration();
+        $dimensions    = $configuration->getCustomDimensionsHavingScope($idSite, $scope);
+        return array_filter($dimensions, function ($dimension) use ($scope) {
+            return ($dimension['active'] && $dimension['scope'] === $scope);
+        });
     }
 }

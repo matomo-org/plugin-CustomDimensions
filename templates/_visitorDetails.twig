@@ -1,0 +1,12 @@
+{% if customDimensions %}
+    <div class="visitorCustomDimensions">
+        <br /><b>{{ 'CustomDimensions_CustomDimensions'|translate }}</b>
+    {% for customDimension in customDimensions %}
+        <br/>
+        <abbr class="visitorLogTooltip" title="{{ 'CustomDimensions_CustomDimensionId'|translate(customDimension.id) }}">{{ customDimension.name|truncate(30) }}:</abbr>
+        {% if customDimension.value is null %}<em>{{ 'CustomDimensions_NoValue'|translate }}</em>
+        {% elseif customDimension.value == '' %}<em>{{ 'CustomDimensions_EmptyValue'|translate }}</em>
+        {% elseif customDimension.value|length > 0 %}{{ customDimension.value|truncate(50) }}{% endif %}
+    {% endfor %}
+    </div>
+{% endif %}

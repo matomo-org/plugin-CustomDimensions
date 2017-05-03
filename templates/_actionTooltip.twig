@@ -1,0 +1,10 @@
+{% if action.customDimensions is defined %}
+
+    {{ 'CustomDimensions_CustomDimensions'|translate }}:{% for dimension,value in action.customDimensions %}
+
+        {# line break above is important #}
+        - {{ dimension|raw }} = {% if value is null %}*{{ 'CustomDimensions_NoValue'|translate }}*{#
+                              #}{% elseif value == '' %}*{{ 'CustomDimensions_EmptyValue'|translate }}*{#
+                              #}{% elseif value|length > 0 %}{{ value|raw }}{% endif %}
+{% endfor %}
+{% endif %}
