@@ -304,16 +304,14 @@ class CustomDimensions extends Plugin
         }
     }
 
-    public function provideActionDimensionFields(&$fields, &$joins, $idSite)
+    public function provideActionDimensionFields(&$fields, &$joins)
     {
-        $configuration = new Dao\Configuration();
-        $dimensions    = $configuration->getCustomDimensionsHavingScope($idSite, CustomDimensions::SCOPE_ACTION);
+        $logTable = new Dao\LogTable(CustomDimensions::SCOPE_ACTION);
+        $indices = $logTable->getInstalledIndexes();
 
-        foreach ($dimensions as $dimension) {
-            if ($dimension['active'] && $dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
-                $field    = Dao\LogTable::buildCustomDimensionColumnName($dimension);
-                $fields[] = $field;
-            }
+        foreach ($indices as $index) {
+            $field    = Dao\LogTable::buildCustomDimensionColumnName($index);
+            $fields[] = $field;
         }
     }
 

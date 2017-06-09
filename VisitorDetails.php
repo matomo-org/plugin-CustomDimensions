@@ -61,6 +61,14 @@ class VisitorDetails extends VisitorDetailsAbstract
             }
             unset($action[$field]);
         }
+
+        $logTable = new Dao\LogTable(CustomDimensions::SCOPE_ACTION);
+        $indices = $logTable->getInstalledIndexes();
+
+        foreach ($indices as $index) {
+            $field    = Dao\LogTable::buildCustomDimensionColumnName($index);
+            unset($action[$field]);
+        }
     }
 
     public function renderVisitorDetails($visitorDetails)
