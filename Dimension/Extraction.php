@@ -103,7 +103,9 @@ class Extraction
         if (!isset($value) || '' === $value) {
             return null;
         }
-
+        
+        $value = Common::unsanitizeInputValue($value);
+        
         $pattern = $this->pattern;
         if ($this->dimension === 'urlparam') {
             $pattern = '\?.*' . $pattern . '=([^&]*)';
