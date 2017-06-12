@@ -8,7 +8,6 @@
  */
 namespace Piwik\Plugins\CustomDimensions;
 
-use Piwik\Piwik;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
@@ -62,8 +61,12 @@ class VisitorDetails extends VisitorDetailsAbstract
             unset($action[$field]);
         }
 
-        $logTable = new Dao\LogTable(CustomDimensions::SCOPE_ACTION);
-        $indices = $logTable->getInstalledIndexes();
+        static $indices;
+
+        if (is_null($indices)) {
+            $logTable = new Dao\LogTable(CustomDimensions::SCOPE_ACTION);
+            $indices  = $logTable->getInstalledIndexes();
+        }
 
         foreach ($indices as $index) {
             $field    = Dao\LogTable::buildCustomDimensionColumnName($index);
@@ -118,12 +121,21 @@ class VisitorDetails extends VisitorDetailsAbstract
         return $view->render();
     }
 
+    protected $activeCustomDimensionsCache = array();
+
     protected function getActiveCustomDimensionsInScope($idSite, $scope)
     {
+        if (array_key_exists($idSite.$scope, $this->activeCustomDimensionsCache)) {
+            return $this->activeCustomDimensionsCache[$idSite.$scope];
+        }
+
         $configuration = new Configuration();
         $dimensions    = $configuration->getCustomDimensionsHavingScope($idSite, $scope);
-        return array_filter($dimensions, function ($dimension) use ($scope) {
+        $dimensions    = array_filter($dimensions, function ($dimension) use ($scope) {
             return ($dimension['active'] && $dimension['scope'] === $scope);
         });
+
+        $this->activeCustomDimensionsCache[$idSite.$scope] = $dimensions;
+        return $this->activeCustomDimensionsCache[$idSite.$scope];
     }
 }
