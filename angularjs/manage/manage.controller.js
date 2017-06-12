@@ -57,10 +57,12 @@
 
         initState();
 
-        $rootScope.$on('$locationChangeSuccess', initState);
+        var onChangeSuccess = $rootScope.$on('$locationChangeSuccess', initState);
 
         $scope.$on('$destroy', function() {
-            $rootScope.off('mouseup', initState);
+            if (onChangeSuccess) {
+                onChangeSuccess();
+            }
         });
     }
 })();
