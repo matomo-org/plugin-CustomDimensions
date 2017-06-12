@@ -1,5 +1,8 @@
 ## Changelog
 
+* 3.0.2
+  * Make sure to unsanitize extraction patterns so HTML entities can be used
+
 * 3.0.0: Compatibility with Piwik 3.0
 * 0.1.5 
   * Fix some problems where a wrong whitespace might cause JavaScript errors and causes the UI to not work
