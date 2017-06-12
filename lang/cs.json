@@ -34,7 +34,7 @@
         "ExceptionDimensionIsNotActive": "Dimenze %d pro web %d není aktivní.",
         "DimensionCreated": "Vlastní dimenze vytvořena",
         "DimensionUpdated": "Vlastní dimenze aktualizována",
-        "ColumnUniqueActions": "Unikátní akce",
+        "ColumnUniqueActions": "Jedinečné akce",
         "ColumnAvgTimeOnDimension": "Průměrný čas na dimenzi",
         "CustomDimensionId": "CustomDimensions (Id %d)"
     }
