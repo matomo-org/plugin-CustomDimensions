@@ -1,5 +1,7 @@
 ## Changelog
 
+* 3.0.2
+  * Make sure to unsanitize extraction patterns so HTML entities can be used
 * 3.0.1: 
   * Language updates
   * No longer show an empty entry as `Value not defined`
