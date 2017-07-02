@@ -112,9 +112,11 @@ class VisitorDetails extends VisitorDetailsAbstract
             $customDimensions[$dimension['name']] = $action[$column];
         }
 
-        if (!empty($customDimensions)) {
-            $action['customDimensions'] = $customDimensions;
+        if (empty($customDimensions)) {
+            return;
         }
+
+        $action['customDimensions'] = $customDimensions;
 
         $view         = new View('@CustomDimensions/_actionTooltip');
         $view->action = $action;
