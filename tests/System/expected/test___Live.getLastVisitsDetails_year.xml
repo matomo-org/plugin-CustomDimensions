@@ -27,11 +27,13 @@
 				
 				
 				<pageId>4</pageId>
+				<bandwidth />
 				<generationTimeMilliseconds>45</generationTimeMilliseconds>
 				<generationTime>0.05s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<icon />
 				
+				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
 				<dimension5>en_US</dimension5>
 			</row>
@@ -43,13 +45,18 @@
 		
 		
 		
+		
+		
+		
+		
+		
+		
 		<userId />
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
 		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
 		<visitCount>1</visitCount>
-		
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />
 		<daysSinceFirstVisit>0</daysSinceFirstVisit>
@@ -121,11 +128,6 @@
 		<dimension1 />
 		<dimension2 />
 		<dimension6 />
-		
-		
-		
-		
-		
 	</row>
 	<row>
 		<idSite>1</idSite>
@@ -154,11 +156,13 @@
 				
 				
 				<pageId>6</pageId>
+				<bandwidth />
 				<generationTimeMilliseconds>1029</generationTimeMilliseconds>
 				<generationTime>1.03s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<icon />
 				
+				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
 				<dimension5>value5 5</dimension5>
 			</row>
@@ -170,13 +174,18 @@
 		
 		
 		
+		
+		
+		
+		
+		
+		
 		<userId />
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
 		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
 		<visitCount>1</visitCount>
-		
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />
 		<daysSinceFirstVisit>0</daysSinceFirstVisit>
@@ -248,11 +257,6 @@
 		<dimension1>value1</dimension1>
 		<dimension2>value2</dimension2>
 		<dimension6 />
-		
-		
-		
-		
-		
 	</row>
 	<row>
 		<idSite>1</idSite>
@@ -281,9 +285,11 @@
 				
 				
 				<pageId>5</pageId>
+				<bandwidth />
 				<interactionPosition>1</interactionPosition>
 				<icon />
 				
+				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
 				<dimension5>en_US</dimension5>
 			</row>
@@ -295,13 +301,18 @@
 		
 		
 		
+		
+		
+		
+		
+		
+		
 		<userId />
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
 		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
 		<visitCount>1</visitCount>
-		
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />
 		<daysSinceFirstVisit>0</daysSinceFirstVisit>
@@ -373,11 +384,6 @@
 		<dimension1 />
 		<dimension2 />
 		<dimension6 />
-		
-		
-		
-		
-		
 	</row>
 	<row>
 		<idSite>1</idSite>
@@ -393,6 +399,7 @@
 				
 				
 				<pageId>1</pageId>
+				<bandwidth />
 				<timeSpent>360</timeSpent>
 				<timeSpentPretty>6 min 0s</timeSpentPretty>
 				<generationTimeMilliseconds>420</generationTimeMilliseconds>
@@ -400,6 +407,7 @@
 				<interactionPosition>1</interactionPosition>
 				<icon />
 				
+				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>value3</dimension3>
 				<dimension5>value5</dimension5>
 			</row>
@@ -424,6 +432,7 @@
 				
 				
 				<pageId>2</pageId>
+				<bandwidth />
 				<timeSpent>360</timeSpent>
 				<timeSpentPretty>6 min 0s</timeSpentPretty>
 				<generationTimeMilliseconds>123</generationTimeMilliseconds>
@@ -431,6 +440,7 @@
 				<interactionPosition>2</interactionPosition>
 				<icon />
 				
+				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
 				<dimension5>343</dimension5>
 			</row>
@@ -442,11 +452,13 @@
 				
 				
 				<pageId>3</pageId>
+				<bandwidth />
 				<generationTimeMilliseconds>344</generationTimeMilliseconds>
 				<generationTime>0.34s</generationTime>
 				<interactionPosition>3</interactionPosition>
 				<icon />
 				
+				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>value5 3</dimension3>
 				<dimension5>en_US</dimension5>
 			</row>
@@ -458,13 +470,18 @@
 		
 		
 		
+		
+		
+		
+		
+		
+		
 		<userId />
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
 		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
 		<visitCount>1</visitCount>
-		
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />
 		<daysSinceFirstVisit>0</daysSinceFirstVisit>
@@ -536,11 +553,6 @@
 		<dimension1>value5 1</dimension1>
 		<dimension2>en_US</dimension2>
 		<dimension6>value6</dimension6>
-		
-		
-		
-		
-		
 	</row>
 	<row>
 		<idSite>1</idSite>
@@ -569,9 +581,11 @@
 				
 				
 				<pageId>9</pageId>
+				<bandwidth />
 				<interactionPosition>1</interactionPosition>
 				<icon />
 				
+				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3 />
 				<dimension5 />
 			</row>
@@ -583,13 +597,18 @@
 		
 		
 		
+		
+		
+		
+		
+		
+		
 		<userId />
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
 		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
 		<visitCount>1</visitCount>
-		
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />
 		<daysSinceFirstVisit>0</daysSinceFirstVisit>
@@ -661,10 +680,5 @@
 		<dimension1 />
 		<dimension2 />
 		<dimension6 />
-		
-		
-		
-		
-		
 	</row>
 </result>
