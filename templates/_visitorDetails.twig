@@ -1,6 +1,5 @@
 {% if customDimensions %}
     <div class="visitorCustomDimensions">
-        <br /><b>{{ 'CustomDimensions_CustomDimensions'|translate }}</b>
     {% for customDimension in customDimensions %}
         <br/>
         <abbr class="visitorLogTooltip" title="{{ 'CustomDimensions_CustomDimensionId'|translate(customDimension.id) }}">{{ customDimension.name|truncate(30) }}:</abbr>
