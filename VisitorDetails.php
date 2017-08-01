@@ -69,7 +69,7 @@ class VisitorDetails extends VisitorDetailsAbstract
         }
 
         foreach ($indices as $index) {
-            $field    = Dao\LogTable::buildCustomDimensionColumnName($index);
+            $field = Dao\LogTable::buildCustomDimensionColumnName($index);
             unset($action[$field]);
         }
     }
@@ -80,6 +80,14 @@ class VisitorDetails extends VisitorDetailsAbstract
             return '';
         }
 
+        $view                   = new View('@CustomDimensions/_visitorDetails');
+        $view->visitInfo        = $visitorDetails;
+        $view->customDimensions = $this->getCustomDimensionsFromVisit($visitorDetails);
+        return $view->render();
+    }
+
+    protected function getCustomDimensionsFromVisit($visitorDetails)
+    {
         $idSite           = $visitorDetails['idSite'];
         $dimensions       = $this->getActiveCustomDimensionsInScope($idSite, CustomDimensions::SCOPE_VISIT);
         $customDimensions = array();
@@ -95,22 +103,12 @@ class VisitorDetails extends VisitorDetailsAbstract
             }
         }
 
-        $view                   = new View('@CustomDimensions/_visitorDetails');
-        $view->visitInfo        = $visitorDetails;
-        $view->customDimensions = $customDimensions;
-        return $view->render();
+        return $customDimensions;
     }
 
     public function renderActionTooltip($action, $visitInfo)
     {
-        $idSite           = $visitInfo['idSite'];
-        $dimensions       = $this->getActiveCustomDimensionsInScope($idSite, CustomDimensions::SCOPE_ACTION);
-        $customDimensions = array();
-
-        foreach ($dimensions as $dimension) {
-            $column                               = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
-            $customDimensions[$dimension['name']] = $action[$column];
-        }
+        $customDimensions = $this->getCustomDimensionsFromAction($action, $visitInfo);
 
         if (empty($customDimensions)) {
             return;
@@ -123,12 +121,26 @@ class VisitorDetails extends VisitorDetailsAbstract
         return $view->render();
     }
 
+    protected function getCustomDimensionsFromAction($action, $visitInfo)
+    {
+        $idSite           = $visitInfo['idSite'];
+        $dimensions       = $this->getActiveCustomDimensionsInScope($idSite, CustomDimensions::SCOPE_ACTION);
+        $customDimensions = array();
+
+        foreach ($dimensions as $dimension) {
+            $column                               = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($dimension);
+            $customDimensions[$dimension['name']] = $action[$column];
+        }
+
+        return $customDimensions;
+    }
+
     protected $activeCustomDimensionsCache = array();
 
     protected function getActiveCustomDimensionsInScope($idSite, $scope)
     {
-        if (array_key_exists($idSite.$scope, $this->activeCustomDimensionsCache)) {
-            return $this->activeCustomDimensionsCache[$idSite.$scope];
+        if (array_key_exists($idSite . $scope, $this->activeCustomDimensionsCache)) {
+            return $this->activeCustomDimensionsCache[$idSite . $scope];
         }
 
         $configuration = new Configuration();
@@ -137,7 +149,107 @@ class VisitorDetails extends VisitorDetailsAbstract
             return ($dimension['active'] && $dimension['scope'] === $scope);
         });
 
-        $this->activeCustomDimensionsCache[$idSite.$scope] = $dimensions;
-        return $this->activeCustomDimensionsCache[$idSite.$scope];
+        $this->activeCustomDimensionsCache[$idSite . $scope] = $dimensions;
+        return $this->activeCustomDimensionsCache[$idSite . $scope];
+    }
+
+    protected $customDimensions = [];
+    protected $lastVisit = null;
+
+    public function initProfile($visits, &$profile)
+    {
+        $this->customDimensions = [
+            CustomDimensions::SCOPE_ACTION => [],
+            CustomDimensions::SCOPE_VISIT  => [],
+        ];
+        $this->lastVisit = $visits->getLastRow();
+    }
+
+    public function handleProfileAction($action, &$profile)
+    {
+        $customDimensions = $this->getCustomDimensionsFromAction($action, $this->lastVisit);
+
+        if (!empty($customDimensions)) {
+            foreach ($customDimensions as $name => $value) {
+
+                $scope = CustomDimensions::SCOPE_ACTION;
+
+                if (empty($value)) {
+                    continue;
+                }
+
+                if (!array_key_exists($name, $this->customDimensions[$scope])) {
+                    $this->customDimensions[$scope][$name] = [
+                    ];
+                }
+
+                if (!array_key_exists($value, $this->customDimensions[$scope][$name])) {
+                    $this->customDimensions[$scope][$name][$value] = 0;
+                }
+
+                $this->customDimensions[$scope][$name][$value]++;
+            }
+        }
+    }
+
+    public function handleProfileVisit($visit, &$profile)
+    {
+        $customDimensions = $this->getCustomDimensionsFromVisit($visit);
+
+        if (!empty($customDimensions)) {
+            foreach ($customDimensions as $dimension) {
+
+                $scope = CustomDimensions::SCOPE_VISIT;
+                $name  = $dimension['name'];
+                $value = $dimension['value'];
+
+                if (empty($value)) {
+                    continue;
+                }
+
+                if (!array_key_exists($name, $this->customDimensions[$scope])) {
+                    $this->customDimensions[$scope][$name] = [
+                    ];
+                }
+
+                if (!array_key_exists($value, $this->customDimensions[$scope][$name])) {
+                    $this->customDimensions[$scope][$name][$value] = 0;
+                }
+
+                $this->customDimensions[$scope][$name][$value]++;
+            }
+        }
+    }
+
+    public function finalizeProfile($visits, &$profile)
+    {
+        $customDimensions = $this->customDimensions;
+        foreach ($customDimensions as $scope => &$dimensions) {
+
+            if (empty($dimensions)) {
+                unset($customDimensions[$scope]);
+                continue;
+            }
+
+            foreach ($dimensions AS $name => &$values) {
+                arsort($values);
+            }
+        }
+        if (!empty($customDimensions)) {
+            $profile['customDimensions'] = $customDimensions;
+        }
+    }
+
+    public function renderProfileSummary($profile)
+    {
+        if (empty($profile['customDimensions']) || (
+            empty($profile['customDimensions'][CustomDimensions::SCOPE_VISIT]) &&
+            empty($profile['customDimensions'][CustomDimensions::SCOPE_ACTION]) )) {
+            return [];
+        }
+
+        $view              = new View('@CustomDimensions/_profileSummary.twig');
+        $view->visitorData = $profile;
+        return [[45, $view->render()]];
     }
 }
