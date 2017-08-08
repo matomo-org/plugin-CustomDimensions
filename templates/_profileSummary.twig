@@ -9,7 +9,7 @@
                 <p>
                     <strong>{{ name }}: </strong>
                     {%- for value,count in dimension -%}
-                        {{ value }} ({{ count }}x){% if not loop.last %}, {% endif %}
+                        <span title="{{ count }}x">{{ value }}</span>{% if not loop.last %}, {% endif %}
                     {%- endfor -%}
                 </p>
             {%- endfor -%}
@@ -22,7 +22,7 @@
                 <p>
                     <strong>{{ name }}: </strong>
                     {%- for value,count in dimension -%}
-                        {{ value }} ({{ count }}x){% if not loop.last %}, {% endif %}
+                        <span title="{{ count }}x">{{ value }}</span>{% if not loop.last %}, {% endif %}
                     {%- endfor -%}
                 </p>
             {%- endfor -%}
