@@ -3,9 +3,9 @@
         {% if loop.index == 1 %}
 
             {{ 'CustomDimensions_CustomDimensions'|translate }}:
-        {% endif -%}
+        {%- endif %}
 
         {# line break above is important #}
         - {{ dimension|raw }} = {{ value|raw }}
-    {% endfor %}
-{% endif %}
+    {%- endfor -%}
+{%- endif -%}

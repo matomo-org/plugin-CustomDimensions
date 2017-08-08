@@ -111,14 +111,14 @@ class VisitorDetails extends VisitorDetailsAbstract
         $customDimensions = $this->getCustomDimensionsFromAction($action, $visitInfo);
 
         if (empty($customDimensions)) {
-            return;
+            return [];
         }
 
         $action['customDimensions'] = $customDimensions;
 
         $view         = new View('@CustomDimensions/_actionTooltip');
         $view->action = $action;
-        return $view->render();
+        return [[ 30, $view->render() ]];
     }
 
     protected function getCustomDimensionsFromAction($action, $visitInfo)
