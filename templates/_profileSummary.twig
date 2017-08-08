@@ -1,11 +1,11 @@
 <div class="visitor-profile-summary visitor-profile-customdimensions">
     <h1>{{ 'CustomDimensions_CustomDimensions'|translate }}</h1>
     <div>
-        {% if visitorData.customDimensions['action'] is defined and visitorData.customDimensions['action']|length > 0 %}
+        {% if visitorData.customDimensions['visit'] is defined and visitorData.customDimensions['visit']|length > 0 %}
             <p></p>
-            <h4>{{ 'CustomVariables_ScopeX'|translate('General_TrackingScopeAction'|translate) }}</h4>
+            <h4>{{ 'CustomVariables_ScopeX'|translate('General_TrackingScopeVisit'|translate) }}</h4>
 
-            {%- for name,dimension in visitorData.customDimensions['action'] -%}
+            {%- for name,dimension in visitorData.customDimensions['visit'] -%}
                 <p>
                     <strong>{{ name }}: </strong>
                     {%- for value,count in dimension -%}
@@ -14,11 +14,11 @@
                 </p>
             {%- endfor -%}
         {% endif %}
-        {% if visitorData.customDimensions['visit'] is defined and visitorData.customDimensions['visit']|length > 0 %}
+        {% if visitorData.customDimensions['action'] is defined and visitorData.customDimensions['action']|length > 0 %}
             <p></p>
-            <h4>{{ 'CustomVariables_ScopeX'|translate('General_TrackingScopeVisit'|translate) }}</h4>
+            <h4>{{ 'CustomVariables_ScopeX'|translate('General_TrackingScopeAction'|translate) }}</h4>
 
-            {%- for name,dimension in visitorData.customDimensions['visit'] -%}
+            {%- for name,dimension in visitorData.customDimensions['action'] -%}
                 <p>
                     <strong>{{ name }}: </strong>
                     {%- for value,count in dimension -%}
