@@ -250,6 +250,6 @@ class VisitorDetails extends VisitorDetailsAbstract
 
         $view              = new View('@CustomDimensions/_profileSummary.twig');
         $view->visitorData = $profile;
-        return [[45, $view->render()]];
+        return [[10, $view->render()]];
     }
 }
