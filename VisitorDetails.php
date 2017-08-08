@@ -77,13 +77,13 @@ class VisitorDetails extends VisitorDetailsAbstract
     public function renderVisitorDetails($visitorDetails)
     {
         if (empty($visitorDetails['idSite'])) {
-            return '';
+            return [];
         }
 
         $view                   = new View('@CustomDimensions/_visitorDetails');
         $view->visitInfo        = $visitorDetails;
         $view->customDimensions = $this->getCustomDimensionsFromVisit($visitorDetails);
-        return $view->render();
+        return [[ 40, $view->render() ]];
     }
 
     protected function getCustomDimensionsFromVisit($visitorDetails)
