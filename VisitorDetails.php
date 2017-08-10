@@ -236,8 +236,38 @@ class VisitorDetails extends VisitorDetailsAbstract
             }
         }
         if (!empty($customDimensions)) {
-            $profile['customDimensions'] = $customDimensions;
+
+            $profile['customDimensions'] = $this->convertForProfile($customDimensions);
         }
+    }
+
+    protected function convertForProfile($customDimensions)
+    {
+        $convertedDimensions = [];
+
+        foreach ($customDimensions as $scope => $scopeDimensions) {
+
+            $convertedDimensions[$scope] = [];
+
+            foreach ($scopeDimensions as $name => $values) {
+
+                $dimension = [
+                    'name' => $name,
+                    'values' => []
+                ];
+
+                foreach ($values as $value => $count) {
+                    $dimension['values'][] = [
+                        'value' => $value,
+                        'count' => $count
+                    ];
+                }
+
+                $convertedDimensions[$scope][] = $dimension;
+            }
+        }
+
+        return $convertedDimensions;
     }
 
     public function renderProfileSummary($profile)
