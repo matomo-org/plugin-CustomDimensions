@@ -1,31 +1,13 @@
-{% if visitorData.customDimensions['visit'] is defined and visitorData.customDimensions['visit']|length > 0 %}
-    <div class="visitor-profile-summary visitor-profile-customdimensions">
-        <h1>{{ 'CustomDimensions_CustomDimensions'|translate }} ({{ 'General_TrackingScopeVisit'|translate }})</h1>
-        <div>
-            {%- for dimension in visitorData.customDimensions['visit'] -%}
-                <p>
-                    <span>{{ dimension.name }}: </span>
-                    {%- for value in dimension.values -%}
-                        <strong title="{{ value.count }}x">{{ value.value }}</strong>{% if not loop.last %}, {% endif %}
-                    {%- endfor -%}
-                </p>
-            {%- endfor -%}
-        </div>
+<div class="visitor-profile-summary visitor-profile-customdimensions">
+    <h1>{{ 'CustomDimensions_CustomDimensions'|translate }} ({{ scopeName }})</h1>
+    <div>
+        {%- for dimension in dimensions -%}
+            <p>
+                <span>{{ dimension.name }}: </span>
+                {%- for value in dimension.values -%}
+                    <strong title="{{ value.count }}x">{{ value.value }}</strong>{% if not loop.last %}, {% endif %}
+                {%- endfor -%}
+            </p>
+        {%- endfor -%}
     </div>
-{% endif %}
-
-{% if visitorData.customDimensions['action'] is defined and visitorData.customDimensions['action']|length > 0 %}
-    <div class="visitor-profile-summary visitor-profile-customdimensions">
-        <h1>{{ 'CustomDimensions_CustomDimensions'|translate }} ({{ 'General_TrackingScopeAction'|translate }})</h1>
-        <div>
-            {%- for dimension in visitorData.customDimensions['action'] -%}
-                <p>
-                    <span>{{ dimension.name }}: </span>
-                    {%- for value in dimension.values -%}
-                        <strong title="{{ value.count }}x">{{ value.value }}</strong>{% if not loop.last %}, {% endif %}
-                    {%- endfor -%}
-                </p>
-            {%- endfor -%}
-        </div>
-    </div>
-{% endif %}
+</div>

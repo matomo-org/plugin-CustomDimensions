@@ -269,17 +269,4 @@ class VisitorDetails extends VisitorDetailsAbstract
 
         return $convertedDimensions;
     }
-
-    public function renderProfileSummary($profile)
-    {
-        if (empty($profile['customDimensions']) || (
-            empty($profile['customDimensions'][CustomDimensions::SCOPE_VISIT]) &&
-            empty($profile['customDimensions'][CustomDimensions::SCOPE_ACTION]) )) {
-            return [];
-        }
-
-        $view              = new View('@CustomDimensions/_profileSummary.twig');
-        $view->visitorData = $profile;
-        return [[10, $view->render()]];
-    }
 }
