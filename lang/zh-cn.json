@@ -20,7 +20,7 @@
         "ExtractionsHelp": "这是可选的。字符regex可用于自动网页网址或页面标题抽取该自定义维度的值。这样一来，自定义维度值不必被经由追踪客户端手动设定。值仍然可以通过Piwik跟踪API手动设置。在跟踪客户手动设置尺寸值总是优先于拔牙。如果有多个提取定义，将使用匹配的第一个提取。",
         "ExtractValue": "获取值",
         "ExampleValue": "维度值",
-        "NoCustomDimensionConfigured": "还没有自定义维度配置呢，现在配置一个？",
+        "NoCustomDimensionConfigured": "尚未配置自定义维度，现在就配置一个吧。",
         "ConfigureNewDimension": "配置一个新的维度",
         "ConfigureDimension": "配置%1$s 自定义维度 %2$s",
         "CannotBeDeleted": "自定义维度不能被删除，只能停用。",
@@ -32,7 +32,7 @@
         "ExceptionDimensionIsNotActive": "%d网站 %d的维度并未激活！",
         "DimensionCreated": "自定义维度创建",
         "DimensionUpdated": "自定义维度更新",
-        "ColumnUniqueActions": "重复动作",
+        "ColumnUniqueActions": "单一动作",
         "ColumnAvgTimeOnDimension": "在维度上的平均时间",
         "CustomDimensionId": "自定义维度 (Id %d)"
     }

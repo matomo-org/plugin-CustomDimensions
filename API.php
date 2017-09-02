@@ -8,6 +8,7 @@
  */
 namespace Piwik\Plugins\CustomDimensions;
 
+use Piwik\Common;
 use Piwik\DataTable\Row;
 
 use Piwik\Archive;
@@ -108,6 +109,7 @@ class API extends \Piwik\Plugin\API
         $scopeCheck = new Scope($scope);
         $scopeCheck->check();
 
+        $extractions = $this->unsanitizeExtractions($extractions);
         $this->checkExtractionsAreSupportedForScope($scope, $extractions);
 
         $index = new Index();
@@ -120,6 +122,19 @@ class API extends \Piwik\Plugin\API
         Cache::clearCacheGeneral();
 
         return $idDimension;
+    }
+
+    private function unsanitizeExtractions($extractions)
+    {
+        if (!empty($extractions) && is_array($extractions)) {
+            foreach ($extractions as $index => $extraction) {
+                if (!empty($extraction['pattern']) && is_string($extraction['pattern'])) {
+                    $extractions[$index]['pattern'] = Common::unsanitizeInputValue($extraction['pattern']);
+                }
+            }
+        }
+
+        return $extractions;
     }
 
     /**
@@ -150,6 +165,7 @@ class API extends \Piwik\Plugin\API
             $caseSensitive = $dimension->getCaseSensitive();
         }
 
+        $extractions = $this->unsanitizeExtractions($extractions);
         $this->checkCustomDimensionConfig($name, $active, $extractions, $caseSensitive);
         $this->checkExtractionsAreSupportedForScope($dimension->getScope(), $extractions);
 

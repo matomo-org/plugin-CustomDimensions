@@ -18,7 +18,7 @@
 		</metrics>
 		<metricsDocumentation>
 			<nb_hits>The number of times this page was visited.</nb_hits>
-			<nb_visits>If a visitor comes to your website for the first time or if he visits a page more than 30 minutes after his last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
 			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
 			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
 			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
@@ -85,22 +85,22 @@
 		<row>
 			
 			<segment>dimension3==en</segment>
-			<idsubdatatable>6147</idsubdatatable>
+			<idsubdatatable>6217</idsubdatatable>
 		</row>
 		<row>
 			
 			<segment>dimension3==value3</segment>
-			<idsubdatatable>6148</idsubdatatable>
+			<idsubdatatable>6218</idsubdatatable>
 		</row>
 		<row>
 			
 			<segment>dimension3==value5+3</segment>
-			<idsubdatatable>6149</idsubdatatable>
+			<idsubdatatable>6219</idsubdatatable>
 		</row>
 		<row>
 			
 			<segment>dimension3==</segment>
-			<idsubdatatable>6146</idsubdatatable>
+			<idsubdatatable>6216</idsubdatatable>
 		</row>
 	</reportMetadata>
 	<reportTotal>
