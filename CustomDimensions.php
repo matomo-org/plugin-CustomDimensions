@@ -89,8 +89,24 @@ class CustomDimensions extends Plugin
             'Tracker.getVisitFieldsToPersist'  => 'addVisitFieldsToPersist',
             'Tracker.setTrackerCacheGeneral'   => 'setTrackerCacheGeneral',
             'Category.addSubcategories' => 'addSubcategories',
-            'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics'
+            'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics',
+            'Dimension.addDimensions' => 'addDimensions'
         );
+    }
+
+    public function addDimensions(&$instances)
+    {
+        $idSite = Common::getRequestVar('idSite', 0, 'int');
+        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        foreach ($dimensions as $dimension) {
+            if (!$dimension['active']) {
+                continue;
+            }
+
+            $custom = new CustomDimension();
+            $custom->initCustomDimension($dimension);
+            $instances[] = $custom;
+        }
     }
 
     public function addSubcategories(&$subcategories)
