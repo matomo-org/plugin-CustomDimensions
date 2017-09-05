@@ -36,6 +36,8 @@
         "DimensionUpdated": "Custom Dimension updated",
         "ColumnUniqueActions": "Unique Actions",
         "ColumnAvgTimeOnDimension": "Avg. Time On Dimension",
-        "CustomDimensionId": "CustomDimensions (Id %d)"
+        "CustomDimensionId": "Custom Dimensions (Id %d)",
+        "NoValue": "no value",
+        "EmptyValue": "empty value"
     }
 }

@@ -11,6 +11,7 @@ namespace Piwik\Plugins\CustomDimensions\tests\Integration;
 use Piwik\Plugins\CustomDimensions\CustomDimensions;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
+use Piwik\Plugins\CustomDimensions\VisitorDetails;
 use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tracker\Cache;
@@ -213,7 +214,9 @@ class CustomDimensionsTest extends IntegrationTestCase
             'custom_dimension_6' => 'my value 6', // index does not exist
         );
 
-        $this->plugin->extendVisitorDetails($visitor, $details);
+        $visitorDetails = new VisitorDetails();
+        $visitorDetails->setDetails($details);
+        $visitorDetails->extendVisitorDetails($visitor);
 
         $expected = array(
             'idSite' => 1,
