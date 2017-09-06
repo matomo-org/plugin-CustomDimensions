@@ -39,7 +39,7 @@ class CustomDimension extends Dimension
                 return $autoSuggest->getMostUsedActionDimensionValues($dimension, $idSite, $maxValuesToReturn);
             };
         } elseif ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
-            $this->category = 'General_Visit';
+            $this->category = 'General_Visitors';
             $this->dbTableName = 'log_visit';
         }
     }
