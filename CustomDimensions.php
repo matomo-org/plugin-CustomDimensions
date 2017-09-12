@@ -79,7 +79,6 @@ class CustomDimensions extends Plugin
         }
 
         return array(
-            'Live.getAllVisitorDetails'        => 'extendVisitorDetails',
             'Tracker.Cache.getSiteAttributes'  => 'addCustomDimensionsAttributes',
             'SitesManager.deleteSite.end'      => 'deleteCustomDimensionDefinitionsForSite',
             'AssetManager.getJavaScriptFiles'  => 'getJsFiles',
@@ -90,7 +89,8 @@ class CustomDimensions extends Plugin
             'Tracker.setTrackerCacheGeneral'   => 'setTrackerCacheGeneral',
             'Category.addSubcategories' => 'addSubcategories',
             'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics',
-            'Dimension.addDimensions' => 'addDimensions'
+            'Dimension.addDimensions' => 'addDimensions',
+            'Actions.getCustomActionDimensionFieldsAndJoins' => 'provideActionDimensionFields'
         );
     }
 
@@ -193,23 +193,6 @@ class CustomDimensions extends Plugin
     public function isTrackerPlugin()
     {
         return true;
-    }
-
-    public function extendVisitorDetails(&$visitor, $details)
-    {
-        if (empty($visitor['idSite'])) {
-            return;
-        }
-
-        $idSite = $visitor['idSite'];
-        $dimensions = $this->configuration->getCustomDimensionsHavingScope($idSite, self::SCOPE_VISIT);
-
-        $visit  = new Visitor($details);
-        $values = $visit->getCustomDimensionValues($dimensions);
-
-        foreach ($values as $field => $value) {
-            $visitor[$field] = $value;
-        }
     }
 
     public function addCustomDimensionsAttributes(&$content, $idSite)
@@ -334,6 +317,17 @@ class CustomDimensions extends Plugin
 
         foreach ($indexes as $index) {
             $fields[] = LogTable::buildCustomDimensionColumnName($index);
+        }
+    }
+
+    public function provideActionDimensionFields(&$fields, &$joins)
+    {
+        $logTable = new Dao\LogTable(CustomDimensions::SCOPE_ACTION);
+        $indices = $logTable->getInstalledIndexes();
+
+        foreach ($indices as $index) {
+            $field    = Dao\LogTable::buildCustomDimensionColumnName($index);
+            $fields[] = $field;
         }
     }
 
