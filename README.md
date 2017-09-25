@@ -9,5 +9,5 @@ by giving it a name and a scope (Action or Visit). Afterwards you will see a new
 for each configured dimension and be able to get its data. You can also export the report as a widget, segment by this
  dimenson, and more. For more information read the [Custom Dimensions user guide](https://piwik.org/docs/custom-dimensions/) or have a look in the FAQ.
 
-*Warning*: Depending on the database size of your Piwik this plugin may take a long time to install.
+**Warning**: Depending on the database size of your Piwik this plugin may take a long time to install.
 
