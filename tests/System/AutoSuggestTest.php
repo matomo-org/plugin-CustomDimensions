@@ -68,14 +68,14 @@ class AutoSuggestTest extends SystemTestCase
     {
         $autoSuggest = new AutoSuggest();
         $values = $autoSuggest->getMostUsedActionDimensionValues(array('index' => 1), $idSite = 1, $limit = 60);
-        $this->assertEquals(array('en', 'value3', 'value5 3', ''), $values);
+        $this->assertEquals(array('en', '', 'value3', 'value5 3'), $values);
     }
 
     public function test_getMostUsedActionDimensionValues_shouldApplyLimit()
     {
         $autoSuggest = new AutoSuggest();
         $values = $autoSuggest->getMostUsedActionDimensionValues(array('index' => 1), $idSite = 1, $limit = 2);
-        $this->assertEquals(array('en', 'value3'), $values);
+        $this->assertEquals(array('en', ''), $values);
     }
 
     public function test_getMostUsedActionDimensionValues_shouldApplyIdSite()
@@ -89,7 +89,7 @@ class AutoSuggestTest extends SystemTestCase
     {
         $autoSuggest = new AutoSuggest();
         $values = $autoSuggest->getMostUsedActionDimensionValues(array('index' => 3), $idSite = 1, $limit = 10);
-        $this->assertEquals(array('en_US', 'value5', '343', 'value5 5'), $values);
+        $this->assertEquals(array('en_US', '343', 'value5', 'value5 5'), $values);
     }
 
     public static function getOutputPrefix()
