@@ -33,7 +33,7 @@ class AutoSuggest
         $query = "SELECT $name, count($name) as countName FROM $table
                   WHERE idsite = ? and server_time > $startDate and $name is not null
                   GROUP by $name
-                  ORDER BY countName DESC LIMIT $maxValuesToReturn";
+                  ORDER BY countName DESC, $name ASC LIMIT $maxValuesToReturn";
         $rows = Db::get()->fetchAll($query, array($idSite));
 
         $values = array();
