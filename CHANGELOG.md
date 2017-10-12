@@ -1,5 +1,10 @@
 ## Changelog
 
+* 3.1.1
+  * Adds support for [Custom Reports](https://plugins.piwik.org/CustomReports)
+  * Better sorting for auto suggestion in segments
+* 3.1.0
+  * Makes plugin compatible with Piwik 3.1.0 (Adjustments to make custom dimensions visible in visitor log and profile)
 * 3.0.2
   * Make sure to unsanitize extraction patterns so HTML entities can be used
 * 3.0.1: 
