@@ -34,6 +34,8 @@
         "DimensionUpdated": "Aangepaste dimensie bijgewerkt",
         "ColumnUniqueActions": "Unieke acties",
         "ColumnAvgTimeOnDimension": "Gem. tijd op Dimension",
-        "CustomDimensionId": "CustomDimensions (Id %d)"
+        "CustomDimensionId": "Aangepaste dimensies (ID %d)",
+        "NoValue": "geen waarde",
+        "EmptyValue": "lege waarde"
     }
 }

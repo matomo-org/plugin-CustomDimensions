@@ -35,7 +35,6 @@
         "DimensionCreated": "Kreirana je dodatna dimenzija.",
         "DimensionUpdated": "Dodatna dimenzija je izmenjena.",
         "ColumnUniqueActions": "Jedinstvene akcije",
-        "ColumnAvgTimeOnDimension": "Prosečno vreme na dimenziji",
-        "CustomDimensionId": "Korisnička dimenzija (ID %d)"
+        "ColumnAvgTimeOnDimension": "Prosečno vreme na dimenziji"
     }
 }

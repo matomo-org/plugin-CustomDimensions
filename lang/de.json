@@ -8,7 +8,7 @@
         "ScopeDescriptionAction": "Benutzerdefinierte Dimensionen im Bereich 'Aktion' kann bei jeder Aktionsart (Seitenansicht, Download, Ereignis, usw.) gesandt werden.",
         "ScopeDescriptionActionMoreInfo": "Extraktionen können definiert werden, so dass der benutzerdefinierte Dimensionswert von der Seiten-URL, dem Seitentitel oder dem Seiten-URL-Parameter extrahiert wird.",
         "IncreaseAvailableCustomDimensionsTitle": "Die Anzahl von verfügbaren eigenen Dimensionen erhöhen",
-        "IncreaseAvailableCustomDimensionsTakesLong": "Eine neue benutzerdefinierte Dimension zu erstellen kann viel Zeit beanspruchen, abhängig von der Grösse Ihrer Datenbank. Deshalb ist dieser Vorgang nur über die Konsole mit Hilfe von Kommandozeilenbefehlen möglich.",
+        "IncreaseAvailableCustomDimensionsTakesLong": "Eine neue benutzerdefinierte Dimension zu erstellen kann viel Zeit beanspruchen, abhängig von der Größe Ihrer Datenbank. Deshalb ist dieser Vorgang nur über die Konsole mit Hilfe von Kommandozeilenbefehlen möglich.",
         "HowToCreateCustomDimension": "Um eine neue benutzerdefinierte Dimension zu erstellen, führen Sie den folgenden Befehl in Ihrer Piwik Installation aus:",
         "HowToManyCreateCustomDimensions": "Wenn Sie mehrere neue benutzerdefinierten Dimensionen gleichzeitig erstellen wollen, fügen Sie die Anzahl zu erstellender Dimensionen an. Weil alle Datenbankänderungen in einem Befehl ausgeführt werden, wird es nicht merklich mehr Zeit beanspruchen, mehrere benutzerdefinierte Dimensionen auf einmal zu erstellen.",
         "ExampleCreateCustomDimensions": "Um zum Beispiel %s neue benutzerdefinierte Dimensionen im Aktionenbereich zu erstellen, führen Sie den folgenden Befehl aus:",
@@ -36,6 +36,7 @@
         "DimensionUpdated": "Eigene Dimension aktualisiert",
         "ColumnUniqueActions": "Eindeutige Aktionen",
         "ColumnAvgTimeOnDimension": "Durchschn. Zeit Der Dimension",
-        "CustomDimensionId": "Benutzerdefinierte Dimensionen (Id %d)"
+        "NoValue": "kein Wert",
+        "EmptyValue": "leerer Wert"
     }
 }

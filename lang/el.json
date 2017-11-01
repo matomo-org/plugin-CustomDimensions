@@ -36,6 +36,8 @@
         "DimensionUpdated": "Ενημερώθηκε η Προσαρμοσμένη Διάσταση",
         "ColumnUniqueActions": "Μοναδικές Ενέργειες",
         "ColumnAvgTimeOnDimension": "Μέσος Χρόνος στη Διάσταση",
-        "CustomDimensionId": "CustomDimensions (Id %d)"
+        "CustomDimensionId": "Προσαρμοσμένες Διαστάσεις (Α\/Α %d)",
+        "NoValue": "χωρίς τιμή",
+        "EmptyValue": "κενή τιμή"
     }
 }

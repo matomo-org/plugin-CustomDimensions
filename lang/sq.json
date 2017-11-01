@@ -35,7 +35,6 @@
         "DimensionCreated": "Përmasa Vetjake u krijua",
         "DimensionUpdated": "Përmasa Vetjake u përditësua",
         "ColumnUniqueActions": "Veprime Unike",
-        "ColumnAvgTimeOnDimension": "Mesatare Kohëqëndrimi Në Përmasë",
-        "CustomDimensionId": "Përmasa Vetjake (Id %d)"
+        "ColumnAvgTimeOnDimension": "Mesatare Kohëqëndrimi Në Përmasë"
     }
 }

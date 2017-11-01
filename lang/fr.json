@@ -3,7 +3,7 @@
         "CustomDimensions": "Dimensions personnalisées",
         "CustomDimensionsIntro": "En créant des %1$sDimensions personnalisées%2$s vous pouvez récupérer n'importe quelle donnée personnalisé pour '%3$s'.",
         "CustomDimensionsIntroNext": "Piwik va créer un rapport pour chacune des dimensions personnalisées (incluant le taux de conversion pour chacun de vos objectifs), ainsi que vous laisser segmenter facilement vos usagers en se basant sur ces valeurs. Les dimensions personnalisées sont similaires aux %1$sVariables personnalisées%2$s mais il existe %3$squelques différences entre les dimensions et variables personnaliées%4$s.",
-        "ScopeDescriptionVisit": "Les dimensions personnalisées dans la portée \"visite\" peuvent être transmises avec n'importe quelle requête de suivit et stockées avec la visite.",
+        "ScopeDescriptionVisit": "Les dimensions personnalisées dans la portée \"visite\" peuvent être transmises avec n'importe quelle requête de suivi et stockées avec la visite.",
         "ScopeDescriptionVisitMoreInfo": "Si vous définissez différentes valeurs pour une dimension donnée lors d'une visite, la dernière valeur définie sera utilisée.",
         "ScopeDescriptionAction": "Les dimensions personnalisées dans la portée \"Action\" peuvent être transmises avec n'importe quelle action (vue de page, téléchargement, évènement, etc...).",
         "ScopeDescriptionActionMoreInfo": "Des extractions peuvent être définies de manière à ce que la valeur soit extraite depuis l'URL, le titre ou des paramètres d'URL de la page.",
@@ -16,9 +16,9 @@
         "HowToTrackManuallyViaJs": "Pour suivre une valeur depuis le traceur JavaScript appelez:",
         "HowToTrackManuallyViaJsDetails": "Pour plus d'informations consultez le %1$sguide du suiveur JavaScript pour les dimensions personnalisées%2$s",
         "HowToTrackManuallyViaPhp": "Pour suivre une valeur depuis le traceur PHP appelez :",
-        "HowToTrackManuallyViaHttp": "Pour suivre une valeur via l'API de suivit HTTP utilisez le paramètre de suivit \"dimension\" suivit de l'id de la dimension personnalisée :",
+        "HowToTrackManuallyViaHttp": "Pour suivre une valeur via l'API de suivi HTTP utilisez le paramètre de suivi \"dimension\" suivi de l'id de la dimension personnalisée :",
         "Extractions": "Extractions",
-        "ExtractionsHelp": "Ceci est optionnel. Une regex peut être utilisée pour extraire la valeur de cette dimension personnalisée depuis l'url ou le titre d'une page automatiquement. De cette manière la value de la dimension personnalisée n'a pas besoin d'être définie manuellement via l'API de suivit. Une valeur peut toujours être définie via l'API de suivit Piwik. Les valeurs de dimension définies manuellement via l'API ont toujours priorité sur celles extraites. Si plusieurs extractions sont définies, la première correspondance est utilisée.",
+        "ExtractionsHelp": "Ceci est optionnel. Une regex peut être utilisée pour extraire la valeur de cette dimension personnalisée depuis l'url ou le titre d'une page automatiquement. De cette manière la value de la dimension personnalisée n'a pas besoin d'être définie manuellement via l'API de suivi. Une valeur peut toujours être définie via l'API de suivi Piwik. Les valeurs de dimension définies manuellement via l'API ont toujours priorité sur celles extraites. Si plusieurs extractions sont définies, la première correspondance est utilisée.",
         "ExtractValue": "Extraire la valeur",
         "ExampleValue": "valeurDeDimension",
         "NoCustomDimensionConfigured": "Aucune dimension personnalisée n'est encore configurée, configurez-en une maintenant.",
@@ -36,6 +36,8 @@
         "DimensionUpdated": "Dimension personnalisée mise à jour",
         "ColumnUniqueActions": "Actions uniques",
         "ColumnAvgTimeOnDimension": "Tps. Moyen sur la dimension",
-        "CustomDimensionId": "Dimension Personnalisées (Id %d)"
+        "CustomDimensionId": "Dimensions personnalisées (Id %d)",
+        "NoValue": "aucune valeur",
+        "EmptyValue": "valeur vide"
     }
 }

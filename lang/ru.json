@@ -35,7 +35,6 @@
         "DimensionCreated": "Пользовательское измерение создано.",
         "DimensionUpdated": "Пользовательское измерение обновлено",
         "ColumnUniqueActions": "Уникальные действия",
-        "ColumnAvgTimeOnDimension": "Прибл. время на Измерение",
-        "CustomDimensionId": "ПользовательскиеИзмерения (Id %d)"
+        "ColumnAvgTimeOnDimension": "Прибл. время на Измерение"
     }
 }

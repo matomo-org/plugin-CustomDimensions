@@ -35,7 +35,6 @@
         "DimensionCreated": "Dimensión personalizada creada",
         "DimensionUpdated": "Dimensión personalizada actualizada",
         "ColumnUniqueActions": "Acciones únicas",
-        "ColumnAvgTimeOnDimension": "Promedio de tiempo para la dimensión",
-        "CustomDimensionId": "CustomDimensions (Id %d)"
+        "ColumnAvgTimeOnDimension": "Promedio de tiempo para la dimensión"
     }
 }

@@ -36,6 +36,8 @@
         "DimensionUpdated": "カスタムディメンションが更新されました",
         "ColumnUniqueActions": "ユニークアクション",
         "ColumnAvgTimeOnDimension": "ディメンションの平均時間",
-        "CustomDimensionId": "カスタムディメンション ( Id %d )"
+        "CustomDimensionId": "カスタムディメンション ( Id %d )",
+        "NoValue": "値なし",
+        "EmptyValue": "空の値"
     }
 }

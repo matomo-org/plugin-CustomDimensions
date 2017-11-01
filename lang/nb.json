@@ -35,7 +35,6 @@
         "DimensionCreated": "Tilpasset dimensjon opprettet",
         "DimensionUpdated": "Tilpasset dimensjon oppdatert",
         "ColumnUniqueActions": "Unike handlinger",
-        "ColumnAvgTimeOnDimension": "Gj.snitt. tid på dimensjon",
-        "CustomDimensionId": "CustomDimensions (Id %d)"
+        "ColumnAvgTimeOnDimension": "Gj.snitt. tid på dimensjon"
     }
 }

@@ -35,7 +35,6 @@
         "DimensionCreated": "Vlastní dimenze vytvořena",
         "DimensionUpdated": "Vlastní dimenze aktualizována",
         "ColumnUniqueActions": "Jedinečné akce",
-        "ColumnAvgTimeOnDimension": "Průměrný čas na dimenzi",
-        "CustomDimensionId": "CustomDimensions (Id %d)"
+        "ColumnAvgTimeOnDimension": "Průměrný čas na dimenzi"
     }
 }
