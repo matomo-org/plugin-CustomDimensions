@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\CustomDimensions\tests\Unit\Dimension;
 use Piwik\Plugins\CustomDimensions\Dimension\Scope;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group CustomDimensions
@@ -15,7 +16,7 @@ use Piwik\Plugins\CustomDimensions\Dimension\Scope;
  * @group Scope
  * @group Plugins
  */
-class ScopeTest extends \PHPUnit_Framework_TestCase
+class ScopeTest extends TestCase
 {
 
     /**

@@ -10,6 +10,7 @@ namespace Piwik\Plugins\CustomDimensions\tests\Unit\DataTable\Filter;
 use Piwik\DataTable;
 use Piwik\DataTable\Row;
 use Piwik\Plugins\CustomDimensions\Archiver;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group CustomDimensions
@@ -17,7 +18,7 @@ use Piwik\Plugins\CustomDimensions\Archiver;
  * @group AddSegmentMetadata
  * @group Plugins
  */
-class AddSegmentMetadataTest extends \PHPUnit_Framework_TestCase
+class AddSegmentMetadataTest extends TestCase
 {
     private $filter = 'Piwik\Plugins\CustomDimensions\DataTable\Filter\AddSegmentMetadata';
 

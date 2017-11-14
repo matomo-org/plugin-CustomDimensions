@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\CustomDimensions\tests\Unit\Dimension;
 use Piwik\Plugins\CustomDimensions\Dimension\CaseSensitive;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group CustomDimensions
@@ -15,7 +16,7 @@ use Piwik\Plugins\CustomDimensions\Dimension\CaseSensitive;
  * @group CaseSensitive
  * @group Plugins
  */
-class CaseSensitiveTest extends \PHPUnit_Framework_TestCase
+class CaseSensitiveTest extends TestCase
 {
 
     /**
