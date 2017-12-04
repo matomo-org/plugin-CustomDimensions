@@ -36,6 +36,7 @@
         "DimensionUpdated": "Eigene Dimension aktualisiert",
         "ColumnUniqueActions": "Eindeutige Aktionen",
         "ColumnAvgTimeOnDimension": "Durchschn. Zeit Der Dimension",
+        "CustomDimensionId": "Benutzerdefinierte Dimensionen (Id %d)",
         "NoValue": "kein Wert",
         "EmptyValue": "leerer Wert"
     }
