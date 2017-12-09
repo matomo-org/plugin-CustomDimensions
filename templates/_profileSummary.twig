@@ -5,7 +5,7 @@
             <p>
                 <span>{{ dimension.name }}: </span>
                 {%- for value in dimension.values -%}
-                    <strong title="{{ value.count }}x">{{ value.value }}</strong>{% if not loop.last %}, {% endif %}
+                    <strong title="{{ value.count }}x">{{ value.value|rawSafeDecoded }}</strong>{% if not loop.last %}, {% endif %}
                 {%- endfor -%}
             </p>
         {%- endfor -%}
