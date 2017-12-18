@@ -11,6 +11,7 @@ namespace Piwik\Plugins\CustomDimensions\tests\System;
 use Piwik\Plugin\Manager;
 use Piwik\Plugins\CustomDimensions\tests\Fixtures\TrackVisitsWithCustomDimensionsFixture;
 use Piwik\Tests\Framework\TestCase\SystemTestCase;
+use Piwik\Version;
 
 /**
  * @group CustomDimensions
@@ -137,22 +138,24 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        $apiToTest[] = array(
-            array('API.getReportMetadata'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('day')
-            )
-        );
+        if (version_compare(Version::VERSION, '3.2.0', '>=')) {
+            $apiToTest[] = array(
+                array('API.getReportMetadata'),
+                array(
+                    'idSite' => 1,
+                    'date' => self::$fixture->dateTime,
+                    'periods' => array('day')
+                )
+            );
 
-        $apiToTest[] = array(array('API.getSegmentsMetadata'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('year'),
-            )
-        );
+            $apiToTest[] = array(array('API.getSegmentsMetadata'),
+                array(
+                    'idSite'  => 1,
+                    'date'    => self::$fixture->dateTime,
+                    'periods' => array('year'),
+                )
+            );
+        }
 
         $apiToTest[] = array(array('API.getProcessedReport'),
                              array(
