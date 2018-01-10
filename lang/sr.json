@@ -2,7 +2,7 @@
     "CustomDimensions": {
         "CustomDimensions": "Dodatne dimenzije",
         "CustomDimensionsIntro": "Kreiranjem %1$sdodatnih dimenzija%2$s možete da prikupite bilo kakve podatke za '%3$s'.",
-        "CustomDimensionsIntroNext": "Piwik će kreirati izveštaj za svaku dodatnu dimenziju (uključujući i stepen konverzije za svaki od vaših ciljeva) i omogućiće vam laku segmentaciju vaših posetilaca na osnovu tih podataka. Dodatne dimenzije su slične %1$sdodatnim parametrima%2$s s tim što postoje određene %3$srazlike između dodatnih dimenzija i dodatnih parametara%4$s.",
+        "CustomDimensionsIntroNext": "Matomo će kreirati izveštaj za svaku dodatnu dimenziju (uključujući i stepen konverzije za svaki od vaših ciljeva) i omogućiće vam laku segmentaciju vaših posetilaca na osnovu tih podataka. Dodatne dimenzije su slične %1$sdodatnim parametrima%2$s s tim što postoje određene %3$srazlike između dodatnih dimenzija i dodatnih parametara%4$s.",
         "ScopeDescriptionVisit": "Dodatne dimenzije u domenu 'Posete' mogu biti poslate kroz bilo koji zahtev za praćenje i smeštene su u posetama.",
         "ScopeDescriptionVisitMoreInfo": "Ukoliko postavite različite vrednosti za datu dimenziju tokom trajanja posete, biće uzeta poslednja vrednost.",
         "ScopeDescriptionAction": "Dodatne dimenzije u domenu 'Akcija' mogu biti poslate kroz bilo koju akciju (prikaz stranice, preuzimanja, događaj itd.).",
@@ -18,7 +18,7 @@
         "HowToTrackManuallyViaPhp": "Ako želite da pratite vrednost u PHP trekeru, pozovite:",
         "HowToTrackManuallyViaHttp": "Ako želite da pratite vrednost preko HTTP treker API-ja, koristite parametar 'dimenzija' nakon čega ide identifikator dimenzije:",
         "Extractions": "Ekstrakcije",
-        "ExtractionsHelp": "Ovo je opciono. Možete koristiti regularni izraz kako biste automatski izvukli vrednost ove dodatne dimenzije iz URL-a ili naslova stranice. Na taj način vrednost nije potrebno ručno postaviti preko klijenta za praćenje. Vrednost je još uvek moguće ručno postaviti preko Piwik treker API-ja. Vrednosti postavljene ručno preko klijenata za praćenje uvek imaju prednost pri ekstrakciji. Ukoliko je definisano više ekstrakcija, koristi se prva koja je zadovoljena.",
+        "ExtractionsHelp": "Ovo je opciono. Možete koristiti regularni izraz kako biste automatski izvukli vrednost ove dodatne dimenzije iz URL-a ili naslova stranice. Na taj način vrednost nije potrebno ručno postaviti preko klijenta za praćenje. Vrednost je još uvek moguće ručno postaviti preko Matomo treker API-ja. Vrednosti postavljene ručno preko klijenata za praćenje uvek imaju prednost pri ekstrakciji. Ukoliko je definisano više ekstrakcija, koristi se prva koja je zadovoljena.",
         "ExtractValue": "Vrednost ekstrakcije",
         "ExampleValue": "Vrednost dimenzije",
         "NoCustomDimensionConfigured": "Trenutno nema definisanih dodatnih dimenzija. Podesite jednu sada.",
