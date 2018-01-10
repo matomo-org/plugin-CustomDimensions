@@ -36,6 +36,7 @@
         "DimensionUpdated": "Vlastní dimenze aktualizována",
         "ColumnUniqueActions": "Jedinečné akce",
         "ColumnAvgTimeOnDimension": "Průměrný čas na dimenzi",
+        "CustomDimensionId": "Vlastní dimenze (Id %d)",
         "NoValue": "bez hodnoty",
         "EmptyValue": "prázdná hodnota"
     }

@@ -35,6 +35,8 @@
         "DimensionCreated": "Den Anpassade Dimensionen skapades",
         "DimensionUpdated": "Den Anpassade Dimensionen uppdaterades",
         "ColumnUniqueActions": "Unika åtgärder",
-        "ColumnAvgTimeOnDimension": "Genomsnittlig tid på Dimension"
+        "ColumnAvgTimeOnDimension": "Genomsnittlig tid på Dimension",
+        "NoValue": "inget värde",
+        "EmptyValue": "tomt värde"
     }
 }
