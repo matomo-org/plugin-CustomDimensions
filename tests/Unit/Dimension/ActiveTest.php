@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\CustomDimensions\tests\Unit\Dimension;
 use Piwik\Plugins\CustomDimensions\Dimension\Active;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group CustomDimensions
@@ -15,7 +16,7 @@ use Piwik\Plugins\CustomDimensions\Dimension\Active;
  * @group Active
  * @group Plugins
  */
-class ActiveTest extends \PHPUnit_Framework_TestCase
+class ActiveTest extends TestCase
 {
 
     /**
