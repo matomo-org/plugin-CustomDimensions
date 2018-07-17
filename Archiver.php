@@ -178,10 +178,8 @@ class Archiver extends \Piwik\Plugin\Archiver
             )
         );
 
-        $where = "log_link_visit_action.server_time >= ?
-                  AND log_link_visit_action.server_time <= ?
-                  AND log_link_visit_action.idsite = ?
-                  AND log_link_visit_action.$valueField is not null";
+        $where  = $this->getLogAggregator()->getWhereStatement('log_link_visit_action', 'server_time');
+        $where .= " AND log_link_visit_action.$valueField is not null";
 
         if (!empty($additionalWhere)) {
             $where .= ' AND ' . $additionalWhere;
