@@ -19,7 +19,7 @@ class Controller extends \Piwik\Plugin\Controller
     {
         $idSite = Common::getRequestVar('idSite');
 
-        Piwik::checkUserHasAdminAccess($idSite);
+        Piwik::checkUserHasWriteAccess($idSite);
 
         return $this->renderTemplate('manage', array('title' => Piwik::translate('CustomDimensions_CustomDimensions')));
     }
