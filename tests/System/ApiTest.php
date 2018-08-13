@@ -185,16 +185,19 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        $apiToTest[] = array(array('Live.getLastVisitsDetails'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('year'),
-                'otherRequestParameters' => array(
-                    'hideColumns' => 'generationTimeMilliseconds,totalEcommerceRevenue,totalEcommerceConversions,totalEcommerceItems,totalAbandonedCarts,totalAbandonedCartsRevenue,totalAbandonedCartsItems'
+        if (version_compare(Version::VERSION, '3.6.0-b1', '>=')) {
+            $apiToTest[] = array(
+                array('Live.getLastVisitsDetails'),
+                array(
+                    'idSite'                 => 1,
+                    'date'                   => self::$fixture->dateTime,
+                    'periods'                => array('year'),
+                    'otherRequestParameters' => array(
+                        'hideColumns' => 'generationTimeMilliseconds,totalEcommerceRevenue,totalEcommerceConversions,totalEcommerceItems,totalAbandonedCarts,totalAbandonedCartsRevenue,totalAbandonedCartsItems'
+                    )
                 )
-            )
-        );
+            );
+        }
 
         return $apiToTest;
     }
