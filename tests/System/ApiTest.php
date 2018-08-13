@@ -167,7 +167,8 @@ class ApiTest extends SystemTestCase
                                      'apiAction' => 'getCustomDimension',
                                      'idDimension' => '3'
                                  ),
-                                 'testSuffix' => '_actionDimension'
+                                 'testSuffix' => '_actionDimension',
+                                 'xmlFieldsToRemove' => ['idsubdatatable']
                              )
         );
 
