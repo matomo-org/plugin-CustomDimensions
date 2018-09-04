@@ -85,18 +85,22 @@
 		<row>
 			
 			<segment>dimension3==en</segment>
+			
 		</row>
 		<row>
 			
 			<segment>dimension3==value3</segment>
+			
 		</row>
 		<row>
 			
 			<segment>dimension3==value5+3</segment>
+			
 		</row>
 		<row>
 			
 			<segment>dimension3==</segment>
+			
 		</row>
 	</reportMetadata>
 	<reportTotal>
