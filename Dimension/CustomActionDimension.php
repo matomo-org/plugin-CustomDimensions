@@ -16,10 +16,11 @@ use Piwik\Plugin\Dimension\ActionDimension;
  */
 class CustomActionDimension extends ActionDimension
 {
-    public function __construct($column, $name)
+    public function __construct($column, $name, $idDimension)
     {
         $this->columnName = $column;
         $this->actualName = $name;
+        $this->idDimension = $idDimension;
     }
 
     /**
@@ -33,6 +34,6 @@ class CustomActionDimension extends ActionDimension
 
     public function getId()
     {
-        return 'CustomDimensions.' . $this->columnName;
+        return 'CustomDimension.CustomDimension' . $this->idDimension;
     }
 }

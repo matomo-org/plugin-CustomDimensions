@@ -16,10 +16,11 @@ use Piwik\Plugin\Dimension\VisitDimension;
  */
 class CustomVisitDimension extends VisitDimension
 {
-    public function __construct($column, $name)
+    public function __construct($column, $name, $idDimension)
     {
         $this->columnName = $column;
         $this->actualName = $name;
+        $this->idDimension = $idDimension;
     }
 
     /**
@@ -33,7 +34,7 @@ class CustomVisitDimension extends VisitDimension
 
     public function getId()
     {
-        return 'CustomDimensions.' . $this->columnName;
+        return 'CustomDimension.CustomDimension' . $this->idDimension;
     }
 
 }

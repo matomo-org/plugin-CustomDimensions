@@ -250,7 +250,7 @@ class GetCustomDimension extends Report
 
         if ($this->scopeOfDimension === CustomDimensions::SCOPE_ACTION) {
             $this->categoryId = 'General_Actions';
-            $this->dimension = new CustomActionDimension($dimensionField, $this->name);
+            $this->dimension = new CustomActionDimension($dimensionField, $this->name, $dimension['idcustomdimension']);
             $this->metrics = array('nb_hits', 'nb_visits');
             $this->processedMetrics = array(
                 new AverageTimeOnDimension(),
@@ -260,7 +260,7 @@ class GetCustomDimension extends Report
             );
         } elseif ($this->scopeOfDimension === CustomDimensions::SCOPE_VISIT) {
             $this->categoryId = 'General_Visitors';
-            $this->dimension = new CustomVisitDimension($dimensionField, $this->name);
+            $this->dimension = new CustomVisitDimension($dimensionField, $this->name, $dimension['idcustomdimension']);
             $this->metrics = array('nb_visits', 'nb_actions');
             $this->processedMetrics = array(
                 new AverageTimeOnSite(),
