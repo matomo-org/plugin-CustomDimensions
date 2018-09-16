@@ -26,7 +26,7 @@ class Menu extends \Piwik\Plugin\Menu
         $default = $userPreferences->getDefaultWebsiteId();
         $idSite = Common::getRequestVar('idSite', $default, 'int');
 
-        if (Piwik::isUserHasAdminAccess($idSite)) {
+        if (Piwik::isUserHasWriteAccess($idSite)) {
             $menu->addMeasurableItem('CustomDimensions_CustomDimensions', $this->urlForAction('manage'), $orderId = 41);
         }
     }

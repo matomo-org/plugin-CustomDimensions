@@ -95,7 +95,7 @@ class ApiTest extends IntegrationTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasWriteAccess
      */
     public function test_configureNewDimension_shouldFailWhenNotHavingAdminPermissions()
     {
@@ -174,7 +174,7 @@ class ApiTest extends IntegrationTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasWriteAccess
      */
     public function test_configureExistingCustomDimension_shouldFailWhenNotHavingAdminPermissions()
     {
@@ -184,7 +184,7 @@ class ApiTest extends IntegrationTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasWriteAccess
      */
     public function test_getConfiguredCustomDimensions_shouldFailWhenNotHavingAdminPermissions()
     {
@@ -194,7 +194,7 @@ class ApiTest extends IntegrationTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasAdminAccess
+     * @expectedExceptionMessage checkUserHasWriteAccess
      */
     public function test_getAvailableScopes_shouldFailWhenNotHavingAdminPermissions()
     {
@@ -204,7 +204,7 @@ class ApiTest extends IntegrationTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasSomeAdminAccess
+     * @expectedExceptionMessage checkUserHasSomeWriteAccess
      */
     public function test_getAvailableExtractionDimensions_shouldFailWhenNotHavingAdminPermissions()
     {
