@@ -27,6 +27,7 @@ use Piwik\Plugins\CustomDimensions\Dimension\CustomVisitDimension;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
 use Piwik\Report\ReportWidgetFactory;
+use Piwik\Tests\Unit\CommonTest;
 use Piwik\Widget\WidgetsList;
 
 /**
@@ -51,26 +52,18 @@ class GetCustomDimension extends Report
         $this->order = 100;
         $this->actionToLoadSubTables = $this->action;
 
-        if (!empty($this->parameters['idDimension'])) {
-            $dimension = $this->getDimensionForParam((int) $this->parameters['idDimension']);
-            if (!empty($dimension)) {
-                $this->initThisReportFromDimension($dimension);
-            }
-        }
-    }
-
-    private function getDimensionForParam($idDimension)
-    {
         $idSite = Common::getRequestVar('idSite', 0, 'int');
+        $idDimension = Common::getRequestVar('idDimension', 0, 'int');
+        print $idDimension."\n";
+
         if ($idDimension > 0 && $idSite > 0) {
             $dimensions = $this->getActiveDimensionsForSite($idSite);
             foreach ($dimensions as $dimension) {
                 if (((int) $dimension['idcustomdimension']) === $idDimension) {
-                    return $dimension;
+                    $this->initThisReportFromDimension($dimension);
                 }
             }
         }
-        return null;
     }
 
     /**
