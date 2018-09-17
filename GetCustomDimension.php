@@ -54,7 +54,6 @@ class GetCustomDimension extends Report
 
         $idSite = Common::getRequestVar('idSite', 0, 'int');
         $idDimension = Common::getRequestVar('idDimension', 0, 'int');
-        print $idDimension."\n";
 
         if ($idDimension > 0 && $idSite > 0) {
             $dimensions = $this->getActiveDimensionsForSite($idSite);
