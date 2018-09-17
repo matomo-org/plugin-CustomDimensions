@@ -90,6 +90,7 @@ class CustomDimensions extends Plugin
             'Category.addSubcategories' => 'addSubcategories',
             'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics',
             'Dimension.addDimensions' => 'addDimensions',
+            'Report.addReports' => 'addReports',
             'Actions.getCustomActionDimensionFieldsAndJoins' => 'provideActionDimensionFields'
         );
     }
@@ -106,6 +107,21 @@ class CustomDimensions extends Plugin
             $custom = new CustomDimension();
             $custom->initCustomDimension($dimension);
             $instances[] = $custom;
+        }
+    }
+
+    public function addReports(&$instances)
+    {
+        $idSite = Common::getRequestVar('idSite', 0, 'int');
+        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        foreach ($dimensions as $dimension) {
+            if (!$dimension['active']) {
+                continue;
+            }
+
+            $report = new GetCustomDimension();
+            $report->initThisReportFromDimension($dimension);
+            $instances[] = $report;
         }
     }
 

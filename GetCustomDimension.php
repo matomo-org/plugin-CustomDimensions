@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 
-namespace Piwik\Plugins\CustomDimensions\Reports;
+namespace Piwik\Plugins\CustomDimensions;
 
 use Piwik\Common;
 use Piwik\DataTable;
@@ -24,11 +24,9 @@ use Piwik\Plugins\CoreVisualizations\Visualizations\HtmlTable;
 use Piwik\Plugins\CustomDimensions\Columns\Metrics\AverageTimeOnDimension;
 use Piwik\Plugins\CustomDimensions\Dimension\CustomActionDimension;
 use Piwik\Plugins\CustomDimensions\Dimension\CustomVisitDimension;
-use Piwik\Plugins\CustomDimensions\CustomDimensions;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
 use Piwik\Report\ReportWidgetFactory;
-use Piwik\View;
 use Piwik\Widget\WidgetsList;
 
 /**
@@ -46,22 +44,33 @@ class GetCustomDimension extends Report
     {
         parent::init();
 
+        $this->module = 'CustomDimensions';
+        $this->action = 'getCustomDimension';
         $this->categoryId = 'CustomDimensions_CustomDimensions';
         $this->name  = Piwik::translate($this->categoryId);
         $this->order = 100;
         $this->actionToLoadSubTables = $this->action;
 
-        $idDimension = Common::getRequestVar('idDimension', 0, 'int');
-        $idSite      = Common::getRequestVar('idSite', 0, 'int');
+        if (!empty($this->parameters['idDimension'])) {
+            $dimension = $this->getDimensionForParam((int) $this->parameters['idDimension']);
+            if (!empty($dimension)) {
+                $this->initThisReportFromDimension($dimension);
+            }
+        }
+    }
 
+    private function getDimensionForParam($idDimension)
+    {
+        $idSite = Common::getRequestVar('idSite', 0, 'int');
         if ($idDimension > 0 && $idSite > 0) {
             $dimensions = $this->getActiveDimensionsForSite($idSite);
             foreach ($dimensions as $dimension) {
                 if (((int) $dimension['idcustomdimension']) === $idDimension) {
-                    $this->initThisReportFromDimension($dimension);
+                    return $dimension;
                 }
             }
         }
+        return null;
     }
 
     /**
@@ -239,7 +248,7 @@ class GetCustomDimension extends Report
         }
     }
 
-    private function initThisReportFromDimension($dimension)
+    public function initThisReportFromDimension($dimension)
     {
         $this->name = $dimension['name'];
         $this->menuTitle = $this->name;

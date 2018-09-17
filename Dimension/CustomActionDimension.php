@@ -9,6 +9,7 @@
 namespace Piwik\Plugins\CustomDimensions\Dimension;
 
 use Piwik\Plugin\Dimension\ActionDimension;
+use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
 
 /**
  * We do not put this one in columns directory of the plugin since we do not want to have it automatically detected.
@@ -20,7 +21,9 @@ class CustomActionDimension extends ActionDimension
     {
         $this->columnName = $column;
         $this->actualName = $name;
+        $this->nameSingular = $name;
         $this->idDimension = $idDimension;
+        $this->segmentName = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($idDimension);
     }
 
     /**
