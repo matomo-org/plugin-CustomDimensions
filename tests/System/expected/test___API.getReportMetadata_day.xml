@@ -1067,6 +1067,130 @@
 	</row>
 	<row>
 		<category>Visitors</category>
+		<subcategory>customdimension1</subcategory>
+		<name>MyName1</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>1</idDimension>
+		</parameters>
+		<dimension>MyName1</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=1&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=1&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--1</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension1</subcategory>
+		<name>MyName1</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>1</idDimension>
+		</parameters>
+		<dimension>MyName1</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=1&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=1&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--1</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension1</subcategory>
+		<name>MyName1</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>1</idDimension>
+		</parameters>
+		<dimension>MyName1</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=1&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=1&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--1</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension1</subcategory>
+		<name>MyName1</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>1</idDimension>
+		</parameters>
+		<dimension>MyName1</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=1&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=1&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--1</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
 		<subcategory>customdimension2</subcategory>
 		<name>MyName2</name>
 		<module>CustomDimensions</module>
@@ -1095,6 +1219,254 @@
 		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
 		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
 		<uniqueId>CustomDimensions_getCustomDimension_idDimension--2</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension2</subcategory>
+		<name>MyName2</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>2</idDimension>
+		</parameters>
+		<dimension>MyName2</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--2</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension2</subcategory>
+		<name>MyName2</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>2</idDimension>
+		</parameters>
+		<dimension>MyName2</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--2</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension2</subcategory>
+		<name>MyName2</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>2</idDimension>
+		</parameters>
+		<dimension>MyName2</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--2</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension2</subcategory>
+		<name>MyName2</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>2</idDimension>
+		</parameters>
+		<dimension>MyName2</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=2&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--2</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension6</subcategory>
+		<name>MyName6</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>6</idDimension>
+		</parameters>
+		<dimension>MyName6</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=6&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=6&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--6</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension6</subcategory>
+		<name>MyName6</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>6</idDimension>
+		</parameters>
+		<dimension>MyName6</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=6&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=6&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--6</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension6</subcategory>
+		<name>MyName6</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>6</idDimension>
+		</parameters>
+		<dimension>MyName6</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=6&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=6&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--6</uniqueId>
+	</row>
+	<row>
+		<category>Visitors</category>
+		<subcategory>customdimension6</subcategory>
+		<name>MyName6</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>6</idDimension>
+		</parameters>
+		<dimension>MyName6</dimension>
+		<metrics>
+			<nb_visits>Visits</nb_visits>
+			<nb_actions>Actions</nb_actions>
+		</metrics>
+		<metricsDocumentation>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<nb_actions>The number of actions performed by your visitors. Actions can be page views, internal site searches, downloads or outlinks.</nb_actions>
+			<avg_time_on_site>The average duration of a visit.</avg_time_on_site>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<nb_actions_per_visit>The average number of actions (page views, site searches, downloads or outlinks) that were performed during the visits.</nb_actions_per_visit>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_site>Avg. Time on Website</avg_time_on_site>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<nb_actions_per_visit>Actions per Visit</nb_actions_per_visit>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=6&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=6&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--6</uniqueId>
 	</row>
 	<row>
 		<category>Visitors</category>
@@ -1728,6 +2100,262 @@
 		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
 		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
 		<uniqueId>CustomDimensions_getCustomDimension_idDimension--3</uniqueId>
+	</row>
+	<row>
+		<category>Actions</category>
+		<subcategory>customdimension3</subcategory>
+		<name>MyName3</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>3</idDimension>
+		</parameters>
+		<dimension>MyName3</dimension>
+		<metrics>
+			<nb_hits>Actions</nb_hits>
+			<nb_visits>Unique Actions</nb_visits>
+		</metrics>
+		<metricsDocumentation>
+			<nb_hits>The number of times this page was visited.</nb_hits>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
+			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<exit_rate>Exit rate</exit_rate>
+			<avg_time_generation>Avg. generation time</avg_time_generation>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--3</uniqueId>
+	</row>
+	<row>
+		<category>Actions</category>
+		<subcategory>customdimension3</subcategory>
+		<name>MyName3</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>3</idDimension>
+		</parameters>
+		<dimension>MyName3</dimension>
+		<metrics>
+			<nb_hits>Actions</nb_hits>
+			<nb_visits>Unique Actions</nb_visits>
+		</metrics>
+		<metricsDocumentation>
+			<nb_hits>The number of times this page was visited.</nb_hits>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
+			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<exit_rate>Exit rate</exit_rate>
+			<avg_time_generation>Avg. generation time</avg_time_generation>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--3</uniqueId>
+	</row>
+	<row>
+		<category>Actions</category>
+		<subcategory>customdimension3</subcategory>
+		<name>MyName3</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>3</idDimension>
+		</parameters>
+		<dimension>MyName3</dimension>
+		<metrics>
+			<nb_hits>Actions</nb_hits>
+			<nb_visits>Unique Actions</nb_visits>
+		</metrics>
+		<metricsDocumentation>
+			<nb_hits>The number of times this page was visited.</nb_hits>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
+			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<exit_rate>Exit rate</exit_rate>
+			<avg_time_generation>Avg. generation time</avg_time_generation>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--3</uniqueId>
+	</row>
+	<row>
+		<category>Actions</category>
+		<subcategory>customdimension3</subcategory>
+		<name>MyName3</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>3</idDimension>
+		</parameters>
+		<dimension>MyName3</dimension>
+		<metrics>
+			<nb_hits>Actions</nb_hits>
+			<nb_visits>Unique Actions</nb_visits>
+		</metrics>
+		<metricsDocumentation>
+			<nb_hits>The number of times this page was visited.</nb_hits>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
+			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<exit_rate>Exit rate</exit_rate>
+			<avg_time_generation>Avg. generation time</avg_time_generation>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=3&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--3</uniqueId>
+	</row>
+	<row>
+		<category>Actions</category>
+		<subcategory>customdimension5</subcategory>
+		<name>MyName5</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>5</idDimension>
+		</parameters>
+		<dimension>MyName5</dimension>
+		<metrics>
+			<nb_hits>Actions</nb_hits>
+			<nb_visits>Unique Actions</nb_visits>
+		</metrics>
+		<metricsDocumentation>
+			<nb_hits>The number of times this page was visited.</nb_hits>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
+			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<exit_rate>Exit rate</exit_rate>
+			<avg_time_generation>Avg. generation time</avg_time_generation>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=5&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=5&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--5</uniqueId>
+	</row>
+	<row>
+		<category>Actions</category>
+		<subcategory>customdimension5</subcategory>
+		<name>MyName5</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>5</idDimension>
+		</parameters>
+		<dimension>MyName5</dimension>
+		<metrics>
+			<nb_hits>Actions</nb_hits>
+			<nb_visits>Unique Actions</nb_visits>
+		</metrics>
+		<metricsDocumentation>
+			<nb_hits>The number of times this page was visited.</nb_hits>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
+			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<exit_rate>Exit rate</exit_rate>
+			<avg_time_generation>Avg. generation time</avg_time_generation>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=5&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=5&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--5</uniqueId>
+	</row>
+	<row>
+		<category>Actions</category>
+		<subcategory>customdimension5</subcategory>
+		<name>MyName5</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>5</idDimension>
+		</parameters>
+		<dimension>MyName5</dimension>
+		<metrics>
+			<nb_hits>Actions</nb_hits>
+			<nb_visits>Unique Actions</nb_visits>
+		</metrics>
+		<metricsDocumentation>
+			<nb_hits>The number of times this page was visited.</nb_hits>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
+			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<exit_rate>Exit rate</exit_rate>
+			<avg_time_generation>Avg. generation time</avg_time_generation>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=5&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=5&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--5</uniqueId>
+	</row>
+	<row>
+		<category>Actions</category>
+		<subcategory>customdimension5</subcategory>
+		<name>MyName5</name>
+		<module>CustomDimensions</module>
+		<action>getCustomDimension</action>
+		<parameters>
+			<idDimension>5</idDimension>
+		</parameters>
+		<dimension>MyName5</dimension>
+		<metrics>
+			<nb_hits>Actions</nb_hits>
+			<nb_visits>Unique Actions</nb_visits>
+		</metrics>
+		<metricsDocumentation>
+			<nb_hits>The number of times this page was visited.</nb_hits>
+			<nb_visits>If a visitor comes to your website for the first time or if they visit a page more than 30 minutes after their last page view, this will be recorded as a new visit.</nb_visits>
+			<bounce_rate>The percentage of visits that only had a single pageview. This means, that the visitor left the website directly from the entrance page.</bounce_rate>
+			<exit_rate>The percentage of visits that left the website after viewing this page.</exit_rate>
+			<avg_time_generation>The average time it took to generate the page. This metric includes the time it took the server to generate the web page, plus the time it took for the visitor to download the response from the server. A lower 'Avg. generation time' means a faster website for your visitors!</avg_time_generation>
+		</metricsDocumentation>
+		<processedMetrics>
+			<avg_time_on_dimension>Avg. Time On Dimension</avg_time_on_dimension>
+			<bounce_rate>Bounce Rate</bounce_rate>
+			<exit_rate>Exit rate</exit_rate>
+			<avg_time_generation>Avg. generation time</avg_time_generation>
+		</processedMetrics>
+		<actionToLoadSubTables>getCustomDimension</actionToLoadSubTables>
+		<imageGraphUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=5&amp;period=day&amp;date=2013-01-23</imageGraphUrl>
+		<imageGraphEvolutionUrl>index.php?module=API&amp;method=ImageGraph.get&amp;idSite=1&amp;apiModule=CustomDimensions&amp;apiAction=getCustomDimension&amp;idDimension=5&amp;period=day&amp;date=2012-12-25,2013-01-23</imageGraphEvolutionUrl>
+		<uniqueId>CustomDimensions_getCustomDimension_idDimension--5</uniqueId>
 	</row>
 	<row>
 		<category>Actions</category>
