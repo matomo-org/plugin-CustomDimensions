@@ -9,6 +9,7 @@
 namespace Piwik\Plugins\CustomDimensions\Dimension;
 
 use Piwik\Plugin\Dimension\VisitDimension;
+use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
 
 /**
  * We do not put this one in columns directory of the plugin since we do not want to have it automatically detected.
@@ -16,10 +17,13 @@ use Piwik\Plugin\Dimension\VisitDimension;
  */
 class CustomVisitDimension extends VisitDimension
 {
-    public function __construct($column, $name)
+    public function __construct($column, $name, $idDimension)
     {
         $this->columnName = $column;
         $this->actualName = $name;
+        $this->nameSingular = $name;
+        $this->idDimension = $idDimension;
+        $this->segmentName = CustomDimensionsRequestProcessor::buildCustomDimensionTrackingApiName($idDimension);
     }
 
     /**
@@ -33,7 +37,7 @@ class CustomVisitDimension extends VisitDimension
 
     public function getId()
     {
-        return 'CustomDimensions.' . $this->columnName;
+        return 'CustomDimension.CustomDimension' . $this->idDimension;
     }
 
 }
