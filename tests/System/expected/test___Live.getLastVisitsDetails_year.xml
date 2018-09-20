@@ -7,19 +7,6 @@
 		
 		<actionDetails>
 			<row>
-				<type>goal</type>
-				<goalName>Has sub_en</goalName>
-				<goalId>1</goalId>
-				<revenue>0</revenue>
-				<goalPageId>4</goalPageId>
-				
-				<url>http://example.com/sub_en/page?param=en_US</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
-				
-				<dimension3 />
-				<dimension5 />
-			</row>
-			<row>
 				<type>action</type>
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<pageTitle>Fourth page view</pageTitle>
@@ -36,6 +23,19 @@
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
 				<dimension5>en_US</dimension5>
+			</row>
+			<row>
+				<type>goal</type>
+				<goalName>Has sub_en</goalName>
+				<goalId>1</goalId>
+				<revenue>0</revenue>
+				<goalPageId>4</goalPageId>
+				
+				<url>http://example.com/sub_en/page?param=en_US</url>
+				<icon>plugins/Morpheus/images/goal.png</icon>
+				
+				<dimension3 />
+				<dimension5 />
 			</row>
 		</actionDetails>
 		<goalConversions>1</goalConversions>
@@ -139,19 +139,6 @@
 		
 		<actionDetails>
 			<row>
-				<type>goal</type>
-				<goalName>Has sub_en</goalName>
-				<goalId>1</goalId>
-				<revenue>0</revenue>
-				<goalPageId>6</goalPageId>
-				
-				<url>http://example.com/sub_en/page?param=en_US</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
-				
-				<dimension3 />
-				<dimension5 />
-			</row>
-			<row>
 				<type>action</type>
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<pageTitle>Sixth page view</pageTitle>
@@ -168,6 +155,19 @@
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
 				<dimension5>value5 5</dimension5>
+			</row>
+			<row>
+				<type>goal</type>
+				<goalName>Has sub_en</goalName>
+				<goalId>1</goalId>
+				<revenue>0</revenue>
+				<goalPageId>6</goalPageId>
+				
+				<url>http://example.com/sub_en/page?param=en_US</url>
+				<icon>plugins/Morpheus/images/goal.png</icon>
+				
+				<dimension3 />
+				<dimension5 />
 			</row>
 		</actionDetails>
 		<goalConversions>1</goalConversions>
@@ -271,19 +271,6 @@
 		
 		<actionDetails>
 			<row>
-				<type>goal</type>
-				<goalName>Has sub_en</goalName>
-				<goalId>1</goalId>
-				<revenue>0</revenue>
-				<goalPageId>5</goalPageId>
-				
-				<url>http://example.com/sub_en/page?param=en_US</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
-				
-				<dimension3 />
-				<dimension5 />
-			</row>
-			<row>
 				<type>action</type>
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<pageTitle>Fifth page view</pageTitle>
@@ -298,6 +285,19 @@
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
 				<dimension5>en_US</dimension5>
+			</row>
+			<row>
+				<type>goal</type>
+				<goalName>Has sub_en</goalName>
+				<goalId>1</goalId>
+				<revenue>0</revenue>
+				<goalPageId>5</goalPageId>
+				
+				<url>http://example.com/sub_en/page?param=en_US</url>
+				<icon>plugins/Morpheus/images/goal.png</icon>
+				
+				<dimension3 />
+				<dimension5 />
 			</row>
 		</actionDetails>
 		<goalConversions>1</goalConversions>
@@ -421,19 +421,6 @@
 				<dimension5>value5</dimension5>
 			</row>
 			<row>
-				<type>goal</type>
-				<goalName>Has sub_en</goalName>
-				<goalId>1</goalId>
-				<revenue>0</revenue>
-				<goalPageId>2</goalPageId>
-				
-				<url>http://example.com/sub_en/page?test=343&amp;param=23</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
-				
-				<dimension3 />
-				<dimension5 />
-			</row>
-			<row>
 				<type>action</type>
 				<url>http://example.com/sub_en/page?test=343&amp;param=23</url>
 				<pageTitle>Second page view</pageTitle>
@@ -452,6 +439,19 @@
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
 				<dimension5>343</dimension5>
+			</row>
+			<row>
+				<type>goal</type>
+				<goalName>Has sub_en</goalName>
+				<goalId>1</goalId>
+				<revenue>0</revenue>
+				<goalPageId>2</goalPageId>
+				
+				<url>http://example.com/sub_en/page?test=343&amp;param=23</url>
+				<icon>plugins/Morpheus/images/goal.png</icon>
+				
+				<dimension3 />
+				<dimension5 />
 			</row>
 			<row>
 				<type>action</type>
@@ -573,19 +573,6 @@
 		
 		<actionDetails>
 			<row>
-				<type>goal</type>
-				<goalName>Has sub_en</goalName>
-				<goalId>1</goalId>
-				<revenue>0</revenue>
-				<goalPageId>9</goalPageId>
-				
-				<url>http://example.com/sub_en/page</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
-				
-				<dimension3 />
-				<dimension5 />
-			</row>
-			<row>
 				<type>action</type>
 				<url>http://example.com/sub_en/page</url>
 				<pageTitle>Viewing homepage</pageTitle>
@@ -598,6 +585,19 @@
 				<icon />
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
+				<dimension3 />
+				<dimension5 />
+			</row>
+			<row>
+				<type>goal</type>
+				<goalName>Has sub_en</goalName>
+				<goalId>1</goalId>
+				<revenue>0</revenue>
+				<goalPageId>9</goalPageId>
+				
+				<url>http://example.com/sub_en/page</url>
+				<icon>plugins/Morpheus/images/goal.png</icon>
+				
 				<dimension3 />
 				<dimension5 />
 			</row>
