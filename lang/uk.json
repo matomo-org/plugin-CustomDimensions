@@ -35,6 +35,9 @@
         "DimensionCreated": "Користувацьке вимірювання створено.",
         "DimensionUpdated": "Користувацьке вимірювання оновлено",
         "ColumnUniqueActions": "Унікальні дії",
-        "ColumnAvgTimeOnDimension": "Прибл. час на Вимірювання"
+        "ColumnAvgTimeOnDimension": "Прибл. час на Вимірювання",
+        "CustomDimensionId": "Користувацькі вимірювання (Id %d)",
+        "NoValue": "немає значення",
+        "EmptyValue": "порожнє значення"
     }
 }

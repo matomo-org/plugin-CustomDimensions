@@ -36,6 +36,7 @@
         "DimensionUpdated": "Den Anpassade Dimensionen uppdaterades",
         "ColumnUniqueActions": "Unika åtgärder",
         "ColumnAvgTimeOnDimension": "Genomsnittlig tid på Dimension",
+        "CustomDimensionId": "Anpassade Dimensioner (Id %d)",
         "NoValue": "inget värde",
         "EmptyValue": "tomt värde"
     }
