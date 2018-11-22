@@ -42,7 +42,7 @@ describe("CustomDimensions", function () {
         var rowToMatch = 'td.label:contains(' + labelToClick + '):first';
 
         page.mouseMove('table.dataTable tbody ' + rowToMatch);
-        page.mouseMove(rowToMatch + ' a.'+ nameOfRowActionToTrigger + ':visible'); // necessary to get popover to display
+        page.mouseMove(rowToMatch + ' a.'+ nameOfRowActionToTrigger + ':visible', 1000); // necessary to get popover to display
         page.click(rowToMatch + ' a.' + nameOfRowActionToTrigger + ':visible', 1000);
     }
 
