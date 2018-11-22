@@ -43,7 +43,8 @@ describe("CustomDimensions", function () {
 
         page.mouseMove('table.dataTable tbody ' + rowToMatch);
         page.mouseMove(rowToMatch + ' a.'+ nameOfRowActionToTrigger + ':visible'); // necessary to get popover to display
-        page.click(rowToMatch + ' a.' + nameOfRowActionToTrigger + ':visible', 1000);
+        page.mouseMove(rowToMatch + ' a.'+ nameOfRowActionToTrigger + ':visible'); // necessary to get popover to display
+        page.click(rowToMatch + ' a.' + nameOfRowActionToTrigger + ':visible', 1500);
     }
 
     before(function () {
