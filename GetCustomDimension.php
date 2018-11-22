@@ -166,38 +166,6 @@ class GetCustomDimension extends Report
         return $metrics;
     }
 
-    public function configureWidgets(WidgetsList $widgetsList, ReportWidgetFactory $factory)
-    {
-        $idSite = Common::getRequestVar('idSite', 0, 'int');
-
-        if ($idSite < 1) {
-            return;
-        }
-
-        $dimensions = $this->getActiveDimensionsForSite($idSite);
-
-        foreach ($dimensions as $dimension) {
-            if (!$dimension['active']) {
-                continue;
-            }
-
-            if ($dimension['scope'] === CustomDimensions::SCOPE_ACTION) {
-                $this->categoryId = 'General_Actions';
-                $this->subcategoryId = 'customdimension' . $dimension['idcustomdimension'];
-            } elseif ($dimension['scope'] === CustomDimensions::SCOPE_VISIT) {
-                $this->categoryId = 'General_Visitors';
-                $this->subcategoryId = 'customdimension' . $dimension['idcustomdimension'];
-            } else {
-                continue;
-            }
-
-            $widget = $factory->createWidget()->setName($dimension['name']);
-            $widget->setParameters(array('idDimension' => $dimension['idcustomdimension']));
-
-            $widgetsList->addWidgetConfig($widget);
-        }
-    }
-
     public function configureReportMetadata(&$availableReports, $infos)
     {
         if (!$this->isEnabled()) {
