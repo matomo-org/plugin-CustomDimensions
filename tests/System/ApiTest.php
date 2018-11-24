@@ -138,24 +138,25 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        if (version_compare(Version::VERSION, '3.2.0', '>=')) {
-            $apiToTest[] = array(
-                array('API.getReportMetadata'),
-                array(
-                    'idSite' => 1,
-                    'date' => self::$fixture->dateTime,
-                    'periods' => array('day')
-                )
-            );
+        $apiToTest[] = array(
+            array('API.getReportMetadata'),
+            array(
+                'idSite' => 1,
+                'date' => self::$fixture->dateTime,
+                'periods' => array('day')
+            )
+        );
 
-            $apiToTest[] = array(array('API.getSegmentsMetadata'),
-                array(
-                    'idSite'  => 1,
-                    'date'    => self::$fixture->dateTime,
-                    'periods' => array('year'),
-                )
-            );
-        }
+        $apiToTest[] = array(array('API.getSegmentsMetadata'),
+            array(
+                'idSite'  => 1,
+                'date'    => self::$fixture->dateTime,
+                'periods' => array('year'),
+                'otherRequestParameters' => [
+                    'hideColumns' => 'acceptedValues' // hide accepted values as they might change
+                ]
+            )
+        );
 
         $apiToTest[] = array(array('API.getProcessedReport'),
                              array(
@@ -186,7 +187,7 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        if (version_compare(Version::VERSION, '3.6.0-b1', '>=')) {
+        if (version_compare(Version::VERSION, '3.6.1', '>=')) {
             $apiToTest[] = array(
                 array('Live.getLastVisitsDetails'),
                 array(
