@@ -29,28 +29,24 @@
 		<category>Visitors</category>
 		<name>Events</name>
 		<segment>events</segment>
-
 	</row>
 	<row>
 		<type>metric</type>
 		<category>Visitors</category>
 		<name>Local time - minute (Start of visit)</name>
 		<segment>visitLocalMinute</segment>
-
 	</row>
 	<row>
 		<type>metric</type>
 		<category>Visitors</category>
 		<name>Number of Interactions</name>
 		<segment>interactions</segment>
-
 	</row>
 	<row>
 		<type>metric</type>
 		<category>Visitors</category>
 		<name>Number of Internal Searches</name>
 		<segment>searches</segment>
-
 	</row>
 	<row>
 		<type>metric</type>
@@ -69,7 +65,6 @@
 		<category>Visitors</category>
 		<name>Visitor IP</name>
 		<segment>visitIp</segment>
-
 		<permission>1</permission>
 	</row>
 	<row>
@@ -77,14 +72,12 @@
 		<category>Visitors</category>
 		<name>Browser</name>
 		<segment>browserCode</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Browser engine</name>
 		<segment>browserEngine</segment>
-
 		<suggestedValuesCallback>\DeviceDetector\Parser\Client\Browser\Engine::getAvailableEngines</suggestedValuesCallback>
 	</row>
 	<row>
@@ -92,35 +85,30 @@
 		<category>Visitors</category>
 		<name>Browser version</name>
 		<segment>browserVersion</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Device brand</name>
 		<segment>deviceBrand</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Device model</name>
 		<segment>deviceModel</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Device type</name>
 		<segment>deviceType</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Local time - hour (Start of visit)</name>
 		<segment>visitLocalHour</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
@@ -145,119 +133,102 @@
 		<category>Visitors</category>
 		<name>Operating system</name>
 		<segment>operatingSystemCode</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Operating system version</name>
 		<segment>operatingSystemVersion</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Resolution</name>
 		<segment>resolution</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - date (End of visit)</name>
 		<segment>visitEndServerDate</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - day of month (End of visit)</name>
 		<segment>visitEndServerDayOfMonth</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - day of week (End of visit)</name>
 		<segment>visitEndServerDayOfWeek</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - day of year (End of visit)</name>
 		<segment>visitEndServerDayOfYear</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - hour (End of visit)</name>
 		<segment>visitServerHour</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - hour (Start of visit)</name>
 		<segment>visitStartServerHour</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - minute (End of visit)</name>
 		<segment>visitEndServerMinute</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - minute (Start of visit)</name>
 		<segment>visitStartServerMinute</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - month (End of visit)</name>
 		<segment>visitEndServerMonth</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - quarter (End of visit)</name>
 		<segment>visitEndServerQuarter</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - second (End of visit)</name>
 		<segment>visitEndServerSecond</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - week of year (End of visit)</name>
 		<segment>visitEndServerWeekOfYear</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Server time - year (End of visit)</name>
 		<segment>visitEndServerYear</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>User ID</name>
 		<segment>userId</segment>
-
 		<permission>1</permission>
 	</row>
 	<row>
@@ -265,14 +236,12 @@
 		<category>Visitors</category>
 		<name>Visit Ecommerce status at the end of the visit</name>
 		<segment>visitEcommerceStatus</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Visit ID</name>
 		<segment>visitId</segment>
-
 		<permission>1</permission>
 	</row>
 	<row>
@@ -280,28 +249,24 @@
 		<category>Visitors</category>
 		<name>Visit converted a specific Goal Id</name>
 		<segment>visitConvertedGoalId</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Visit converted at least one Goal</name>
 		<segment>visitConverted</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Visit type</name>
 		<segment>visitorType</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Visitor ID</name>
 		<segment>visitorId</segment>
-
 		<permission>1</permission>
 	</row>
 	<row>
@@ -309,49 +274,42 @@
 		<category>Visit Location</category>
 		<name>City</name>
 		<segment>city</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visit Location</category>
 		<name>Continent</name>
 		<segment>continentCode</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visit Location</category>
 		<name>Country</name>
 		<segment>countryCode</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visit Location</category>
 		<name>Language</name>
 		<segment>languageCode</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visit Location</category>
 		<name>Latitude</name>
 		<segment>latitude</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visit Location</category>
 		<name>Longitude</name>
 		<segment>longitude</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visit Location</category>
 		<name>Region</name>
 		<segment>regionCode</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
@@ -530,14 +488,12 @@
 		<category>Actions</category>
 		<name>Bandwidth</name>
 		<segment>bandwidth</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Actions</category>
 		<name>Action Type</name>
 		<segment>actionType</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
@@ -562,28 +518,24 @@
 		<category>Actions</category>
 		<name>Content Interaction</name>
 		<segment>contentInteraction</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Actions</category>
 		<name>Content Name</name>
 		<segment>contentName</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Actions</category>
 		<name>Content Piece</name>
 		<segment>contentPiece</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Actions</category>
 		<name>Content Target</name>
 		<segment>contentTarget</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
@@ -644,7 +596,6 @@
 		<category>Actions</category>
 		<name>Page URL</name>
 		<segment>pageUrl</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
@@ -657,7 +608,6 @@
 		<category>Actions</category>
 		<name>Server time - minute</name>
 		<segment>actionServerMinute</segment>
-
 	</row>
 	<row>
 		<type>metric</type>
@@ -688,34 +638,29 @@
 		<category>Events</category>
 		<name>Event URL</name>
 		<segment>eventUrl</segment>
-
+	</row>
+	<row>
+		<type>dimension</type>
+		<category>Referrers</category>
+		<name>Channel Type</name>
+		<segment>referrerType</segment>
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Referrers</category>
 		<name>Keyword</name>
 		<segment>referrerKeyword</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Referrers</category>
 		<name>Referrer Name</name>
 		<segment>referrerName</segment>
-
-	</row>
-	<row>
-		<type>dimension</type>
-		<category>Referrers</category>
-		<name>Referrer Type</name>
-		<segment>referrerType</segment>
-
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Referrers</category>
 		<name>Referrer URL</name>
 		<segment>referrerUrl</segment>
-
 	</row>
 </result>
