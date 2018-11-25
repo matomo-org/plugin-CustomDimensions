@@ -8,6 +8,7 @@
  */
 namespace Piwik\Plugins\CustomDimensions;
 
+use Piwik\API\Request;
 use Piwik\Category\Subcategory;
 use Piwik\Common;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
@@ -48,7 +49,7 @@ class CustomDimensions extends Plugin
             return;
         }
 
-        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        $dimensions = $this->getCustomDimensions($idSite);
 
         foreach ($dimensions as $dimension) {
             if (!$dimension['active']) {
@@ -98,7 +99,7 @@ class CustomDimensions extends Plugin
     public function addDimensions(&$instances)
     {
         $idSite = Common::getRequestVar('idSite', 0, 'int');
-        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        $dimensions = $this->getCustomDimensions($idSite);
         foreach ($dimensions as $dimension) {
             if (!$dimension['active']) {
                 continue;
@@ -113,7 +114,7 @@ class CustomDimensions extends Plugin
     public function addReports(&$instances)
     {
         $idSite = Common::getRequestVar('idSite', 0, 'int');
-        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        $dimensions = $this->getCustomDimensions($idSite);
         foreach ($dimensions as $dimension) {
             if (!$dimension['active']) {
                 continue;
@@ -138,7 +139,7 @@ class CustomDimensions extends Plugin
             }
         }
 
-        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        $dimensions = $this->getCustomDimensions($idSite);
         $order = 70;
 
         foreach ($dimensions as $dimension) {
@@ -211,9 +212,23 @@ class CustomDimensions extends Plugin
         return true;
     }
 
+    private function getCustomDimensions($idSite)
+    {
+        $cache = \Piwik\Cache::getTransientCache();
+        $key = 'ConfiguredCustomDimensions_' . (int) $idSite;
+        if ($cache->contains($key)) {
+            $dimensions = $cache->fetch($key);
+        } else {
+            $dimensions = Request::processRequest('CustomDimensions.getConfiguredCustomDimensions', ['idSite' => $idSite], []);
+            $cache->save($key, $dimensions);
+        }
+
+        return $dimensions;
+    }
+
     public function addCustomDimensionsAttributes(&$content, $idSite)
     {
-        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
+        $dimensions = $this->getCustomDimensions($idSite);
         $active = array();
 
         foreach ($dimensions as $dimension) {
