@@ -8,6 +8,7 @@
 
 namespace Piwik\Plugins\CustomDimensions;
 
+use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\DataTable;
 use Piwik\Metrics;
@@ -24,11 +25,7 @@ use Piwik\Plugins\CoreVisualizations\Visualizations\HtmlTable;
 use Piwik\Plugins\CustomDimensions\Columns\Metrics\AverageTimeOnDimension;
 use Piwik\Plugins\CustomDimensions\Dimension\CustomActionDimension;
 use Piwik\Plugins\CustomDimensions\Dimension\CustomVisitDimension;
-use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
-use Piwik\Report\ReportWidgetFactory;
-use Piwik\Tests\Unit\CommonTest;
-use Piwik\Widget\WidgetsList;
 
 /**
  * This class defines a new report.
@@ -184,8 +181,7 @@ class GetCustomDimension extends Report
         if (empty($this->dimensionCache[$idSite])) {
             $this->dimensionCache[$idSite] = array();
 
-            $configuration = new Configuration();
-            $dimensions    = $configuration->getCustomDimensionsForSite($idSite);
+            $dimensions = Request::processRequest('CustomDimensions.getConfiguredCustomDimensions', ['idSite' => $idSite], []);
 
             foreach ($dimensions as $index => $dimension) {
                 if ($dimension['active']) {
