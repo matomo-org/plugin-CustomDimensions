@@ -218,9 +218,11 @@ class CustomDimensions extends Plugin
         $key = 'ConfiguredCustomDimensions_' . (int) $idSite;
         if ($cache->contains($key)) {
             $dimensions = $cache->fetch($key);
-        } else {
+        } else if ($idSite) {
             $dimensions = Request::processRequest('CustomDimensions.getConfiguredCustomDimensions', ['idSite' => $idSite], []);
             $cache->save($key, $dimensions);
+        } else {
+            $dimensions = array();
         }
 
         return $dimensions;
