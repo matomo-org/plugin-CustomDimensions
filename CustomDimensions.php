@@ -228,7 +228,7 @@ class CustomDimensions extends Plugin
 
     public function addCustomDimensionsAttributes(&$content, $idSite)
     {
-        $dimensions = $this->getCustomDimensions($idSite);
+        $dimensions = $this->configuration->getCustomDimensionsForSite($idSite);
         $active = array();
 
         foreach ($dimensions as $dimension) {
