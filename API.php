@@ -191,7 +191,7 @@ class API extends \Piwik\Plugin\API
      */
     public function getConfiguredCustomDimensions($idSite)
     {
-        Piwik::checkUserHasWriteAccess($idSite);
+        Piwik::checkUserHasViewAccess($idSite);
 
         $configs = $this->getConfiguration()->getCustomDimensionsForSite($idSite);
 
