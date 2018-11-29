@@ -1,5 +1,8 @@
 ## Changelog
 
+* 3.1.4
+  * Fix flattened reports may define wrong segment selector
+  * Internal changes
 * 3.1.1
   * Adds support for [Custom Reports](https://plugins.piwik.org/CustomReports)
   * Better sorting for auto suggestion in segments
