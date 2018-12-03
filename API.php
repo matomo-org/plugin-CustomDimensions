@@ -228,7 +228,7 @@ class API extends \Piwik\Plugin\API
      */
     public function getAvailableScopes($idSite)
     {
-        Piwik::checkUserHasWriteAccess($idSite);
+        Piwik::checkUserHasViewAccess($idSite);
 
         $scopes = array();
         foreach (CustomDimensions::getPublicScopes() as $scope) {
