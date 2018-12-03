@@ -184,21 +184,21 @@ class ApiTest extends IntegrationTestCase
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasWriteAccess
+     * @expectedExceptionMessage checkUserHasViewAccess
      */
     public function test_getConfiguredCustomDimensions_shouldFailWhenNotHavingAdminPermissions()
     {
-        $this->setUser();
+        $this->setAnonymousUser();
         $this->api->getConfiguredCustomDimensions($idSite = 1);
     }
 
     /**
      * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasWriteAccess
+     * @expectedExceptionMessage checkUserHasViewAccess
      */
     public function test_getAvailableScopes_shouldFailWhenNotHavingAdminPermissions()
     {
-        $this->setUser();
+        $this->setAnonymousUser();
         $this->api->getAvailableScopes($idSite = 1);
     }
 
