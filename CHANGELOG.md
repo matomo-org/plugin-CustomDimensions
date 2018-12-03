@@ -1,5 +1,7 @@
 ## Changelog
 
+* 3.1.5
+  * Fix a permission check
 * 3.1.4
   * Fix flattened reports may define wrong segment selector
   * Internal changes
