@@ -18,6 +18,8 @@
 				<generationTimeMilliseconds>45</generationTimeMilliseconds>
 				<generationTime>0.05s</generationTime>
 				<interactionPosition>1</interactionPosition>
+				<title>Fourth page view</title>
+				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
 				<icon />
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
@@ -33,6 +35,8 @@
 				
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
+				<title>Goal conversion</title>
+				<subtitle>Has sub_en</subtitle>
 				
 				<dimension3 />
 				<dimension5 />
@@ -150,6 +154,8 @@
 				<generationTimeMilliseconds>1029</generationTimeMilliseconds>
 				<generationTime>1.03s</generationTime>
 				<interactionPosition>1</interactionPosition>
+				<title>Sixth page view</title>
+				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
 				<icon />
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
@@ -165,6 +171,8 @@
 				
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
+				<title>Goal conversion</title>
+				<subtitle>Has sub_en</subtitle>
 				
 				<dimension3 />
 				<dimension5 />
@@ -280,6 +288,8 @@
 				<pageId>5</pageId>
 				<bandwidth />
 				<interactionPosition>1</interactionPosition>
+				<title>Fifth page view</title>
+				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
 				<icon />
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
@@ -295,6 +305,8 @@
 				
 				<url>http://example.com/sub_en/page?param=en_US</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
+				<title>Goal conversion</title>
+				<subtitle>Has sub_en</subtitle>
 				
 				<dimension3 />
 				<dimension5 />
@@ -414,6 +426,8 @@
 				<generationTimeMilliseconds>420</generationTimeMilliseconds>
 				<generationTime>0.42s</generationTime>
 				<interactionPosition>1</interactionPosition>
+				<title>Viewing homepage</title>
+				<subtitle>http://example.com/</subtitle>
 				<icon />
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
@@ -434,6 +448,8 @@
 				<generationTimeMilliseconds>123</generationTimeMilliseconds>
 				<generationTime>0.12s</generationTime>
 				<interactionPosition>2</interactionPosition>
+				<title>Second page view</title>
+				<subtitle>http://example.com/sub_en/page?test=343&amp;param=23</subtitle>
 				<icon />
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
@@ -449,6 +465,8 @@
 				
 				<url>http://example.com/sub_en/page?test=343&amp;param=23</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
+				<title>Goal conversion</title>
+				<subtitle>Has sub_en</subtitle>
 				
 				<dimension3 />
 				<dimension5 />
@@ -465,6 +483,8 @@
 				<generationTimeMilliseconds>344</generationTimeMilliseconds>
 				<generationTime>0.34s</generationTime>
 				<interactionPosition>3</interactionPosition>
+				<title>Third page view</title>
+				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
 				<icon />
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
@@ -582,6 +602,8 @@
 				<pageId>9</pageId>
 				<bandwidth />
 				<interactionPosition>1</interactionPosition>
+				<title>Viewing homepage</title>
+				<subtitle>http://example.com/sub_en/page</subtitle>
 				<icon />
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
@@ -597,6 +619,8 @@
 				
 				<url>http://example.com/sub_en/page</url>
 				<icon>plugins/Morpheus/images/goal.png</icon>
+				<title>Goal conversion</title>
+				<subtitle>Has sub_en</subtitle>
 				
 				<dimension3 />
 				<dimension5 />
