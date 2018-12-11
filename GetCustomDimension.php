@@ -172,7 +172,7 @@ class GetCustomDimension extends Report
         $idSite = $this->getIdSiteFromInfos($infos);
 
         if (isset($idSite)) {
-            $this->addReportMetadataForEachDimension($availableReports, $idSite);
+            $availableReports[] = $this->buildReportMetadata();
         }
     }
 
@@ -191,17 +191,6 @@ class GetCustomDimension extends Report
         }
 
         return $this->dimensionCache[$idSite];
-    }
-
-    protected function addReportMetadataForEachDimension(&$availableReports, $idSite)
-    {
-        $dimensions = $this->getActiveDimensionsForSite($idSite);
-
-        foreach ($dimensions as $dimension) {
-            if ($this->initThisReportFromDimension($dimension)) {
-                $availableReports[] = $this->buildReportMetadata();
-            }
-        }
     }
 
     public function initThisReportFromDimension($dimension)
