@@ -2032,7 +2032,7 @@
 		<module>Referrers</module>
 		<action>getCampaigns</action>
 		<dimension>Campaign</dimension>
-		<documentation>This report shows which campaigns led visitors to your website. &lt;br /&gt; For more information about tracking campaigns, read the &lt;a href=&quot;https://matomo.org/docs/tracking-campaigns/&quot; rel=&quot;noreferrer noopener&quot; target=&quot;_blank&quot;&gt;campaigns documentation on piwik.org&lt;/a&gt;</documentation>
+		<documentation>This report shows which campaigns led visitors to your website. &lt;br /&gt; For more information about tracking campaigns, read the &lt;a href=&quot;https://matomo.org/docs/tracking-campaigns/&quot; rel=&quot;noreferrer noopener&quot; target=&quot;_blank&quot;&gt;campaigns documentation on matomo.org&lt;/a&gt;</documentation>
 		<dimensions>
 			<Referrers_Campaign>Campaign</Referrers_Campaign>
 			<Referrers_Keyword>Keyword</Referrers_Keyword>
