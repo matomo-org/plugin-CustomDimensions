@@ -1,5 +1,7 @@
 ## Changelog
 
+* 3.1.6
+  * Fix custom dimensions in scheduled reports may be repeated
 * 3.1.5
   * Fix a permission check
 * 3.1.4
