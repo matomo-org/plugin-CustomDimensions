@@ -99,7 +99,7 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
             $value = Common::getRequestVar($field, '', 'string', $params);
             $hasSentEmptyString = isset($params[$field]) && $params[$field] === '';
             if ($value !== '' || $hasSentEmptyString) {
-                $values[$dbField] = $value;
+                $values[$dbField] = Common::mb_substr($value, 0, 255);
                 continue;
             }
 
@@ -120,7 +120,7 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
                         continue;
                     }
 
-                    $values[$dbField] = $value;
+                    $values[$dbField] = Common::mb_substr($value, 0, 255);
                     break;
                 }
             }
