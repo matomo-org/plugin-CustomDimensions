@@ -52,6 +52,10 @@ class ApiTest extends SystemTestCase
 
         $hideColumns = 'sum_time_generation,sum_bandwidth,nb_hits_with_bandwidth,min_bandwidth,max_bandwidth,avg_bandwidth,nb_total_overall_bandwidth,nb_total_pageview_bandwidth,nb_total_download_bandwidth';
 
+        if (version_compare(Version::VERSION, '3.8.0-b3', '<')) {
+            $hideColumns .= ',CustomDimension_CustomDimension3,segment';
+        }
+
         $apiToTest = array();
 
         foreach ($tests as $test) {
@@ -138,25 +142,27 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        $apiToTest[] = array(
-            array('API.getReportMetadata'),
-            array(
-                'idSite' => 1,
-                'date' => self::$fixture->dateTime,
-                'periods' => array('day')
-            )
-        );
+        if (version_compare(Version::VERSION, '3.8.0', '>=')) {
+            $apiToTest[] = array(
+                array('API.getReportMetadata'),
+                array(
+                    'idSite'  => 1,
+                    'date'    => self::$fixture->dateTime,
+                    'periods' => array('day')
+                )
+            );
 
-        $apiToTest[] = array(array('API.getSegmentsMetadata'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('year'),
-                'otherRequestParameters' => [
-                    'hideColumns' => 'acceptedValues' // hide accepted values as they might change
-                ]
-            )
-        );
+            $apiToTest[] = array(array('API.getSegmentsMetadata'),
+                array(
+                    'idSite'  => 1,
+                    'date'    => self::$fixture->dateTime,
+                    'periods' => array('year'),
+                    'otherRequestParameters' => [
+                        'hideColumns' => 'acceptedValues' // hide accepted values as they might change
+                    ]
+                )
+            );
+        }
 
         $apiToTest[] = array(array('API.getProcessedReport'),
                              array(
