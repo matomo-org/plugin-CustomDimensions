@@ -20,7 +20,7 @@
 				<interactionPosition>1</interactionPosition>
 				<title>Fourth page view</title>
 				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
-				<icon />
+				<icon>plugins/Morpheus/images/action.svg</icon>
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
@@ -34,7 +34,7 @@
 				<goalPageId>4</goalPageId>
 				
 				<url>http://example.com/sub_en/page?param=en_US</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
+				<icon>plugins/Morpheus/images/goal.svg</icon>
 				<title>Goal conversion</title>
 				<subtitle>Has sub_en</subtitle>
 				
@@ -60,7 +60,7 @@
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
-		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
+		<visitConvertedIcon>plugins/Morpheus/images/goal.svg</visitConvertedIcon>
 		<visitCount>1</visitCount>
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />
@@ -156,7 +156,7 @@
 				<interactionPosition>1</interactionPosition>
 				<title>Sixth page view</title>
 				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
-				<icon />
+				<icon>plugins/Morpheus/images/action.svg</icon>
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
@@ -170,7 +170,7 @@
 				<goalPageId>6</goalPageId>
 				
 				<url>http://example.com/sub_en/page?param=en_US</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
+				<icon>plugins/Morpheus/images/goal.svg</icon>
 				<title>Goal conversion</title>
 				<subtitle>Has sub_en</subtitle>
 				
@@ -196,7 +196,7 @@
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
-		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
+		<visitConvertedIcon>plugins/Morpheus/images/goal.svg</visitConvertedIcon>
 		<visitCount>1</visitCount>
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />
@@ -290,7 +290,7 @@
 				<interactionPosition>1</interactionPosition>
 				<title>Fifth page view</title>
 				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
-				<icon />
+				<icon>plugins/Morpheus/images/action.svg</icon>
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
@@ -304,7 +304,7 @@
 				<goalPageId>5</goalPageId>
 				
 				<url>http://example.com/sub_en/page?param=en_US</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
+				<icon>plugins/Morpheus/images/goal.svg</icon>
 				<title>Goal conversion</title>
 				<subtitle>Has sub_en</subtitle>
 				
@@ -330,7 +330,7 @@
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
-		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
+		<visitConvertedIcon>plugins/Morpheus/images/goal.svg</visitConvertedIcon>
 		<visitCount>1</visitCount>
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />
@@ -428,7 +428,7 @@
 				<interactionPosition>1</interactionPosition>
 				<title>Viewing homepage</title>
 				<subtitle>http://example.com/</subtitle>
-				<icon />
+				<icon>plugins/Morpheus/images/action.svg</icon>
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>value3</dimension3>
@@ -450,7 +450,7 @@
 				<interactionPosition>2</interactionPosition>
 				<title>Second page view</title>
 				<subtitle>http://example.com/sub_en/page?test=343&amp;param=23</subtitle>
-				<icon />
+				<icon>plugins/Morpheus/images/action.svg</icon>
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>en</dimension3>
@@ -464,7 +464,7 @@
 				<goalPageId>2</goalPageId>
 				
 				<url>http://example.com/sub_en/page?test=343&amp;param=23</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
+				<icon>plugins/Morpheus/images/goal.svg</icon>
 				<title>Goal conversion</title>
 				<subtitle>Has sub_en</subtitle>
 				
@@ -485,7 +485,7 @@
 				<interactionPosition>3</interactionPosition>
 				<title>Third page view</title>
 				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
-				<icon />
+				<icon>plugins/Morpheus/images/action.svg</icon>
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3>value5 3</dimension3>
@@ -510,7 +510,7 @@
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
-		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
+		<visitConvertedIcon>plugins/Morpheus/images/goal.svg</visitConvertedIcon>
 		<visitCount>1</visitCount>
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />
@@ -604,7 +604,7 @@
 				<interactionPosition>1</interactionPosition>
 				<title>Viewing homepage</title>
 				<subtitle>http://example.com/sub_en/page</subtitle>
-				<icon />
+				<icon>plugins/Morpheus/images/action.svg</icon>
 				
 				<bandwidth_pretty>0 M</bandwidth_pretty>
 				<dimension3 />
@@ -618,7 +618,7 @@
 				<goalPageId>9</goalPageId>
 				
 				<url>http://example.com/sub_en/page</url>
-				<icon>plugins/Morpheus/images/goal.png</icon>
+				<icon>plugins/Morpheus/images/goal.svg</icon>
 				<title>Goal conversion</title>
 				<subtitle>Has sub_en</subtitle>
 				
@@ -644,7 +644,7 @@
 		<visitorType>new</visitorType>
 		<visitorTypeIcon />
 		<visitConverted>1</visitConverted>
-		<visitConvertedIcon>plugins/Morpheus/images/goal.png</visitConvertedIcon>
+		<visitConvertedIcon>plugins/Morpheus/images/goal.svg</visitConvertedIcon>
 		<visitCount>1</visitCount>
 		<visitEcommerceStatus>none</visitEcommerceStatus>
 		<visitEcommerceStatusIcon />

@@ -193,6 +193,9 @@ class ApiTest extends SystemTestCase
             if (version_compare(Version::VERSION, '3.8.0-b3', '<')) {
                 $additionalColumns = ',title,subtitle';
             }
+            if (version_compare(Version::VERSION, '3.9.0-b1', '<')) {
+                $additionalColumns .= ',icon,visitConvertedIcon';
+            }
 
             $apiToTest[] = array(
                 array('Live.getLastVisitsDetails'),
@@ -201,7 +204,7 @@ class ApiTest extends SystemTestCase
                     'date'                   => self::$fixture->dateTime,
                     'periods'                => array('year'),
                     'otherRequestParameters' => array(
-                        'hideColumns' => 'generationTimeMilliseconds,totalEcommerceRevenue,totalEcommerceConversions,totalEcommerceItems,totalAbandonedCarts,icon,visitConvertedIcon,totalAbandonedCartsRevenue,totalAbandonedCartsItems'.$additionalColumns
+                        'hideColumns' => 'generationTimeMilliseconds,totalEcommerceRevenue,totalEcommerceConversions,totalEcommerceItems,totalAbandonedCarts,totalAbandonedCartsRevenue,totalAbandonedCartsItems'.$additionalColumns
                     )
                 )
             );
