@@ -201,7 +201,7 @@ class ApiTest extends SystemTestCase
                     'date'                   => self::$fixture->dateTime,
                     'periods'                => array('year'),
                     'otherRequestParameters' => array(
-                        'hideColumns' => 'generationTimeMilliseconds,totalEcommerceRevenue,totalEcommerceConversions,totalEcommerceItems,totalAbandonedCarts,totalAbandonedCartsRevenue,totalAbandonedCartsItems'.$additionalColumns
+                        'hideColumns' => 'generationTimeMilliseconds,totalEcommerceRevenue,totalEcommerceConversions,totalEcommerceItems,totalAbandonedCarts,icon,visitConvertedIcon,totalAbandonedCartsRevenue,totalAbandonedCartsItems'.$additionalColumns
                     )
                 )
             );
