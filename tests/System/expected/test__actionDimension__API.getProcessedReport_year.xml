@@ -118,10 +118,5 @@
 		<bounce_count>4</bounce_count>
 		<exit_nb_visits>5</exit_nb_visits>
 		<sum_daily_nb_uniq_visitors>7</sum_daily_nb_uniq_visitors>
-		<avg_bandwidth>0</avg_bandwidth>
-		<avg_time_on_dimension>103</avg_time_on_dimension>
-		<bounce_rate>57%</bounce_rate>
-		<exit_rate>71%</exit_rate>
-		<avg_time_generation>0.392</avg_time_generation>
 	</reportTotal>
 </result>

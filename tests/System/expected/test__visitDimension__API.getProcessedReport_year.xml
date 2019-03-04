@@ -95,9 +95,6 @@
 		<revenue>0</revenue>
 		<sum_daily_nb_uniq_visitors>3</sum_daily_nb_uniq_visitors>
 		<sum_daily_nb_users>0</sum_daily_nb_users>
-		<avg_bandwidth>0</avg_bandwidth>
-		<avg_time_on_site>241</avg_time_on_site>
-		<bounce_rate>67%</bounce_rate>
 		<nb_actions_per_visit>1.7</nb_actions_per_visit>
 	</reportTotal>
 </result>
