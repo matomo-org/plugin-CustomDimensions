@@ -359,11 +359,18 @@ class ConfigurationTest extends IntegrationTestCase
         $dimensions = $this->config->getCustomDimensionsHavingIndex('action', $index);
         $this->assertCount(2, $dimensions);
 
-        $this->config->deleteConfigurationsForIndex($index);
+        $this->config->deleteConfigurationsForIndex($index, 'visit');
 
         // verify deleted
         $dimensions = $this->config->getCustomDimensionsHavingIndex('visit', $index);
         $this->assertSame(array(), $dimensions);
+
+        $dimensions = $this->config->getCustomDimensionsHavingIndex('action', $index);
+        $this->assertCount(2, $dimensions);
+
+        $this->config->deleteConfigurationsForIndex($index, 'action');
+
+        // verify now also deleted
         $dimensions = $this->config->getCustomDimensionsHavingIndex('action', $index);
         $this->assertSame(array(), $dimensions);
 

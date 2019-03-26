@@ -100,9 +100,9 @@ class Configuration
         $this->getDb()->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE idsite = ?", $idSite);
     }
 
-    public function deleteConfigurationsForIndex($index)
+    public function deleteConfigurationsForIndex($index, $scope)
     {
-        $this->getDb()->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE `index` = ?", $index);
+        $this->getDb()->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE `index` = ? and `scope` = ?", $index, $scope);
     }
 
     private function fetchAllDimensionsEnriched($sql, $bind)
