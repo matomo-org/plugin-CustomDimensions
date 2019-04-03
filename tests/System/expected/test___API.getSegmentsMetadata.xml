@@ -107,6 +107,13 @@
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
+		<name>Fingerprint</name>
+		<segment>fingerprint</segment>
+		<permission>1</permission>
+	</row>
+	<row>
+		<type>dimension</type>
+		<category>Visitors</category>
 		<name>Local time - hour (Start of visit)</name>
 		<segment>visitLocalHour</segment>
 	</row>
