@@ -10,7 +10,6 @@ namespace Piwik\Plugins\CustomDimensions;
 
 use Piwik\API\Request;
 use Piwik\Common;
-use Piwik\DataTable;
 use Piwik\Metrics;
 use Piwik\Piwik;
 use Piwik\Plugin\Report;
@@ -20,7 +19,6 @@ use Piwik\Plugins\Actions\Columns\Metrics\ExitRate;
 use Piwik\Plugins\CoreHome\Columns\Metrics\ActionsPerVisit;
 use Piwik\Plugins\CoreHome\Columns\Metrics\AverageTimeOnSite;
 use Piwik\Plugins\CoreHome\Columns\Metrics\BounceRate;
-use Piwik\Plugins\CoreHome\Columns\UserId;
 use Piwik\Plugins\CoreVisualizations\Visualizations\HtmlTable;
 use Piwik\Plugins\CustomDimensions\Columns\Metrics\AverageTimeOnDimension;
 use Piwik\Plugins\CustomDimensions\Dimension\CustomActionDimension;
