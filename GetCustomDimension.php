@@ -10,6 +10,7 @@ namespace Piwik\Plugins\CustomDimensions;
 
 use Piwik\API\Request;
 use Piwik\Common;
+use Piwik\DataTable;
 use Piwik\Metrics;
 use Piwik\Piwik;
 use Piwik\Plugin\Report;
@@ -19,6 +20,7 @@ use Piwik\Plugins\Actions\Columns\Metrics\ExitRate;
 use Piwik\Plugins\CoreHome\Columns\Metrics\ActionsPerVisit;
 use Piwik\Plugins\CoreHome\Columns\Metrics\AverageTimeOnSite;
 use Piwik\Plugins\CoreHome\Columns\Metrics\BounceRate;
+use Piwik\Plugins\CoreHome\Columns\UserId;
 use Piwik\Plugins\CoreVisualizations\Visualizations\HtmlTable;
 use Piwik\Plugins\CustomDimensions\Columns\Metrics\AverageTimeOnDimension;
 use Piwik\Plugins\CustomDimensions\Dimension\CustomActionDimension;
@@ -103,6 +105,19 @@ class GetCustomDimension extends Report
             $view->config->columns_to_display = array(
                 'label', 'nb_visits', 'nb_uniq_visitors', 'nb_users', 'nb_actions', 'nb_actions_per_visit', 'avg_time_on_site', 'bounce_rate'
             );
+
+            if ($view->isViewDataTableId(HtmlTable::ID)) {
+                $view->config->filters[] = function (DataTable $table) use ($view) {
+                    $userId = new UserId();
+                    if (!$userId->hasDataTableUsers($table)) {
+                        $view->config->removeColumnToDisplay('nb_users');
+                    }
+
+                    if ($table->getRowsCount() > 0 && !$table->getFirstRow()->hasColumn('nb_uniq_visitors')) {
+                        $view->config->removeColumnToDisplay('nb_uniq_visitors');
+                    }
+                };
+            }
         } elseif ($this->scopeOfDimension === CustomDimensions::SCOPE_ACTION) {
             $view->config->columns_to_display = array(
                 'label', 'nb_hits', 'nb_visits', 'bounce_rate', 'avg_time_on_dimension', 'exit_rate', 'avg_time_generation'
