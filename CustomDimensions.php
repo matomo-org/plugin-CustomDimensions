@@ -43,7 +43,7 @@ class CustomDimensions extends Plugin
 
     public function getReportsWithGoalMetrics(&$reportsWithGoals)
     {
-        $idSite = Common::getRequestVar('idSite', 0, 'int');
+        $idSite = $this->getIdSite();
 
         if ($idSite < 1) {
             return;
@@ -98,7 +98,12 @@ class CustomDimensions extends Plugin
 
     public function addDimensions(&$instances)
     {
-        $idSite = Common::getRequestVar('idSite', 0, 'int');
+        $idSite = $this->getIdSite();
+
+        if (!$idSite) {
+            return;
+        }
+
         $dimensions = $this->getCustomDimensions($idSite);
         foreach ($dimensions as $dimension) {
             if (!$dimension['active']) {
@@ -113,7 +118,11 @@ class CustomDimensions extends Plugin
 
     public function addReports(&$instances)
     {
-        $idSite = Common::getRequestVar('idSite', 0, 'int');
+        $idSite = $this->getIdSite();
+        if (!$idSite) {
+            return;
+        }
+
         $dimensions = $this->getCustomDimensions($idSite);
         foreach ($dimensions as $dimension) {
             if (!$dimension['active']) {
@@ -126,7 +135,7 @@ class CustomDimensions extends Plugin
         }
     }
 
-    public function addSubcategories(&$subcategories)
+    private function getIdSite()
     {
         $idSite = Common::getRequestVar('idSite', 0, 'int');
 
@@ -135,8 +144,26 @@ class CustomDimensions extends Plugin
             $idSite = Common::getRequestVar('idSites', 0, 'int');
 
             if (!$idSite) {
+                $idSite = Common::getRequestVar('idSites', 0, 'array');
+                if (is_array($idSite) && count($idSite) === 1) {
+                    $idSite = array_shift($idSite);
+                    if (is_numeric($idSite)) {
+                        return $idSite;
+                    }
+                }
+
                 return;
             }
+        }
+
+        return $idSite;
+    }
+
+    public function addSubcategories(&$subcategories)
+    {
+        $idSite = $this->getIdSite();
+        if (!$idSite) {
+            return;
         }
 
         $dimensions = $this->getCustomDimensions($idSite);
