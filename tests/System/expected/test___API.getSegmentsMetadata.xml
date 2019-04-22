@@ -71,6 +71,12 @@
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Browser</name>
+		<segment>browserName</segment>
+	</row>
+	<row>
+		<type>dimension</type>
+		<category>Visitors</category>
+		<name>Browser code</name>
 		<segment>browserCode</segment>
 	</row>
 	<row>
@@ -139,6 +145,12 @@
 		<type>dimension</type>
 		<category>Visitors</category>
 		<name>Operating system</name>
+		<segment>operatingSystemName</segment>
+	</row>
+	<row>
+		<type>dimension</type>
+		<category>Visitors</category>
+		<name>Operating system code</name>
 		<segment>operatingSystemCode</segment>
 	</row>
 	<row>
@@ -292,6 +304,12 @@
 		<type>dimension</type>
 		<category>Visit Location</category>
 		<name>Country</name>
+		<segment>countryName</segment>
+	</row>
+	<row>
+		<type>dimension</type>
+		<category>Visit Location</category>
+		<name>Country code</name>
 		<segment>countryCode</segment>
 	</row>
 	<row>
