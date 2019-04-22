@@ -70,28 +70,28 @@ class AutoSuggestTest extends SystemTestCase
     public function test_getMostUsedActionDimensionValues_shouldReturnMostUsedValues()
     {
         $autoSuggest = new AutoSuggest();
-        $values = $autoSuggest->getMostUsedActionDimensionValues(array('index' => 1), $idSite = 1, $limit = 60);
-        $this->assertEquals(array('en', '', 'value3', 'value5 3'), $values);
+        $values = $autoSuggest->getMostUsedActionDimensionValues(array('idcustomdimension' => 3), $idSite = 1, $limit = 60);
+        $this->assertEquals(array('en', 'value3', 'value5 3'), $values);
     }
 
     public function test_getMostUsedActionDimensionValues_shouldApplyLimit()
     {
         $autoSuggest = new AutoSuggest();
-        $values = $autoSuggest->getMostUsedActionDimensionValues(array('index' => 1), $idSite = 1, $limit = 2);
-        $this->assertEquals(array('en', ''), $values);
+        $values = $autoSuggest->getMostUsedActionDimensionValues(array('idcustomdimension' => 3), $idSite = 1, $limit = 2);
+        $this->assertEquals(array('en','value3'), $values);
     }
 
     public function test_getMostUsedActionDimensionValues_shouldApplyIdSite()
     {
         $autoSuggest = new AutoSuggest();
-        $values = $autoSuggest->getMostUsedActionDimensionValues(array('index' => 1), $idSite = 2, $limit = 2);
-        $this->assertEquals(array(), $values);
+        $values = $autoSuggest->getMostUsedActionDimensionValues(array('idcustomdimension' => 1), $idSite = 2, $limit = 2);
+        $this->assertEquals(array('site2 value1'), $values);
     }
 
     public function test_getMostUsedActionDimensionValues_shouldApplyIndex()
     {
         $autoSuggest = new AutoSuggest();
-        $values = $autoSuggest->getMostUsedActionDimensionValues(array('index' => 3), $idSite = 1, $limit = 10);
+        $values = $autoSuggest->getMostUsedActionDimensionValues(array('idcustomdimension' => 5), $idSite = 1, $limit = 10);
         $this->assertEquals(array('en_US', '343', 'value5', 'value5 5'), $values);
     }
 

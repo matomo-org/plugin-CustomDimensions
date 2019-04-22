@@ -9,9 +9,12 @@
 
 namespace Piwik\Plugins\CustomDimensions\Dao;
 
+use Piwik\API\Request;
 use Piwik\Common;
+use Piwik\DataTable;
 use Piwik\Date;
 use Piwik\Db;
+use Piwik\Plugins\CustomDimensions\Archiver;
 
 class AutoSuggest
 {
@@ -24,24 +27,27 @@ class AutoSuggest
      */
     public function getMostUsedActionDimensionValues($dimension, $idSite, $maxValuesToReturn)
     {
-        $maxValuesToReturn = (int) $maxValuesToReturn;
-        $idSite = (int) $idSite;
-        $startDate = Date::now()->subDay(60)->toString();
-        $name = LogTable::buildCustomDimensionColumnName($dimension);
+        // we use first day from the month so it only needs to aggregate archives of two/three months and no weeks etc
+        $date = Date::now()->subMonth(2)->setDay(1)->toString() . ',today';
+        /** @var DataTable $report */
+        $report = Request::processRequest('CustomDimensions.getCustomDimension', array(
+            'idDimension' => $dimension['idcustomdimension'],
+            'idSite' => $idSite,
+            'filter_offset' => 0,
+            'filter_limit' => $maxValuesToReturn,
+            'period' => 'range',
+            'date' => $date,
+            'disable_queued_filters' => 1
+        ), array());
 
-        $table = Common::prefixTable('log_link_visit_action');
-        $query = "SELECT $name, count($name) as countName FROM $table
-                  WHERE idsite = ? and server_time > $startDate and $name is not null
-                  GROUP by $name
-                  ORDER BY countName DESC, $name ASC LIMIT $maxValuesToReturn";
-        $rows = Db::get()->fetchAll($query, array($idSite));
-
-        $values = array();
-        foreach ($rows as $row) {
-            $values[] = $row[$name];
+        $labels = $report->getColumn('label');
+        $notDefinedKey = array_search(Archiver::LABEL_CUSTOM_VALUE_NOT_DEFINED, $labels);
+        if ($notDefinedKey !== false) {
+            unset($labels[$notDefinedKey]);
+            $labels = array_values($labels);
         }
 
-        return $values;
+        return $labels;
     }
 
 }
