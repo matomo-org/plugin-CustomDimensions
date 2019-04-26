@@ -167,7 +167,7 @@ class Configuration
                   `active` TINYINT UNSIGNED NOT NULL DEFAULT 0,
                   `extractions` TEXT NOT NULL DEFAULT '',
                   `case_sensitive` TINYINT UNSIGNED NOT NULL DEFAULT 1,
-                  UNIQUE KEY idcustomdimension_idsite (`idcustomdimension`, `idsite`),
+                  PRIMARY KEY (`idcustomdimension`, `idsite`),
                   UNIQUE KEY uniq_hash(idsite, `scope`, `index`)";
 
         DbHelper::createTable($this->tableName, $table);
