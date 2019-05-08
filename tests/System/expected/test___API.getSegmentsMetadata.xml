@@ -688,4 +688,10 @@
 		<name>Referrer URL</name>
 		<segment>referrerUrl</segment>
 	</row>
+	<row>
+		<type>metric</type>
+		<category>Ecommerce</category>
+		<name>Order ID</name>
+		<segment>orderId</segment>
+	</row>
 </result>
