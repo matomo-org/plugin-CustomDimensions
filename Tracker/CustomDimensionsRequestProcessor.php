@@ -99,7 +99,7 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
             $value = Common::getRequestVar($field, '', 'string', $params);
             $hasSentEmptyString = isset($params[$field]) && $params[$field] === '';
             if ($value !== '' || $hasSentEmptyString) {
-                $values[$dbField] = $value;
+                $values[$dbField] = self::prepareValue($value);
                 continue;
             }
 
@@ -120,13 +120,18 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
                         continue;
                     }
 
-                    $values[$dbField] = $value;
+                    $values[$dbField] = self::prepareValue(urldecode($value));
                     break;
                 }
             }
         }
 
         return $values;
+    }
+
+    private static function prepareValue($value)
+    {
+        return Common::mb_substr(trim($value), 0, 250);
     }
 
     public static function buildCustomDimensionTrackingApiName($idDimensionOrDimension)

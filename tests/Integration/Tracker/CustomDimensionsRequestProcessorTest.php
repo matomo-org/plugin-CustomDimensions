@@ -333,6 +333,106 @@ class CustomDimensionsRequestProcessorTest extends IntegrationTestCase
         ), $action->getCustomFields());
     }
 
+    public function test_valueWithWhitespace_isTrimmed()
+    {
+        $this->configureSomeDimensions();
+
+        $visitProperties = new VisitProperties();
+        $request = new Request(array(
+            'idsite' => 1,
+            'dimension1' => 'value1 ',
+        ));
+
+        $action = new ActionPageview($request);
+        $request->setMetadata('Actions', 'action', $action);
+
+        // should only add visit scope dimensions
+        $this->processor->onNewVisit($visitProperties, $request);
+
+        $expected1 = array(
+            'custom_dimension_1' => 'value1',
+        );
+        $this->assertSame($expected1, $visitProperties->getProperties());
+        $this->assertSame(array(), $action->getCustomFields());
+    }
+
+    public function test_veryLongValue_isTruncated()
+    {
+        $this->configureSomeDimensions();
+
+        $veryLongStr =  '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
+        $trimmedStr =   '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
+
+        $visitProperties = new VisitProperties();
+        $request = new Request(array(
+            'idsite' => 1,
+            'dimension1' => $veryLongStr,
+        ));
+
+        $action = new ActionPageview($request);
+        $request->setMetadata('Actions', 'action', $action);
+
+        // should only add visit scope dimensions
+        $this->processor->onNewVisit($visitProperties, $request);
+
+        $expected1 = array(
+            'custom_dimension_1' => $trimmedStr,
+        );
+        $this->assertSame($expected1, $visitProperties->getProperties());
+        $this->assertSame(array(), $action->getCustomFields());
+    }
+
+    public function test_valueWithWhitespace_isTrimmed_extractedFromUrl()
+    {
+        $configuration = new Configuration();
+        $extractions = array(
+            array('dimension' => 'urlparam', 'pattern' => 'id'),
+        );
+        $configuration->configureNewDimension($idSite = 1, 'Dimension1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions, $caseSensitive = true);
+
+        $extractions = array(
+            array('dimension' => 'urlparam', 'pattern' => 'module'),
+        );
+        $configuration->configureNewDimension($idSite = 1, 'Dimension2', CustomDimensions::SCOPE_VISIT, 2, true, $extractions, $caseSensitive = true);
+
+        $request = new Request(array('idsite' => 1, 'url' => 'http://www.example.com/test?id=11 &module=test%20'));
+        $action = new ActionPageview($request);
+        $request->setMetadata('Actions', 'action', $action);
+
+        $visitProperties = new VisitProperties();
+
+        $this->processor->onNewVisit($visitProperties, $request);
+
+        $this->assertSame(array(
+            'custom_dimension_1' => '11',
+            'custom_dimension_2' => 'test'
+        ), $visitProperties->getProperties());
+    }
+
+    public function test_veryLongValue_isTrimmed_extractedFromUrl()
+    {
+        $veryLongStr =  '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
+        $trimmedStr =   '1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890';
+
+        $configuration = new Configuration();
+        $extractions = array(
+            array('dimension' => 'urlparam', 'pattern' => 'module'),
+        );
+        $configuration->configureNewDimension($idSite = 1, 'Dimension1', CustomDimensions::SCOPE_VISIT, 1, true, $extractions, $caseSensitive = true);
+
+        $request = new Request(array('idsite' => 1, 'url' => 'http://www.example.com/test?id=11&module=' . $veryLongStr));
+        $action = new ActionPageview($request);
+        $request->setMetadata('Actions', 'action', $action);
+
+        $visitProperties = new VisitProperties();
+
+        $this->processor->onNewVisit($visitProperties, $request);
+
+        $this->assertSame(array(
+            'custom_dimension_1' => $trimmedStr,
+        ), $visitProperties->getProperties());
+    }
+
     private function configureSomeDimensions()
     {
         $configuration = new Configuration();
