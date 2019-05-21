@@ -1,5 +1,7 @@
 ## Changelog
 
+* 3.1.8
+  * Trim and truncate raw values from tracker
 * 3.1.7
   * Add primary key for better replication
 * 3.1.6
