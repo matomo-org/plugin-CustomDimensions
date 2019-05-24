@@ -84,15 +84,6 @@ class Configuration
         return $dimension;
     }
 
-    public function getCustomDimensionsHavingScope($idSite, $scope)
-    {
-        $result = Request::processRequest('CustomDimensions.getConfiguredCustomDimensions', [
-            'idSite' => $idSite,
-        ], $default = []);
-        $result = array_filter($result, function ($row) use ($scope) { return $row['scope'] == $scope; });
-        return $result;
-    }
-
     public function getCustomDimensionsHavingIndex($scope, $index)
     {
         $query= "SELECT * FROM " . $this->tableNamePrefixed . " WHERE `index` = ? and scope = ?";

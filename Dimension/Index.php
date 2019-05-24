@@ -10,6 +10,7 @@
 namespace Piwik\Plugins\CustomDimensions\Dimension;
 
 use \Exception;
+use Piwik\API\Request;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 
@@ -19,8 +20,10 @@ class Index
     {
         $indexes = $this->getTracking($scope)->getInstalledIndexes();
 
-        $configuration = $this->getConfiguration();
-        $configs = $configuration->getCustomDimensionsHavingScope($idSite, $scope);
+        $configs = Request::processRequest('CustomDimensions.getConfiguredCustomDimensionsHavingScope', [
+            'idSite' => $idSite,
+            'scope' => $scope,
+        ]);
         foreach ($configs as $config) {
             $key = array_search($config['index'], $indexes);
             if ($key !== false) {
