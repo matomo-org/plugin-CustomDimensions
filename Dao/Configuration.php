@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\CustomDimensions\Dao;
 
+use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Db;
 use Piwik\DbHelper;
@@ -85,8 +86,11 @@ class Configuration
 
     public function getCustomDimensionsHavingScope($idSite, $scope)
     {
-        $query= "SELECT * FROM " . $this->tableNamePrefixed . " WHERE idsite = ? and scope = ?";
-        return $this->fetchAllDimensionsEnriched($query, array($idSite, $scope));
+        $result = Request::processRequest('CustomDimensions.getConfiguredCustomDimensions', [
+            'idSite' => $idSite,
+        ], $default = []);
+        $result = array_filter($result, function ($row) use ($scope) { return $row['scope'] == $scope; });
+        return $result;
     }
 
     public function getCustomDimensionsHavingIndex($scope, $index)
