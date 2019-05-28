@@ -9,6 +9,7 @@
 
 namespace Piwik\Plugins\CustomDimensions\Dao;
 
+use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Db;
 use Piwik\DbHelper;
@@ -81,12 +82,6 @@ class Configuration
         $dimension = $this->enrichDimension($dimension);
 
         return $dimension;
-    }
-
-    public function getCustomDimensionsHavingScope($idSite, $scope)
-    {
-        $query= "SELECT * FROM " . $this->tableNamePrefixed . " WHERE idsite = ? and scope = ?";
-        return $this->fetchAllDimensionsEnriched($query, array($idSite, $scope));
     }
 
     public function getCustomDimensionsHavingIndex($scope, $index)

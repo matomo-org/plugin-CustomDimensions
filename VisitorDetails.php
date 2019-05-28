@@ -8,6 +8,7 @@
  */
 namespace Piwik\Plugins\CustomDimensions;
 
+use Piwik\API\Request;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
@@ -143,8 +144,10 @@ class VisitorDetails extends VisitorDetailsAbstract
             return $this->activeCustomDimensionsCache[$idSite . $scope];
         }
 
-        $configuration = new Configuration();
-        $dimensions    = $configuration->getCustomDimensionsHavingScope($idSite, $scope);
+        $dimensions    = Request::processRequest('CustomDimensions.getConfiguredCustomDimensionsHavingScope', [
+            'idSite' => $idSite,
+            'scope' => $scope,
+        ], $default = []);
         $dimensions    = array_filter($dimensions, function ($dimension) use ($scope) {
             return ($dimension['active'] && $dimension['scope'] === $scope);
         });

@@ -115,10 +115,6 @@ class ConfigurationTest extends IntegrationTestCase
         $dimensions = $this->config->getCustomDimensionsHavingIndex($scope, $index);
         $dimension = array_shift($dimensions);
         $this->assertSame($expectedExtractions, $dimension['extractions']);
-
-        $dimensions = $this->config->getCustomDimensionsHavingScope($idSite, $scope);
-        $dimension = array_shift($dimensions);
-        $this->assertSame($expectedExtractions, $dimension['extractions']);
     }
 
     /**
@@ -272,35 +268,6 @@ class ConfigurationTest extends IntegrationTestCase
         $this->assertSame(array(), $dimensions);
     }
 
-    public function test_getCustomDimensionsHavingScope_shouldFindEntriesHavingScopeAndSite()
-    {
-        $this->createManyCustomDimensionCases();
-
-        $dimensions = $this->config->getCustomDimensionsHavingScope($idSite = 1, $scope = 'action');
-
-        $this->assertCount(2, $dimensions);
-
-        foreach ($dimensions as $dimension) {
-            $this->assertSame('1', $dimension['idsite']);
-            $this->assertSame('action', $dimension['scope']);
-            $this->assertTrue(is_bool($dimension['active']));
-        }
-
-        $dimensions = $this->config->getCustomDimensionsHavingScope($idSite = 1, $scope = 'visit');
-
-        $this->assertCount(3, $dimensions);
-
-        foreach ($dimensions as $dimension) {
-            $this->assertSame('1', $dimension['idsite']);
-            $this->assertSame('visit', $dimension['scope']);
-            $this->assertTrue(is_bool($dimension['active']));
-        }
-
-        // nothing matches
-        $dimensions = $this->config->getCustomDimensionsHavingScope($idSite = 1, $scope = 'nothing');
-        $this->assertSame(array(), $dimensions);
-    }
-
     public function test_getCustomDimensionsHavingIndex_shouldFindEntriesHavingIndexAndSite()
     {
         $this->createManyCustomDimensionCases();
@@ -374,6 +341,11 @@ class ConfigurationTest extends IntegrationTestCase
 
     private function createManyCustomDimensionCases()
     {
+        return self::createManyCustomDimensionCasesFor($this->config);
+    }
+
+    public static function createManyCustomDimensionCasesFor(Configuration $config)
+    {
         $cases = array(
             array('idSite' => 1, 'scope' => 'action', 'index' => 1, 'expectedId' => 1, 'case_sensitive' => true, 'active' => true),
             array('idSite' => 1, 'scope' => 'visit',  'index' => 1, 'expectedId' => 2, 'case_sensitive' => false, 'active' => false),
@@ -386,8 +358,8 @@ class ConfigurationTest extends IntegrationTestCase
         );
 
         foreach ($cases as $index => $case) {
-            $idDimension = $this->config->configureNewDimension($case['idSite'], $name = 'Test' . $index, $case['scope'], $case['index'], $case['active'], $extractions = array(), $case['case_sensitive']);
-            $this->assertSame($case['expectedId'], $idDimension);
+            $idDimension = $config->configureNewDimension($case['idSite'], $name = 'Test' . $index, $case['scope'], $case['index'], $case['active'], $extractions = array(), $case['case_sensitive']);
+            self::assertSame($case['expectedId'], $idDimension);
         }
 
         return $cases;

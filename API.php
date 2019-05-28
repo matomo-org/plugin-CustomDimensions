@@ -198,6 +198,18 @@ class API extends \Piwik\Plugin\API
         return $configs;
     }
 
+    /**
+     * For convenience. Hidden to reduce API surface area.
+     * @hide
+     */
+    public function getConfiguredCustomDimensionsHavingScope($idSite, $scope)
+    {
+        $result = $this->getConfiguredCustomDimensions($idSite);
+        $result = array_filter($result, function ($row) use ($scope) { return $row['scope'] == $scope; });
+        $result = array_values($result);
+        return $result;
+    }
+
     private function checkCustomDimensionConfig($name, $active, $extractions, $caseSensitive)
     {
         // ideally we would work with these objects a bit more instead of arrays but we'd have a lot of
@@ -233,7 +245,7 @@ class API extends \Piwik\Plugin\API
         $scopes = array();
         foreach (CustomDimensions::getPublicScopes() as $scope) {
 
-            $configs = $this->getConfiguration()->getCustomDimensionsHavingScope($idSite, $scope);
+            $configs = $this->getConfiguredCustomDimensionsHavingScope($idSite, $scope);
             $indexes = $this->getTracking($scope)->getInstalledIndexes();
 
             $scopes[] = array(

@@ -10,6 +10,8 @@ namespace Piwik\Plugins\CustomDimensions\tests\Integration;
 
 use Piwik\Plugins\CustomDimensions\API;
 use Piwik\Plugins\CustomDimensions\CustomDimensions;
+use Piwik\Plugins\CustomDimensions\Dao\Configuration;
+use Piwik\Plugins\CustomDimensions\tests\Integration\Dao\ConfigurationTest;
 use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\Mock\FakeAccess;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
@@ -220,6 +222,35 @@ class ApiTest extends IntegrationTestCase
     {
         $this->setAnonymousUser();
         $this->api->getCustomDimension($idDimension = 1, $idSite = 1, $period = 'day', $date = 'today');
+    }
+
+    public function test_getConfiguredCustomDimensionsHavingScope_shouldFindEntriesHavingScopeAndSite()
+    {
+        ConfigurationTest::createManyCustomDimensionCasesFor(new Configuration());
+
+        $dimensions = $this->api->getConfiguredCustomDimensionsHavingScope($idSite = 1, $scope = 'action');
+
+        $this->assertCount(2, $dimensions);
+
+        foreach ($dimensions as $dimension) {
+            $this->assertSame('1', $dimension['idsite']);
+            $this->assertSame('action', $dimension['scope']);
+            $this->assertTrue(is_bool($dimension['active']));
+        }
+
+        $dimensions = $this->api->getConfiguredCustomDimensionsHavingScope($idSite = 1, $scope = 'visit');
+
+        $this->assertCount(3, $dimensions);
+
+        foreach ($dimensions as $dimension) {
+            $this->assertSame('1', $dimension['idsite']);
+            $this->assertSame('visit', $dimension['scope']);
+            $this->assertTrue(is_bool($dimension['active']));
+        }
+
+        // nothing matches
+        $dimensions = $this->api->getConfiguredCustomDimensionsHavingScope($idSite = 1, $scope = 'nothing');
+        $this->assertSame(array(), $dimensions);
     }
 
     public function provideContainerConfig()

@@ -132,6 +132,18 @@ class ApiTest extends SystemTestCase
                     'testSuffix' => '_' . $idSite
                 )
             );
+
+            $apiToTest[] = array('CustomDimensions.getConfiguredCustomDimensionsHavingScope',
+                array(
+                    'idSite'     => $idSite,
+                    'date'       => self::$fixture->dateTime,
+                    'periods'    => array('day'),
+                    'testSuffix' => '_' . $idSite,
+                    'otherRequestParameters' => [
+                        'scope' => 'visit',
+                    ],
+                ),
+            );
         }
 
         $apiToTest[] = array(array('CustomDimensions.getAvailableExtractionDimensions'),
