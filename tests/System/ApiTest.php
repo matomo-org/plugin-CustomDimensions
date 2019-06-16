@@ -50,10 +50,23 @@ class ApiTest extends SystemTestCase
             array('idSite' => 1, 'idDimension' => 999), // dimension does not exist
         );
 
-        $hideColumns = 'sum_time_generation,sum_bandwidth,nb_hits_with_bandwidth,min_bandwidth,max_bandwidth,avg_bandwidth,nb_total_overall_bandwidth,nb_total_pageview_bandwidth,nb_total_download_bandwidth';
+        $removeColumns = [
+            'sum_time_generation',
+            'sum_bandwidth',
+            'nb_hits_with_bandwidth',
+            'min_bandwidth',
+            'max_bandwidth',
+            'avg_bandwidth',
+            'nb_total_overall_bandwidth',
+            'nb_total_pageview_bandwidth',
+            'nb_total_download_bandwidth'
+        ];
 
         if (version_compare(Version::VERSION, '3.8.0-b3', '<')) {
-            $hideColumns .= ',CustomDimension_CustomDimension3,segment';
+            $removeColumns[] = 'CustomDimension_CustomDimension3';
+            $removeColumns[] = 'segment';
+            $removeColumns[] = 'sum_visit_length';
+            $removeColumns[] = 'avg_time_on_site';
         }
 
         $apiToTest = array();
@@ -72,9 +85,9 @@ class ApiTest extends SystemTestCase
                             'idDimension' => $idDimension,
                             'expanded' => '0',
                             'flat' => '0',
-                            'hideColumns' => $hideColumns
                         ),
-                        'testSuffix' => "${period}_site_${idSite}_dimension_${idDimension}"
+                        'testSuffix' => "${period}_site_${idSite}_dimension_${idDimension}",
+                        'xmlFieldsToRemove' => $removeColumns
                     )
                 );
             }
@@ -89,9 +102,9 @@ class ApiTest extends SystemTestCase
                 'idDimension' => 3,
                 'expanded' => '1',
                 'flat' => '0',
-                'hideColumns' => $hideColumns
             ),
-            'testSuffix' => "day_site_1_dimension_3_expanded"
+            'testSuffix' => "day_site_1_dimension_3_expanded",
+            'xmlFieldsToRemove' => $removeColumns
         ));
 
         $apiToTest[] = array($api, array(
@@ -102,9 +115,9 @@ class ApiTest extends SystemTestCase
                 'idDimension' => 3,
                 'expanded' => '0',
                 'flat' => '1',
-                'hideColumns' => $hideColumns
             ),
-            'testSuffix' => "day_site_1_dimension_3_flat"
+            'testSuffix' => "day_site_1_dimension_3_flat",
+            'xmlFieldsToRemove' => $removeColumns
         ));
 
         $apiToTest[] = array($api,
@@ -115,9 +128,9 @@ class ApiTest extends SystemTestCase
                 'segment'    => 'dimension1=@value5',
                 'otherRequestParameters' => array(
                     'idDimension' => 1,
-                    'hideColumns' => $hideColumns
                 ),
-                'testSuffix' => "year_site_1_dimension_1_withsegment"
+                'testSuffix' => "year_site_1_dimension_1_withsegment",
+                'xmlFieldsToRemove' => $removeColumns
             )
         );
 
@@ -176,43 +189,52 @@ class ApiTest extends SystemTestCase
             );
         }
 
-        $apiToTest[] = array(array('API.getProcessedReport'),
-                             array(
-                                 'idSite'  => 1,
-                                 'date'    => self::$fixture->dateTime,
-                                 'periods' => array('year'),
-                                 'otherRequestParameters' => array(
-                                     'apiModule' => 'CustomDimensions',
-                                     'apiAction' => 'getCustomDimension',
-                                     'idDimension' => '3'
-                                 ),
-                                 'testSuffix' => '_actionDimension',
-                                 'xmlFieldsToRemove' => ['idsubdatatable']
-                             )
-        );
-
-        $apiToTest[] = array(array('API.getProcessedReport'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('year'),
-                'otherRequestParameters' => array(
-                    'apiModule' => 'CustomDimensions',
-                    'apiAction' => 'getCustomDimension',
-                    'idDimension' => '1'
-                ),
-                'testSuffix' => '_visitDimension'
-            )
-        );
-
         if (version_compare(Version::VERSION, '3.6.1', '>=')) {
+            $apiToTest[] = array(array('API.getProcessedReport'),
+                                 array(
+                                     'idSite'  => 1,
+                                     'date'    => self::$fixture->dateTime,
+                                     'periods' => array('year'),
+                                     'otherRequestParameters' => array(
+                                         'apiModule' => 'CustomDimensions',
+                                         'apiAction' => 'getCustomDimension',
+                                         'idDimension' => '3'
+                                     ),
+                                     'testSuffix' => '_actionDimension',
+                                     'xmlFieldsToRemove' => ['idsubdatatable']
+                                 )
+            );
 
-            $additionalColumns = '';
+            $apiToTest[] = array(array('API.getProcessedReport'),
+                array(
+                    'idSite'  => 1,
+                    'date'    => self::$fixture->dateTime,
+                    'periods' => array('year'),
+                    'otherRequestParameters' => array(
+                        'apiModule' => 'CustomDimensions',
+                        'apiAction' => 'getCustomDimension',
+                        'idDimension' => '1'
+                    ),
+                    'testSuffix' => '_visitDimension'
+                )
+            );
+
+            $removeColumns = [
+                'generationTimeMilliseconds',
+                'totalEcommerceRevenue',
+                'totalEcommerceConversions',
+                'totalEcommerceItems',
+                'totalAbandonedCarts',
+                'totalAbandonedCartsRevenue',
+                'totalAbandonedCartsItems'
+            ];
             if (version_compare(Version::VERSION, '3.8.0-b3', '<')) {
-                $additionalColumns = ',title,subtitle';
+                $removeColumns[] = 'title';
+                $removeColumns[] = 'subtitle';
             }
             if (version_compare(Version::VERSION, '3.9.0-b1', '<')) {
-                $additionalColumns .= ',icon,visitConvertedIcon';
+                $removeColumns[] = 'icon';
+                $removeColumns[] = 'visitConvertedIcon';
             }
 
             $apiToTest[] = array(
@@ -221,9 +243,7 @@ class ApiTest extends SystemTestCase
                     'idSite'                 => 1,
                     'date'                   => self::$fixture->dateTime,
                     'periods'                => array('year'),
-                    'otherRequestParameters' => array(
-                        'hideColumns' => 'generationTimeMilliseconds,totalEcommerceRevenue,totalEcommerceConversions,totalEcommerceItems,totalAbandonedCarts,totalAbandonedCartsRevenue,totalAbandonedCartsItems'.$additionalColumns
-                    )
+                    'xmlFieldsToRemove'      => $removeColumns
                 )
             );
         }

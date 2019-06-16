@@ -78,6 +78,7 @@ describe("CustomDimensions", function () {
             await page.goto( "?" + urlBase + "#?" + generalParams + "&category=Goals_Goals&subcategory=General_Overview");
             await (await page.jQuery('.reportsByDimensionView .dimension:contains(MyName1)')).click();
             await page.waitForNetworkIdle();
+            await page.waitFor(100);
         });
     });
 
