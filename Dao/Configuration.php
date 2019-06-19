@@ -102,7 +102,7 @@ class Configuration
 
     public function deleteConfigurationsForIndex($index, $scope)
     {
-        $this->getDb()->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE `index` = ? and `scope` = ?", $index, $scope);
+        $this->getDb()->query("DELETE FROM " . $this->tableNamePrefixed . " WHERE `index` = ? and `scope` = ?", array($index, $scope));
     }
 
     private function fetchAllDimensionsEnriched($sql, $bind)
