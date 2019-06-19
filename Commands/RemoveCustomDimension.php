@@ -78,7 +78,7 @@ class RemoveCustomDimension extends ConsoleCommand
         $tracking = new LogTable($scope);
         $tracking->removeCustomDimension($index);
 
-        $configuration->deleteConfigurationsForIndex($index);
+        $configuration->deleteConfigurationsForIndex($index, $scope);
 
         if ($scope === CustomDimensions::SCOPE_VISIT) {
             $tracking = new LogTable(CustomDimensions::SCOPE_CONVERSION);
