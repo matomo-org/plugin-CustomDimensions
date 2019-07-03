@@ -31,13 +31,21 @@ class Name
             throw new Exception(Piwik::translate('CustomDimensions_NameIsTooLong', $maxLen));
         }
 
-        $blockedCharacters = array(
-            '/', '\\', '&', '.', '<', '>'
-            // we do not really have to do this and it is not very effective for preventing XSS but doesn't hurt to have
-        );
+        $blockedCharacters = self::getBlockedCharacters();
+
+        // we do not really have to do this and it is not very effective for preventing XSS but doesn't hurt to have
         if (strip_tags($this->name) !== $this->name || str_replace($blockedCharacters, '', $this->name) !== $this->name) {
             throw new Exception(Piwik::translate('CustomDimensions_NameAllowedCharacters'));
         }
     }
 
+    /**
+     * @api
+     */
+    public static function getBlockedCharacters()
+    {
+        return [
+            '/', '\\', '&', '.', '<', '>',
+        ];
+    }
 }
