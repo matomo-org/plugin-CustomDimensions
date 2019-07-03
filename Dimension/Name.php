@@ -39,6 +39,9 @@ class Name
         }
     }
 
+    /**
+     * @api
+     */
     public static function getBlockedCharacters()
     {
         return [
