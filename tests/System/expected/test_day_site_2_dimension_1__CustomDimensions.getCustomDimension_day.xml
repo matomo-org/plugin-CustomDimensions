@@ -8,6 +8,7 @@
 		<max_actions>2</max_actions>
 		<sum_visit_length>721</sum_visit_length>
 		<bounce_count>0</bounce_count>
+		<nb_visits_converted>0</nb_visits_converted>
 		<goals>
 			<row idgoal='ecommerceAbandonedCart'>
 				<nb_conversions>1</nb_conversions>
@@ -18,6 +19,7 @@
 		</goals>
 		<nb_conversions>0</nb_conversions>
 		<revenue>0</revenue>
+		
 		<avg_time_on_site>721</avg_time_on_site>
 		<bounce_rate>0%</bounce_rate>
 		<nb_actions_per_visit>2</nb_actions_per_visit>

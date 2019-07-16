@@ -9,6 +9,7 @@
 		<sum_visit_length>722</sum_visit_length>
 		<bounce_count>0</bounce_count>
 		<nb_visits_converted>1</nb_visits_converted>
+		
 		<avg_time_on_site>722</avg_time_on_site>
 		<bounce_rate>0%</bounce_rate>
 		<nb_actions_per_visit>3</nb_actions_per_visit>
@@ -26,6 +27,7 @@
 		<nb_conversions>1</nb_conversions>
 		<revenue>0</revenue>
 		<nb_visits>0</nb_visits>
+		
 		<avg_time_on_site>0</avg_time_on_site>
 		<bounce_rate>0%</bounce_rate>
 		<nb_actions_per_visit>0</nb_actions_per_visit>

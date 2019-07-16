@@ -16,7 +16,7 @@
 				
 				<pageId>4</pageId>
 				<bandwidth />
-				<generationTimeMilliseconds>45</generationTimeMilliseconds>
+				
 				<generationTime>0.05s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<title>Fourth page view</title>
@@ -103,6 +103,12 @@
 		<browserIcon>plugins/Morpheus/icons/dist/browsers/FF.png</browserIcon>
 		<browserCode>FF</browserCode>
 		<browserVersion>3.6</browserVersion>
+		
+		
+		
+		
+		
+		
 		<events>0</events>
 		<continent>Europe</continent>
 		<continentCode>eur</continentCode>
@@ -156,7 +162,7 @@
 				
 				<pageId>6</pageId>
 				<bandwidth />
-				<generationTimeMilliseconds>1029</generationTimeMilliseconds>
+				
 				<generationTime>1.03s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<title>Sixth page view</title>
@@ -243,6 +249,12 @@
 		<browserIcon>plugins/Morpheus/icons/dist/browsers/FF.png</browserIcon>
 		<browserCode>FF</browserCode>
 		<browserVersion>3.6</browserVersion>
+		
+		
+		
+		
+		
+		
 		<events>0</events>
 		<continent>Europe</continent>
 		<continentCode>eur</continentCode>
@@ -381,6 +393,12 @@
 		<browserIcon>plugins/Morpheus/icons/dist/browsers/FF.png</browserIcon>
 		<browserCode>FF</browserCode>
 		<browserVersion>3.6</browserVersion>
+		
+		
+		
+		
+		
+		
 		<events>0</events>
 		<continent>Europe</continent>
 		<continentCode>eur</continentCode>
@@ -436,7 +454,7 @@
 				<bandwidth />
 				<timeSpent>360</timeSpent>
 				<timeSpentPretty>6 min 0s</timeSpentPretty>
-				<generationTimeMilliseconds>420</generationTimeMilliseconds>
+				
 				<generationTime>0.42s</generationTime>
 				<interactionPosition>1</interactionPosition>
 				<title>Viewing homepage</title>
@@ -459,7 +477,7 @@
 				<bandwidth />
 				<timeSpent>360</timeSpent>
 				<timeSpentPretty>6 min 0s</timeSpentPretty>
-				<generationTimeMilliseconds>123</generationTimeMilliseconds>
+				
 				<generationTime>0.12s</generationTime>
 				<interactionPosition>2</interactionPosition>
 				<title>Second page view</title>
@@ -497,7 +515,7 @@
 				
 				<pageId>3</pageId>
 				<bandwidth />
-				<generationTimeMilliseconds>344</generationTimeMilliseconds>
+				
 				<generationTime>0.34s</generationTime>
 				<interactionPosition>3</interactionPosition>
 				<title>Third page view</title>
@@ -567,6 +585,12 @@
 		<browserIcon>plugins/Morpheus/icons/dist/browsers/FF.png</browserIcon>
 		<browserCode>FF</browserCode>
 		<browserVersion>3.6</browserVersion>
+		
+		
+		
+		
+		
+		
 		<events>0</events>
 		<continent>Europe</continent>
 		<continentCode>eur</continentCode>
@@ -705,6 +729,12 @@
 		<browserIcon>plugins/Morpheus/icons/dist/browsers/FF.png</browserIcon>
 		<browserCode>FF</browserCode>
 		<browserVersion>3.6</browserVersion>
+		
+		
+		
+		
+		
+		
 		<events>0</events>
 		<continent>Europe</continent>
 		<continentCode>eur</continentCode>
