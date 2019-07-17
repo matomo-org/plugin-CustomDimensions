@@ -10,7 +10,7 @@
     "license": "GPL v3+",
     "homepage": "https:\/\/matomo.org",
     "require": {
-        "piwik": ">=3.9.0,<4.0.0-b1"
+        "piwik": ">=3.10.0,<4.0.0-b1"
     },
     "support": {
         "issues": "https://github.com/matomo-org/plugin-CustomDimensions/issues",
