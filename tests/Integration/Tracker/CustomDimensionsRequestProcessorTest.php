@@ -12,6 +12,7 @@ use Piwik\Plugins\CustomDimensions\CustomDimensions;
 use Piwik\Plugins\CustomDimensions\Dao\Configuration;
 use Piwik\Plugins\CustomDimensions\Dao\LogTable;
 use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor as Processor;
+use Piwik\Plugins\CustomDimensions\Tracker\CustomDimensionsRequestProcessor;
 use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tracker\ActionPageview;
@@ -99,6 +100,26 @@ class CustomDimensionsRequestProcessorTest extends IntegrationTestCase
         $request = new Request(array('idsite' => 2));
         $dimensions = Processor::getCachedCustomDimensions($request);
         $this->assertCount(1, $dimensions);
+    }
+
+    public function test_hasActionCustomDimensionConfiguredInSite_whenHasActionDimensionConfigured()
+    {
+        $this->configureSomeDimensions();
+
+        $request = new Request(array('idsite' => 1));
+        $this->assertTrue(Processor::hasActionCustomDimensionConfiguredInSite($request));
+    }
+
+    public function test_hasActionCustomDimensionConfiguredInSite_whenHasOnlyVisitDimensions()
+    {
+        $request = new Request(array('idsite' => 2));
+        $this->assertFalse(Processor::hasActionCustomDimensionConfiguredInSite($request));
+    }
+
+    public function test_hasActionCustomDimensionConfiguredInSite_WhenNoDimensionsAreConfgigured()
+    {
+        $request = new Request(array('idsite' => 1));
+        $this->assertFalse(Processor::hasActionCustomDimensionConfiguredInSite($request));
     }
 
     public function test_onExistingVisit_ShouldOnlyAddColumnsOfCustomDimensionsInScopeVisit()

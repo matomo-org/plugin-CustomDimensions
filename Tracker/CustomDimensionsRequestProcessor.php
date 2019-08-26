@@ -28,6 +28,10 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
 
     public function recordLogs(VisitProperties $visitProperties, Request $request)
     {
+        if (!self::hasActionCustomDimensionConfiguredInSite($request)) {
+            return;
+        }
+
         $model = new Model();
 
         /** @var Action $action */
@@ -45,6 +49,20 @@ class CustomDimensionsRequestProcessor extends RequestProcessor
         if (!empty($lastIdLinkVa) && $timeSpent > 0) {
             $model->updateAction($lastIdLinkVa, array('time_spent' => $timeSpent));
         }
+    }
+
+    public static function hasActionCustomDimensionConfiguredInSite($request)
+    {
+        $dimensions = self::getCachedCustomDimensions($request);
+        if (empty($dimensions)) {
+            return false;
+        }
+        foreach ($dimensions as $dimension) {
+            if ($dimension['scope'] == CustomDimensions::SCOPE_ACTION) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public function onNewVisit(VisitProperties $visitProperties, Request $request)
