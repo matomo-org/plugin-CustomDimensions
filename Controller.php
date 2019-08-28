@@ -13,7 +13,7 @@ use Piwik\DataTable;
 use Piwik\Piwik;
 use Piwik\View;
 
-class Controller extends \Piwik\Plugin\Controller
+class Controller extends \Piwik\Plugin\ControllerAdmin
 {
     public function manage()
     {
