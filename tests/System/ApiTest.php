@@ -59,15 +59,9 @@ class ApiTest extends SystemTestCase
             'avg_bandwidth',
             'nb_total_overall_bandwidth',
             'nb_total_pageview_bandwidth',
-            'nb_total_download_bandwidth'
+            'nb_total_download_bandwidth',
+            'nb_visits_converted'
         ];
-
-        if (version_compare(Version::VERSION, '3.8.0-b3', '<')) {
-            $removeColumns[] = 'CustomDimension_CustomDimension3';
-            $removeColumns[] = 'segment';
-            $removeColumns[] = 'sum_visit_length';
-            $removeColumns[] = 'avg_time_on_site';
-        }
 
         $apiToTest = array();
 
@@ -167,7 +161,7 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        if (version_compare(Version::VERSION, '3.8.0', '>=')) {
+        if (version_compare(Version::VERSION, '3.12.0', '>=')) {
             $apiToTest[] = array(
                 array('API.getReportMetadata'),
                 array(
@@ -176,77 +170,68 @@ class ApiTest extends SystemTestCase
                     'periods' => array('day')
                 )
             );
-
-            $apiToTest[] = array(array('API.getSegmentsMetadata'),
-                array(
-                    'idSite'  => 1,
-                    'date'    => self::$fixture->dateTime,
-                    'periods' => array('year'),
-                    'otherRequestParameters' => [
-                        'hideColumns' => 'acceptedValues' // hide accepted values as they might change
-                    ]
-                )
-            );
         }
 
-        if (version_compare(Version::VERSION, '3.6.1', '>=')) {
-            $apiToTest[] = array(array('API.getProcessedReport'),
-                                 array(
-                                     'idSite'  => 1,
-                                     'date'    => self::$fixture->dateTime,
-                                     'periods' => array('year'),
-                                     'otherRequestParameters' => array(
-                                         'apiModule' => 'CustomDimensions',
-                                         'apiAction' => 'getCustomDimension',
-                                         'idDimension' => '3'
-                                     ),
-                                     'testSuffix' => '_actionDimension',
-                                     'xmlFieldsToRemove' => ['idsubdatatable']
-                                 )
-            );
+        $apiToTest[] = array(array('API.getSegmentsMetadata'),
+            array(
+                'idSite'  => 1,
+                'date'    => self::$fixture->dateTime,
+                'periods' => array('year'),
+                'otherRequestParameters' => [
+                    'hideColumns' => 'acceptedValues' // hide accepted values as they might change
+                ]
+            )
+        );
 
-            $apiToTest[] = array(array('API.getProcessedReport'),
-                array(
-                    'idSite'  => 1,
-                    'date'    => self::$fixture->dateTime,
-                    'periods' => array('year'),
-                    'otherRequestParameters' => array(
-                        'apiModule' => 'CustomDimensions',
-                        'apiAction' => 'getCustomDimension',
-                        'idDimension' => '1'
-                    ),
-                    'testSuffix' => '_visitDimension'
-                )
-            );
+        $apiToTest[] = array(array('API.getProcessedReport'),
+                             array(
+                                 'idSite'  => 1,
+                                 'date'    => self::$fixture->dateTime,
+                                 'periods' => array('year'),
+                                 'otherRequestParameters' => array(
+                                     'apiModule' => 'CustomDimensions',
+                                     'apiAction' => 'getCustomDimension',
+                                     'idDimension' => '3'
+                                 ),
+                                 'testSuffix' => '_actionDimension',
+                                 'xmlFieldsToRemove' => ['idsubdatatable']
+                             )
+        );
 
-            $removeColumns = [
-                'generationTimeMilliseconds',
-                'totalEcommerceRevenue',
-                'totalEcommerceConversions',
-                'totalEcommerceItems',
-                'totalAbandonedCarts',
-                'totalAbandonedCartsRevenue',
-                'totalAbandonedCartsItems'
-            ];
-            if (version_compare(Version::VERSION, '3.8.0-b3', '<')) {
-                $removeColumns[] = 'title';
-                $removeColumns[] = 'subtitle';
-            }
-            if (version_compare(Version::VERSION, '3.9.0-b1', '<')) {
-                $removeColumns[] = 'icon';
-                $removeColumns[] = 'visitConvertedIcon';
-            }
+        $apiToTest[] = array(array('API.getProcessedReport'),
+            array(
+                'idSite'  => 1,
+                'date'    => self::$fixture->dateTime,
+                'periods' => array('year'),
+                'otherRequestParameters' => array(
+                    'apiModule' => 'CustomDimensions',
+                    'apiAction' => 'getCustomDimension',
+                    'idDimension' => '1'
+                ),
+                'testSuffix' => '_visitDimension',
+                'xmlFieldsToRemove' => ['nb_visits_converted']
+           )
+        );
 
-            $apiToTest[] = array(
-                array('Live.getLastVisitsDetails'),
-                array(
-                    'idSite'                 => 1,
-                    'date'                   => self::$fixture->dateTime,
-                    'periods'                => array('year'),
-                    'xmlFieldsToRemove'      => $removeColumns
-                )
-            );
-        }
+        $removeColumns = [
+            'generationTimeMilliseconds',
+            'totalEcommerceRevenue',
+            'totalEcommerceConversions',
+            'totalEcommerceItems',
+            'totalAbandonedCarts',
+            'totalAbandonedCartsRevenue',
+            'totalAbandonedCartsItems'
+        ];
+
+        $apiToTest[] = array(
+            array('Live.getLastVisitsDetails'),
+            array(
+                'idSite'                 => 1,
+                'date'                   => self::$fixture->dateTime,
+                'periods'                => array('year'),
+                'xmlFieldsToRemove'      => $removeColumns
+            )
+        );
 
         return $apiToTest;
     }
