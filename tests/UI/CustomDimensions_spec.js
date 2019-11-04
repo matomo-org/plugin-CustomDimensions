@@ -37,7 +37,9 @@ describe("CustomDimensions", function () {
 
     async function closeOpenedPopover()
     {
+        await page.waitFor(100);
         await (await page.jQuery('.ui-dialog:visible .ui-button-icon-primary.ui-icon-closethick:visible')).click();
+        await page.waitFor(100);
     }
 
     async function triggerRowAction(labelToClick, nameOfRowActionToTrigger)
@@ -45,6 +47,7 @@ describe("CustomDimensions", function () {
         var rowToMatch = 'td.label:contains(' + labelToClick + '):first';
 
         await (await page.jQuery('table.dataTable tbody ' + rowToMatch)).hover();
+        await page.waitFor(50);
         await (await page.jQuery(rowToMatch + ' a.'+ nameOfRowActionToTrigger + ':visible')).hover(); // necessary to get popover to display
         await (await page.jQuery(rowToMatch + ' a.' + nameOfRowActionToTrigger + ':visible')).click();
         await page.mouse.move(-10, -10);
@@ -157,9 +160,14 @@ describe("CustomDimensions", function () {
 
     it('should be able to show transitions for subtable', async function () {
         await captureSelector('report_action_subtable_transitions', popupSelector, async function () {
-            await closeOpenedPopover();
+            await page.goto('about:blank');
+            await page.goto(reportUrlDimension3);
+            await (await page.jQuery('.dataTable .subDataTable .value:contains(en):first')).click();
+            await page.waitForNetworkIdle();
+            await page.waitFor(100);
+            await (await page.jQuery('td.label:contains(en_US)')).hover();
+            await page.waitFor(100);
             await triggerRowAction('en_US', 'actionTransitions');
         });
     });
-
 });
