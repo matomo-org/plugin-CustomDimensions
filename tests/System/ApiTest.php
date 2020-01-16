@@ -161,16 +161,14 @@ class ApiTest extends SystemTestCase
             )
         );
 
-        if (version_compare(Version::VERSION, '3.12.0', '>=')) {
-            $apiToTest[] = array(
-                array('API.getReportMetadata'),
-                array(
-                    'idSite'  => 1,
-                    'date'    => self::$fixture->dateTime,
-                    'periods' => array('day')
-                )
-            );
-        }
+        $apiToTest[] = array(
+            array('API.getReportMetadata'),
+            array(
+                'idSite'  => 1,
+                'date'    => self::$fixture->dateTime,
+                'periods' => array('day')
+            )
+        );
 
         $apiToTest[] = array(array('API.getSegmentsMetadata'),
             array(
