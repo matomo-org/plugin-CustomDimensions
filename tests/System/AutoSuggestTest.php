@@ -12,7 +12,6 @@ use Piwik\Date;
 use Piwik\Plugins\CustomDimensions\Dao\AutoSuggest;
 use Piwik\Plugins\CustomDimensions\tests\Fixtures\TrackVisitsWithCustomDimensionsFixture;
 use Piwik\Tests\Framework\TestCase\SystemTestCase;
-use Piwik\Version;
 
 /**
  * @group CustomDimensions

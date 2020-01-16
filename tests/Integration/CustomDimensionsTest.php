@@ -16,7 +16,6 @@ use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
 use Piwik\Tracker\Cache;
 use Piwik\Tracker\Request;
-use Piwik\Plugin;
 
 /**
  * @group CustomDimensions

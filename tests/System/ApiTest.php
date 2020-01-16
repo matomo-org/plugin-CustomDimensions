@@ -8,10 +8,8 @@
 
 namespace Piwik\Plugins\CustomDimensions\tests\System;
 
-use Piwik\Plugin\Manager;
 use Piwik\Plugins\CustomDimensions\tests\Fixtures\TrackVisitsWithCustomDimensionsFixture;
 use Piwik\Tests\Framework\TestCase\SystemTestCase;
-use Piwik\Version;
 
 /**
  * @group CustomDimensions

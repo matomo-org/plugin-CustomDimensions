@@ -15,7 +15,6 @@ use Piwik\Plugins\CustomDimensions\tests\Integration\Dao\ConfigurationTest;
 use Piwik\Tests\Framework\Fixture;
 use Piwik\Tests\Framework\Mock\FakeAccess;
 use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
-use Piwik\Plugin;
 use Exception;
 
 /**
