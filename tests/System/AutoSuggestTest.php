@@ -12,7 +12,6 @@ use Piwik\Date;
 use Piwik\Plugins\CustomDimensions\Dao\AutoSuggest;
 use Piwik\Plugins\CustomDimensions\tests\Fixtures\TrackVisitsWithCustomDimensionsFixture;
 use Piwik\Tests\Framework\TestCase\SystemTestCase;
-use Piwik\Version;
 
 /**
  * @group CustomDimensions
@@ -36,20 +35,18 @@ class AutoSuggestTest extends SystemTestCase
 
     public function getApiForTesting()
     {
-        if (version_compare(Version::VERSION, '3.6.1', '>=')) {
-            $apiToTest[] = array(array('API.getSuggestedValuesForSegment'),
-                array(
-                    'idSite' => 1,
-                    'date' => self::$fixture->dateTime,
-                    'periods' => array('year'),
-                    'otherRequestParameters' => array(
-                        'segmentName' => 'dimension1',
-                        'idSite' => self::$fixture->idSite,
-                    ),
-                    'testSuffix' => '_visitScope'
-                )
-            );
-        }
+        $apiToTest[] = array(array('API.getSuggestedValuesForSegment'),
+            array(
+                'idSite' => 1,
+                'date' => self::$fixture->dateTime,
+                'periods' => array('year'),
+                'otherRequestParameters' => array(
+                    'segmentName' => 'dimension1',
+                    'idSite' => self::$fixture->idSite,
+                ),
+                'testSuffix' => '_visitScope'
+            )
+        );
 
         $apiToTest[] = array(array('API.getSuggestedValuesForSegment'),
             array(

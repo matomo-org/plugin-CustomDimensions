@@ -8,7 +8,6 @@
 
 namespace Piwik\Plugins\CustomDimensions\tests;
 
-
 use Piwik\Plugins\CustomDimensions\API;
 use Piwik\Segment;
 use Piwik\Tests\Framework\Fixture;
