@@ -18,36 +18,35 @@ use Piwik\Tests\Framework\Fixture;
  */
 class NameTest extends \PHPUnit\Framework\TestCase
 {
-    public function setUp()
+    public function setUp(): void
     {
         Fixture::resetTranslations();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage CustomDimensions_NameIsRequired
-     */
     public function test_check_shouldFailWhenNameIsEmpty()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('CustomDimensions_NameIsRequired');
+
         $this->buildName('')->check();
     }
 
     /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage CustomDimensions_NameAllowedCharacters
      * @dataProvider getInvalidNames
      */
     public function test_check_shouldFailWhenNameIsInvalid($name)
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('CustomDimensions_NameAllowedCharacters');
+
         $this->buildName($name)->check();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage CustomDimensions_NameIsTooLong
-     */
     public function test_check_shouldFailWhenNameIsTooLong()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('CustomDimensions_NameIsTooLong');
+
         $this->buildName(str_pad('test', 256, '434'))->check();
     }
 
@@ -74,6 +73,7 @@ class NameTest extends \PHPUnit\Framework\TestCase
     public function test_check_shouldNotFailWhenScopeIsValid($name)
     {
         $this->buildName($name)->check();
+        self::assertTrue(true);
     }
 
     public function getValidNames()

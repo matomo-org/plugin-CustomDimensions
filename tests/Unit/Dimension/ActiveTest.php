@@ -18,30 +18,27 @@ use Piwik\Plugins\CustomDimensions\Dimension\Active;
 class ActiveTest extends \PHPUnit\Framework\TestCase
 {
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Invalid value '' for 'active' specified. Allowed values: '0' or '1'
-     */
     public function test_check_shouldFailWhenActiveIsEmpty()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Invalid value '' for 'active' specified. Allowed values: '0' or '1'");
+
         $this->buildActive('')->check();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Invalid value 'anyValUe' for 'active' specified. Allowed values: '0' or '1'
-     */
     public function test_check_shouldFailWhenActiveIsNotValid()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Invalid value 'anyValUe' for 'active' specified. Allowed values: '0' or '1'");
+
         $this->buildActive('anyValUe')->check();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Invalid value '2'
-     */
     public function test_check_shouldFailWhenActiveIsNumericButNot0or1()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Invalid value '2'");
+
         $this->buildActive('2')->check();
     }
 
@@ -53,6 +50,8 @@ class ActiveTest extends \PHPUnit\Framework\TestCase
         $this->buildActive(1)->check();
         $this->buildActive('0')->check();
         $this->buildActive('1')->check();
+
+        self::assertTrue(true);
     }
 
     private function buildActive($active)

@@ -27,7 +27,7 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
     public $idSite = 1;
     public $idSite2 = 2;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->setUpWebsites();
         $this->addGoals();
@@ -37,7 +37,7 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
         $this->trackThirdVisit();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         // empty
     }

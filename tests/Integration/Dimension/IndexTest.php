@@ -28,7 +28,7 @@ class IndexTest extends IntegrationTestCase
      */
     private $index;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -68,12 +68,11 @@ class IndexTest extends IntegrationTestCase
         $this->assertSame(2, $this->index->getNextIndex($idSite, CustomDimensions::SCOPE_ACTION)); // should remain unchanged
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage All Custom Dimensions for website 1 in scope 'action' are already used
-     */
     public function test_shouldThrowAnException_IfAllIndexesAreUsed()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('All Custom Dimensions for website 1 in scope \'action\' are already used');
+
         $idSite = 1;
 
         foreach (range(1,5) as $index) {
