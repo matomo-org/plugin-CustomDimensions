@@ -15,7 +15,7 @@ use Piwik\Plugins\CustomDimensions\Dimension\CaseSensitive;
  * @group CaseSensitive
  * @group Plugins
  */
-class CaseSensitiveTest extends \PHPUnit_Framework_TestCase
+class CaseSensitiveTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

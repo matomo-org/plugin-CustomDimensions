@@ -15,7 +15,7 @@ use Piwik\Plugins\CustomDimensions\Dimension\Extractions;
  * @group Extractions
  * @group Plugins
  */
-class ExtractionsTest extends \PHPUnit_Framework_TestCase
+class ExtractionsTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

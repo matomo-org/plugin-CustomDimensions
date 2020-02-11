@@ -15,7 +15,7 @@ use Piwik\Plugins\CustomDimensions\Dimension\Scope;
  * @group Scope
  * @group Plugins
  */
-class ScopeTest extends \PHPUnit_Framework_TestCase
+class ScopeTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

@@ -17,7 +17,7 @@ use Piwik\Plugins\CustomDimensions\Archiver;
  * @group AddSegmentMetadata
  * @group Plugins
  */
-class AddSegmentMetadataTest extends \PHPUnit_Framework_TestCase
+class AddSegmentMetadataTest extends \PHPUnit\Framework\TestCase
 {
     private $filter = 'Piwik\Plugins\CustomDimensions\DataTable\Filter\AddSegmentMetadata';
 
