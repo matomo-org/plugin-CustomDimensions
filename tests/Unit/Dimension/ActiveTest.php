@@ -15,7 +15,7 @@ use Piwik\Plugins\CustomDimensions\Dimension\Active;
  * @group Active
  * @group Plugins
  */
-class ActiveTest extends \PHPUnit_Framework_TestCase
+class ActiveTest extends \PHPUnit\Framework\TestCase
 {
 
     /**

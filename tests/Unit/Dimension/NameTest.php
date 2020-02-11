@@ -16,7 +16,7 @@ use Piwik\Translate;
  * @group Name
  * @group Plugins
  */
-class NameTest extends \PHPUnit_Framework_TestCase
+class NameTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {
