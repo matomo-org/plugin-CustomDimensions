@@ -8,7 +8,7 @@
 
 namespace Piwik\Plugins\CustomDimensions\tests\Unit\Dimension;
 use Piwik\Plugins\CustomDimensions\Dimension\Name;
-use Piwik\Translate;
+use Piwik\Tests\Framework\Fixture;
 
 /**
  * @group CustomDimensions
@@ -20,7 +20,7 @@ class NameTest extends \PHPUnit\Framework\TestCase
 {
     public function setUp()
     {
-        Translate::reset();
+        Fixture::resetTranslations();
     }
 
     /**
