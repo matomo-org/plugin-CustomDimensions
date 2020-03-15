@@ -1,6 +1,6 @@
 {
     "name": "CustomDimensions",
-    "version": "3.1.9",
+    "version": "3.1.10",
     "description": "Extend Matomo to your needs by defining and tracking Custom Dimensions in scope Action or Visit",
     "theme": false,
     "keywords": [
