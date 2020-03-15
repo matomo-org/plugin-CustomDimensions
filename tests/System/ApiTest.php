@@ -172,16 +172,19 @@ class ApiTest extends SystemTestCase
             );
         }
 
-        $apiToTest[] = array(array('API.getSegmentsMetadata'),
-            array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
-                'periods' => array('year'),
-                'otherRequestParameters' => [
-                    'hideColumns' => 'acceptedValues' // hide accepted values as they might change
-                ]
-            )
-        );
+        // some segments were added in 3.13.0
+        if (version_compare(Version::VERSION, '3.13.0', '>=')) {
+            $apiToTest[] = array(array('API.getSegmentsMetadata'),
+                array(
+                    'idSite' => 1,
+                    'date' => self::$fixture->dateTime,
+                    'periods' => array('year'),
+                    'otherRequestParameters' => [
+                        'hideColumns' => 'acceptedValues' // hide accepted values as they might change
+                    ]
+                )
+            );
+        }
 
         $apiToTest[] = array(array('API.getProcessedReport'),
                              array(
