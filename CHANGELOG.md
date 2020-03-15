@@ -1,5 +1,8 @@
 ## Changelog
 
+* 3.1.10
+  * Performance & code improvements
+  * Translation updates
 * 3.1.9
   * Remove custom dimension configs for the correct scope 
   * Improve speed of auto suggest for custom dimension for high traffic sites
