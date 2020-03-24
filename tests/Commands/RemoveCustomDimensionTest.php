@@ -40,7 +40,7 @@ class RemoveCustomDimensionTest extends IntegrationTestCase
         $this->executeCommand('invalidscope', null);
     }
 
-    public function testExecute_ShouldThrowException_IfIndexIsNotSpecifed()
+    public function testExecute_ShouldThrowException_IfIndexIsNotSpecified()
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('An option "index" must be specified');
