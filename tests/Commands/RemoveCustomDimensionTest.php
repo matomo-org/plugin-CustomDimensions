@@ -46,7 +46,7 @@ class RemoveCustomDimensionTest extends IntegrationTestCase
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage  An option "index" must be specified
      */
-    public function testExecute_ShouldThrowException_IfIndexIsNotSpecifed()
+    public function testExecute_ShouldThrowException_IfIndexIsNotSpecified()
     {
         $this->executeCommand(CustomDimensions::SCOPE_VISIT, null);
     }
