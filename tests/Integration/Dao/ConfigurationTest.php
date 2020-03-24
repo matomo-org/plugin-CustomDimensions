@@ -29,7 +29,7 @@ class ConfigurationTest extends IntegrationTestCase
 
     private $tableName;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -48,12 +48,11 @@ class ConfigurationTest extends IntegrationTestCase
         $this->assertSame($expected, $columns);
     }
 
-    /**
-     * @expectedException \Zend_Db_Statement_Exception
-     * @expectedExceptionMessage custom_dimensions
-     */
     public function test_shouldBeAbleToUninstallConfigTable()
     {
+        $this->expectException(\Zend_Db_Statement_Exception::class);
+        $this->expectExceptionMessage('custom_dimensions');
+
         $this->config->uninstall();
 
         try {
@@ -82,12 +81,11 @@ class ConfigurationTest extends IntegrationTestCase
         }
     }
 
-    /**
-     * @expectedException \Zend_Db_Statement_Exception
-     * @expectedExceptionMessage Duplicate
-     */
     public function test_configureNewDimension_shouldNotBePossibleToAssignSameIndexForSameScopeAndIdSiteTwice()
     {
+        $this->expectException(\Zend_Db_Statement_Exception::class);
+        $this->expectExceptionMessage('Duplicate');
+
         $this->configureNewDimension();
         $this->configureNewDimension();
     }

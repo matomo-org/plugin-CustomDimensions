@@ -35,6 +35,9 @@
         "DimensionCreated": "自定义维度创建",
         "DimensionUpdated": "自定义维度更新",
         "ColumnUniqueActions": "单一动作",
-        "ColumnAvgTimeOnDimension": "在维度上的平均时间"
+        "ColumnAvgTimeOnDimension": "在维度上的平均时间",
+        "CustomDimensionId": "自定义维度（Id%d）",
+        "NoValue": "没有价值",
+        "EmptyValue": "空值"
     }
 }

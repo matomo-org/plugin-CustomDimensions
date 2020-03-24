@@ -34,7 +34,7 @@ class CustomDimensionsRequestProcessorTest extends IntegrationTestCase
      */
     private $processor;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -52,7 +52,7 @@ class CustomDimensionsRequestProcessorTest extends IntegrationTestCase
         $this->processor = new Processor();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
     }

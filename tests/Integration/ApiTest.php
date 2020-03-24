@@ -29,7 +29,7 @@ class ApiTest extends IntegrationTestCase
      */
     private $api;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -51,7 +51,7 @@ class ApiTest extends IntegrationTestCase
         try {
             $this->api->configureNewCustomDimension($idSite = 1, $dimension['name'], $dimension['scope'], $dimension['active'], $dimension['extractions'], $dimension['case_sensitive']);
         } catch (Exception $e) {
-            $this->assertContains($dimension['message'], $e->getMessage());
+            self::assertStringContainsString($dimension['message'], $e->getMessage());
             return;
         }
 
@@ -94,12 +94,11 @@ class ApiTest extends IntegrationTestCase
         $this->assertSame(array($expectedDimension), $dimensions);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasWriteAccess
-     */
     public function test_configureNewDimension_shouldFailWhenNotHavingAdminPermissions()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasWriteAccess');
+
         $this->setUser();
         $this->api->configureNewCustomDimension($idSite = 1, 'Valid Name äöü', CustomDimensions::SCOPE_VISIT, '1', array(array('dimension' => 'urlparam', 'pattern' => 'test')));
     }
@@ -113,7 +112,7 @@ class ApiTest extends IntegrationTestCase
             $this->test_configureNewDimension_shouldReturnCreatedIdOnSuccess();
             $this->api->configureExistingCustomDimension($dimension['id'], $idSite = 1, $dimension['name'], $dimension['active'], $dimension['extractions']);
         } catch (Exception $e) {
-            $this->assertContains($dimension['message'], $e->getMessage());
+            self::assertStringContainsString($dimension['message'], $e->getMessage());
             return;
         }
 
@@ -163,62 +162,56 @@ class ApiTest extends IntegrationTestCase
         $this->assertFalse($dimensions[0]['case_sensitive']);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Extractions can be used only in scope 'action'
-     */
     public function test_configureExistingCustomDimension_shouldThrowException_WhenTryingToSetExtractionsForNonActionScope()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Extractions can be used only in scope \'action\'');
+
         $id = $this->api->configureNewCustomDimension($idSite = 1, 'Name', CustomDimensions::SCOPE_VISIT, '1');
         $this->api->configureExistingCustomDimension($id, $idSite, 'Name', '0', array(array('dimension' => 'urlparam', 'pattern' => 'newtest')));
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasWriteAccess
-     */
     public function test_configureExistingCustomDimension_shouldFailWhenNotHavingAdminPermissions()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasWriteAccess');
+
         $this->setUser();
         $this->api->configureExistingCustomDimension($id = 1, $idSite = 1, 'New Valid Name äöü', '0', array(array('dimension' => 'urlparam', 'pattern' => 'newtest')));
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getConfiguredCustomDimensions_shouldFailWhenNotHavingAdminPermissions()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getConfiguredCustomDimensions($idSite = 1);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getAvailableScopes_shouldFailWhenNotHavingAdminPermissions()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getAvailableScopes($idSite = 1);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasSomeWriteAccess
-     */
     public function test_getAvailableExtractionDimensions_shouldFailWhenNotHavingAdminPermissions()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasSomeWriteAccess');
+
         $this->setUser();
         $this->api->getAvailableExtractionDimensions();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage checkUserHasViewAccess
-     */
     public function test_getCustomDimension_shouldFailWhenNotHavingViewPermissions()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('checkUserHasViewAccess');
+
         $this->setAnonymousUser();
         $this->api->getCustomDimension($idDimension = 1, $idSite = 1, $period = 'day', $date = 'today');
     }

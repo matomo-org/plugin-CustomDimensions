@@ -24,48 +24,43 @@ use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
  */
 class RemoveCustomDimensionTest extends IntegrationTestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  The specified scope is invalid. Use either
-     */
     public function testExecute_ShouldThrowException_IfArgumentIsMissing()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The specified scope is invalid. Use either');
+
         $this->executeCommand(null, null);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  The specified scope is invalid. Use either "--scope=visit" or "--scope=action"
-     */
     public function testExecute_ShouldThrowException_IfScopeIsInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The specified scope is invalid. Use either "--scope=visit" or "--scope=action"');
+
         $this->executeCommand('invalidscope', null);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  An option "index" must be specified
-     */
     public function testExecute_ShouldThrowException_IfIndexIsNotSpecified()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('An option "index" must be specified');
+
         $this->executeCommand(CustomDimensions::SCOPE_VISIT, null);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  Option "index" must be a number
-     */
     public function testExecute_ShouldThrowException_IfIndexIsNotANumber()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Option "index" must be a number');
+
         $this->executeCommand(CustomDimensions::SCOPE_VISIT, '545fddfd');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  Specified index is not installed
-     */
     public function testExecute_ShouldThrowException_IfCountIsLessThanONe()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Specified index is not installed');
+
         $this->executeCommand(CustomDimensions::SCOPE_VISIT, '14');
     }
 
@@ -88,10 +83,10 @@ class RemoveCustomDimensionTest extends IntegrationTestCase
 
         $result = $this->executeCommand(CustomDimensions::SCOPE_ACTION, $index = 3);
 
-        $this->assertContains('Remove Custom Dimension at index 3 in scope action.', $result);
-        $this->assertContains('Are you sure you want to perform this action?', $result);
-        $this->assertContains('Starting to remove this Custom Dimension', $result);
-        $this->assertContains('Your Piwik is now configured for up to 4 Custom Dimensions in scope action.', $result);
+        self::assertStringContainsString('Remove Custom Dimension at index 3 in scope action.', $result);
+        self::assertStringContainsString('Are you sure you want to perform this action?', $result);
+        self::assertStringContainsString('Starting to remove this Custom Dimension', $result);
+        self::assertStringContainsString('Your Piwik is now configured for up to 4 Custom Dimensions in scope action.', $result);
 
         $logVisit = new LogTable(CustomDimensions::SCOPE_VISIT);
         $this->assertSame(range(1,5), $logVisit->getInstalledIndexes());
@@ -113,10 +108,10 @@ class RemoveCustomDimensionTest extends IntegrationTestCase
 
         $result = $this->executeCommand(CustomDimensions::SCOPE_VISIT, $index = 2);
 
-        $this->assertContains('Remove Custom Dimension at index 2 in scope visit', $result);
-        $this->assertContains('Are you sure you want to perform this action?', $result);
-        $this->assertContains('Starting to remove this Custom Dimension', $result);
-        $this->assertContains('Your Piwik is now configured for up to 4 Custom Dimensions in scope visit.', $result);
+        self::assertStringContainsString('Remove Custom Dimension at index 2 in scope visit', $result);
+        self::assertStringContainsString('Are you sure you want to perform this action?', $result);
+        self::assertStringContainsString('Starting to remove this Custom Dimension', $result);
+        self::assertStringContainsString('Your Piwik is now configured for up to 4 Custom Dimensions in scope visit.', $result);
 
         $logVisit = new LogTable(CustomDimensions::SCOPE_VISIT);
         $this->assertSame(array(1,3,4,5), $logVisit->getInstalledIndexes());

@@ -170,8 +170,8 @@ class ApiTest extends SystemTestCase
 
         $apiToTest[] = array(array('API.getSegmentsMetadata'),
             array(
-                'idSite'  => 1,
-                'date'    => self::$fixture->dateTime,
+                'idSite' => 1,
+                'date' => self::$fixture->dateTime,
                 'periods' => array('year'),
                 'otherRequestParameters' => [
                     'hideColumns' => 'acceptedValues' // hide accepted values as they might change

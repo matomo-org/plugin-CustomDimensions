@@ -24,7 +24,7 @@ use Piwik\Tracker\Request;
 class ExtractionTest extends IntegrationTestCase
 {
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -177,22 +177,22 @@ class ExtractionTest extends IntegrationTestCase
         $this->assertSame('http://www.example.com/test/index.php?idsite=54&module=CoreHome&action=test&camelCase=fooBarBaz', $value);
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Invald dimension 'anyInvalid' used in an extraction. Available dimensions are: url, urlparam, action_name
-     */
     public function test_check_shouldFailWhenInvalidDimensionGiven()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Invald dimension \'anyInvalid\' used in an extraction. Available dimensions are: url, urlparam, action_name');
+
         $this->buildExtraction('anyInvalid', '/ref(.+)')->check();
     }
 
     /**
      * @dataProvider getInvalidPatterns
-     * @expectedException \Exception
-     * @expectedExceptionMessage You need to group exactly one part of the regular expression inside round brackets, eg 'index_(.+).html'
      */
     public function test_check_shouldFailWhenInvalidPatternGiven($pattern)
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('You need to group exactly one part of the regular expression inside round brackets, eg \'index_(.+).html\'');
+
         $this->buildExtraction('url', $pattern)->check();
     }
 

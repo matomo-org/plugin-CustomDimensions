@@ -17,32 +17,30 @@ use Piwik\Plugins\CustomDimensions\Dimension\Extractions;
  */
 class ExtractionsTest extends \PHPUnit\Framework\TestCase
 {
-
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage extractions has to be an array
-     */
     public function test_check_shouldFailWhenExtractionsIsNotAnArray()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("extractions has to be an array");
+
         $this->buildExtractions('')->check();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Each extraction within extractions has to be an array
-     */
     public function test_check_shouldFailWhenExtractionsDoesNotContainArrays()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Each extraction within extractions has to be an array");
+
         $this->buildExtractions(array('5'))->check();
     }
 
     /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Each extraction within extractions must have a key "dimension" and "pattern" only
      * @dataProvider getInvalidExtraction
      */
     public function test_check_shouldFailWhenExtractionsDoesNotContainValidExtraction($extraction)
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('Each extraction within extractions must have a key "dimension" and "pattern" only');
+
         $this->buildExtractions(array($extraction))->check();
     }
 
@@ -57,12 +55,11 @@ class ExtractionsTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage Invald dimension 'invalId' used in an extraction. Available dimensions are: url, urlparam, action_name
-     */
     public function test_check_shouldAlsoCheckExtractionAndFailIfValueIsInvalid()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage("Invald dimension 'invalId' used in an extraction. Available dimensions are: url, urlparam, action_name");
+
         $extraction1 = array('dimension' => 'url', 'pattern' => 'index(.+).html');
         $extraction2 = array('dimension' => 'invalId', 'pattern' => 'index');
         $this->buildExtractions(array($extraction1, $extraction2))->check();
@@ -72,7 +69,10 @@ class ExtractionsTest extends \PHPUnit\Framework\TestCase
     {
         $extraction1 = array('dimension' => 'url', 'pattern' => 'index(.+).html');
         $extraction2 = array('dimension' => 'urlparam', 'pattern' => 'index');
-        $this->buildExtractions(array($extraction1, $extraction2))->check();
+        $ex = $this->buildExtractions(array($extraction1, $extraction2));
+        $ex->check();
+
+        self::assertInstanceOf(Extractions::class, $ex);
     }
 
     private function buildExtractions($extractions)

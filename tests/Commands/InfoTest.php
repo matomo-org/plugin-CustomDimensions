@@ -28,7 +28,7 @@ class InfoTest extends IntegrationTestCase
     {
         $output = $this->executeCommand();
 
-        $this->assertContains('./console customdimensions:add-custom-dimension --scope=visit"
+        self::assertStringContainsString('./console customdimensions:add-custom-dimension --scope=visit"
 Installed indexes are:
 1 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=1
 2 to remove this Custom Dimension execute ./console customdimensions:remove-custom-dimension --scope=visit --index=2
@@ -61,7 +61,7 @@ Installed indexes are:
         $model = new LogTable(CustomDimensions::SCOPE_CONVERSION);
         $model->removeCustomDimension(5);
 
-        $this->assertContains('We found an error, Custom Dimensions in scope "conversion" are not correctly installed. Execute the following command to repair it:
+        self::assertStringContainsString('We found an error, Custom Dimensions in scope "conversion" are not correctly installed. Execute the following command to repair it:
 ./console customdimensions:add-custom-dimension --scope=conversion --count=1', $this->executeCommand());
     }
 

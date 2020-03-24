@@ -26,7 +26,7 @@ class DimensionTest extends IntegrationTestCase
     private $id2;
     private $id3;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -42,12 +42,11 @@ class DimensionTest extends IntegrationTestCase
         $this->getDimension($this->id3, 1)->checkExists();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage CustomDimensions_ExceptionDimensionDoesNotExist
-     */
     public function test_checkExists_shouldFailIfDimensionDoesNotExist()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('CustomDimensions_ExceptionDimensionDoesNotExist');
+
         $this->getDimension($this->id1, 2)->checkExists();
     }
 
@@ -57,21 +56,19 @@ class DimensionTest extends IntegrationTestCase
         $this->getDimension($this->id2, 1)->checkActive();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage CustomDimensions_ExceptionDimensionIsNotActive
-     */
     public function test_checkActive_shouldFailIfDimensionExistsButIsNotActive()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('CustomDimensions_ExceptionDimensionIsNotActive');
+
         $this->getDimension($this->id3, 1)->checkActive();
     }
 
-    /**
-     * @expectedException \Exception
-     * @expectedExceptionMessage CustomDimensions_ExceptionDimensionDoesNotExist
-     */
     public function test_checkActive_shouldFailIfDimensionDoesNotExistAndThereforeIsNotActive()
     {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessage('CustomDimensions_ExceptionDimensionDoesNotExist');
+
         $this->getDimension($this->id3, 2)->checkActive();
     }
 

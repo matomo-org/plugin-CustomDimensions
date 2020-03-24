@@ -38,7 +38,7 @@ class LogTableTest extends IntegrationTestCase
      */
     private $logConverison;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -51,7 +51,7 @@ class LogTableTest extends IntegrationTestCase
         $this->logConverison->install();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         $this->logVisit->uninstall();
         $this->logAction->uninstall();

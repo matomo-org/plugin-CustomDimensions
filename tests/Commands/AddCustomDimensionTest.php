@@ -24,39 +24,35 @@ use Piwik\Tests\Framework\TestCase\IntegrationTestCase;
  */
 class AddCustomDimensionTest extends IntegrationTestCase
 {
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  The specified scope is invalid. Use either
-     */
     public function testExecute_ShouldThrowException_IfArgumentIsMissing()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The specified scope is invalid. Use either');
+
         $this->executeCommand(null, null);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  The specified scope is invalid. Use either "--scope=visit" or "--scope=action"
-     */
     public function testExecute_ShouldThrowException_IfScopeIsInvalid()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The specified scope is invalid. Use either "--scope=visit" or "--scope=action"');
+
         $this->executeCommand('invalidscope', null);
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  Option "count" must be a number
-     */
     public function testExecute_ShouldThrowException_IfCountIsNotANumber()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Option "count" must be a number');
+
         $this->executeCommand(CustomDimensions::SCOPE_VISIT, '545fddfd');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage  Option "count" must be at least one
-     */
     public function testExecute_ShouldThrowException_IfCountIsLessThanONe()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Option "count" must be at least one');
+
         $this->executeCommand(CustomDimensions::SCOPE_VISIT, '0');
     }
 
@@ -79,10 +75,10 @@ class AddCustomDimensionTest extends IntegrationTestCase
 
         $result = $this->executeCommand(CustomDimensions::SCOPE_ACTION, $count = 3);
 
-        $this->assertContains('Adding 3 Custom Dimension(s) in scope action.', $result);
-        $this->assertContains('Are you sure you want to perform this action?', $result);
-        $this->assertContains('Starting to add Custom Dimension(s)', $result);
-        $this->assertContains('Your Piwik is now configured for up to 8 Custom Dimensions in scope action.', $result);
+        self::assertStringContainsString('Adding 3 Custom Dimension(s) in scope action.', $result);
+        self::assertStringContainsString('Are you sure you want to perform this action?', $result);
+        self::assertStringContainsString('Starting to add Custom Dimension(s)', $result);
+        self::assertStringContainsString('Your Piwik is now configured for up to 8 Custom Dimensions in scope action.', $result);
 
         $logVisit = new LogTable(CustomDimensions::SCOPE_VISIT);
         $this->assertSame(range(1,5), $logVisit->getInstalledIndexes());
@@ -107,10 +103,10 @@ class AddCustomDimensionTest extends IntegrationTestCase
 
         $result = $this->executeCommand(CustomDimensions::SCOPE_VISIT, $count = 2);
 
-        $this->assertContains('Adding 2 Custom Dimension(s) in scope visit.', $result);
-        $this->assertContains('Are you sure you want to perform this action?', $result);
-        $this->assertContains('Starting to add Custom Dimension(s)', $result);
-        $this->assertContains('Your Piwik is now configured for up to 7 Custom Dimensions in scope visit.', $result);
+        self::assertStringContainsString('Adding 2 Custom Dimension(s) in scope visit.', $result);
+        self::assertStringContainsString('Are you sure you want to perform this action?', $result);
+        self::assertStringContainsString('Starting to add Custom Dimension(s)', $result);
+        self::assertStringContainsString('Your Piwik is now configured for up to 7 Custom Dimensions in scope visit.', $result);
 
         $logVisit = new LogTable(CustomDimensions::SCOPE_VISIT);
         $this->assertSame(range(1,7), $logVisit->getInstalledIndexes());

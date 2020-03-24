@@ -29,7 +29,7 @@ class CustomDimensionsTest extends IntegrationTestCase
      */
     private $plugin;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
