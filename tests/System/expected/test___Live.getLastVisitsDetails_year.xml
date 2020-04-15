@@ -18,7 +18,7 @@
 				<bandwidth />
 				
 				<generationTime>0.05s</generationTime>
-				<interactionPosition>1</interactionPosition>
+				<pageviewPosition>1</pageviewPosition>
 				<title>Fourth page view</title>
 				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
 				<icon />
@@ -164,7 +164,7 @@
 				<bandwidth />
 				
 				<generationTime>1.03s</generationTime>
-				<interactionPosition>1</interactionPosition>
+				<pageviewPosition>1</pageviewPosition>
 				<title>Sixth page view</title>
 				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
 				<icon />
@@ -308,7 +308,7 @@
 				
 				<pageId>5</pageId>
 				<bandwidth />
-				<interactionPosition>1</interactionPosition>
+				<pageviewPosition>1</pageviewPosition>
 				<title>Fifth page view</title>
 				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
 				<icon />
@@ -456,7 +456,7 @@
 				<timeSpentPretty>6 min 0s</timeSpentPretty>
 				
 				<generationTime>0.42s</generationTime>
-				<interactionPosition>1</interactionPosition>
+				<pageviewPosition>1</pageviewPosition>
 				<title>Viewing homepage</title>
 				<subtitle>http://example.com/</subtitle>
 				<icon />
@@ -479,7 +479,7 @@
 				<timeSpentPretty>6 min 0s</timeSpentPretty>
 				
 				<generationTime>0.12s</generationTime>
-				<interactionPosition>2</interactionPosition>
+				<pageviewPosition>2</pageviewPosition>
 				<title>Second page view</title>
 				<subtitle>http://example.com/sub_en/page?test=343&amp;param=23</subtitle>
 				<icon />
@@ -517,7 +517,7 @@
 				<bandwidth />
 				
 				<generationTime>0.34s</generationTime>
-				<interactionPosition>3</interactionPosition>
+				<pageviewPosition>3</pageviewPosition>
 				<title>Third page view</title>
 				<subtitle>http://example.com/sub_en/page?param=en_US</subtitle>
 				<icon />
@@ -644,7 +644,7 @@
 				
 				<pageId>9</pageId>
 				<bandwidth />
-				<interactionPosition>1</interactionPosition>
+				<pageviewPosition>1</pageviewPosition>
 				<title>Viewing homepage</title>
 				<subtitle>http://example.com/sub_en/page</subtitle>
 				<icon />
