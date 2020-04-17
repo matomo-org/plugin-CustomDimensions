@@ -90,38 +90,32 @@ class TrackVisitsWithCustomDimensionsFixture extends Fixture
 
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.1)->getDatetime());
         $t->setUrl('http://example.com/');
-        $t->setGenerationTime(420);
         self::checkResponse($t->doTrackPageView('Viewing homepage'));
 
         $t->setCustomTrackingParameter('dimension1', 'value5 1');
         $t->setCustomTrackingParameter('dimension2', 'dim 2');
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.2)->getDatetime());
         $t->setUrl('http://example.com/sub_en/page?test=343&param=23');
-        $t->setGenerationTime(123);
         self::checkResponse($t->doTrackPageView('Second page view'));
 
         $t->setCustomTrackingParameter('dimension2', 'en_US');
         $t->setCustomTrackingParameter('dimension3', 'value5 3');
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addHour(0.3)->getDatetime());
         $t->setUrl('http://example.com/sub_en/page?param=en_US');
-        $t->setGenerationTime(344);
         self::checkResponse($t->doTrackPageView('Third page view'));
 
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addDay(0.4)->getDatetime());
-        $t->setGenerationTime(45);
         $t->setUrl('http://example.com/sub_en/page?param=en_US');
         self::checkResponse($t->doTrackPageView('Fourth page view'));
 
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addDay(2)->getDatetime());
         $t->setUrl('http://example.com/sub_en/page?param=en_US');
-        $t->setGenerationTime(false);
         self::checkResponse($t->doTrackPageView('Fifth page view'));
 
         $t->setCustomTrackingParameter('dimension1', 'value1');
         $t->setCustomTrackingParameter('dimension2', 'value2');
         $t->setCustomTrackingParameter('dimension5', 'value5 5');
         $t->setForceVisitDateTime(Date::factory($this->dateTime)->addDay(3)->getDatetime());
-        $t->setGenerationTime(1029);
         $t->setUrl('http://example.com/sub_en/page?param=en_US');
         self::checkResponse($t->doTrackPageView('Sixth page view'));
     }
