@@ -38,7 +38,12 @@ describe("CustomDimensions", function () {
     async function closeOpenedPopover()
     {
         await page.waitFor(100);
-        await (await page.jQuery('.ui-dialog:visible .ui-button-icon-primary.ui-icon-closethick:visible')).click();
+        const closeButton = await page.jQuery('.ui-dialog:visible .ui-icon-closethick:visible');
+        if (!closeButton) {
+            return;
+        }
+
+        await closeButton.click();
         await page.waitFor(100);
     }
 
