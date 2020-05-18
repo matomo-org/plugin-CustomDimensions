@@ -1,8 +1,8 @@
 <?php
 /**
- * Piwik - free/libre analytics platform
+ * Matomo - free/libre analytics platform
  *
- * @link http://piwik.org
+ * @link https://matomo.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  *
  */
@@ -92,7 +92,8 @@ class CustomDimensions extends Plugin
             'Goals.getReportsWithGoalMetrics'  => 'getReportsWithGoalMetrics',
             'Dimension.addDimensions' => 'addDimensions',
             'Report.addReports' => 'addReports',
-            'Actions.getCustomActionDimensionFieldsAndJoins' => 'provideActionDimensionFields'
+            'Actions.getCustomActionDimensionFieldsAndJoins' => 'provideActionDimensionFields',
+            'Db.getTablesInstalled' => 'getTablesInstalled'
         );
     }
 
@@ -409,6 +410,16 @@ class CustomDimensions extends Plugin
             $tracking = new LogTable($scope);
             $cacheContent['custom_dimension_indexes_installed_' . $scope] = $tracking->getInstalledIndexes();
         }
+    }
+
+    /**
+     * Register the new tables, so Matomo knows about them.
+     *
+     * @param array $allTablesInstalled
+     */
+    public function getTablesInstalled(&$allTablesInstalled)
+    {
+        $allTablesInstalled[] = Common::prefixTable('custom_dimensions');
     }
 
     public static function getScopes()
