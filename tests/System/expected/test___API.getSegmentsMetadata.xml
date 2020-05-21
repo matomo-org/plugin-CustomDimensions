@@ -21,6 +21,12 @@
 	<row>
 		<type>metric</type>
 		<category>Visitors</category>
+		<name>Days since last visit</name>
+		<segment>daysSinceLastVisit</segment>
+	</row>
+	<row>
+		<type>metric</type>
+		<category>Visitors</category>
 		<name>Events</name>
 		<segment>events</segment>
 	</row>
@@ -78,12 +84,6 @@
 		<name>Visitor IP</name>
 		<segment>visitIp</segment>
 		<permission>1</permission>
-	</row>
-	<row>
-		<type>metric</type>
-		<category>Visitors</category>
-		<name>Visits by days since last visit</name>
-		<segment>daysSinceLastVisit</segment>
 	</row>
 	<row>
 		<type>dimension</type>
