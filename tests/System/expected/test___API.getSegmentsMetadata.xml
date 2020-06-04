@@ -186,32 +186,26 @@
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - date (End of visit)</name>
+		<name>Server time - date (Time of last action)</name>
 		<segment>visitEndServerDate</segment>
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - day of month (End of visit)</name>
+		<name>Server time - day of month (Time of last action)</name>
 		<segment>visitEndServerDayOfMonth</segment>
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - day of week (End of visit)</name>
+		<name>Server time - day of week (Time of last action)</name>
 		<segment>visitEndServerDayOfWeek</segment>
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - day of year (End of visit)</name>
+		<name>Server time - day of year (Time of last action)</name>
 		<segment>visitEndServerDayOfYear</segment>
-	</row>
-	<row>
-		<type>dimension</type>
-		<category>Visitors</category>
-		<name>Server time - hour (End of visit)</name>
-		<segment>visitServerHour</segment>
 	</row>
 	<row>
 		<type>dimension</type>
@@ -222,8 +216,8 @@
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - minute (End of visit)</name>
-		<segment>visitEndServerMinute</segment>
+		<name>Server time - hour (Time of last action)</name>
+		<segment>visitServerHour</segment>
 	</row>
 	<row>
 		<type>dimension</type>
@@ -234,31 +228,37 @@
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - month (End of visit)</name>
+		<name>Server time - minute (Time of last action)</name>
+		<segment>visitEndServerMinute</segment>
+	</row>
+	<row>
+		<type>dimension</type>
+		<category>Visitors</category>
+		<name>Server time - month (Time of last action)</name>
 		<segment>visitEndServerMonth</segment>
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - quarter (End of visit)</name>
+		<name>Server time - quarter (Time of last action)</name>
 		<segment>visitEndServerQuarter</segment>
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - second (End of visit)</name>
+		<name>Server time - second (Time of last action)</name>
 		<segment>visitEndServerSecond</segment>
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - week of year (End of visit)</name>
+		<name>Server time - week of year (Time of last action)</name>
 		<segment>visitEndServerWeekOfYear</segment>
 	</row>
 	<row>
 		<type>dimension</type>
 		<category>Visitors</category>
-		<name>Server time - year (End of visit)</name>
+		<name>Server time - year (Time of last action)</name>
 		<segment>visitEndServerYear</segment>
 	</row>
 	<row>
