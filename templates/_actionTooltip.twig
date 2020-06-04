@@ -1,5 +1,5 @@
 {% if action.customDimensions is defined %}
-    {% for dimension,value in action.customDimensions if value|length > 0 %}
+    {% for dimension,value in action.customDimensions|filter(value => value|length > 0) %}
         {% if loop.index == 1 %}
 
             {{ 'CustomDimensions_CustomDimensions'|translate }}:
